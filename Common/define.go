@@ -80,7 +80,7 @@ var TIAN_GAN_STR = [10]string{
 // 从数字获得天干名, 0-9
 func GetTianGanFromNumber(nValue int) string {
 	if (nValue >= 0) && (nValue < 10) {
-		return TIAN_GAN_STR[AValue]
+		return TIAN_GAN_STR[nValue]
 	}
 	return ""
 }
