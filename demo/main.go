@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	bazi := BaziGo.GetBazi(2018, 9, 22, 12, 0, 0)
+	bazi := BaziGo.GetBazi(2018, 4, 25, 19, 7, 0)
 	log.Println(bazi)
 }

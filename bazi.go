@@ -33,9 +33,10 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	// 节气0 是立春 是1月
 	bazi.BaziDate.Month = bazi.BaziDate.JieQi/2 + 1
 
-	// 通过日期来获取年柱
+	// 通过八字年来获取年柱
 	bazi.Sizhu.YearZhu = SiZhu.GetZhuFromYear(bazi.BaziDate.Year)
-
+	// 通过年干支和八字月
+	bazi.Sizhu.MonthZhu = SiZhu.GetZhuFromMonth(bazi.BaziDate.Month, bazi.Sizhu.YearZhu.Gan)
 	return bazi
 }
 
