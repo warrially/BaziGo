@@ -3,12 +3,7 @@ package SiZhu
 import (
 	. "github.com/warrially/BaziGo/Common"
 	"github.com/warrially/BaziGo/Days"
-	"log"
 )
-
-func wary() {
-	log.Println(1)
-}
 
 // 从八字年获得年柱
 func GetZhuFromYear(nYear int) TZhu {
@@ -29,7 +24,6 @@ func GetZhuFromYear(nYear int) TZhu {
 func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 	var zhu TZhu
 	// 根据口诀从本年干数计算本年首月的干数
-	log.Println(nMonth)
 	switch nGan {
 	case 0, 5:
 		// 甲己 丙佐首
@@ -47,7 +41,7 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 		// 戊癸 甲好求
 		nGan = 0
 	}
-	log.Println(nGan)
+
 	// 计算本月干数
 	nGan += ((nMonth - 1) % 10)
 

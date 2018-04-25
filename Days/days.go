@@ -19,7 +19,6 @@ func GetGanZhiFromHour(nHour int, nGan int) (int, int) {
 	} else {
 		nZhi = (nHour + 1) / 2
 	}
-	print(nGan, "    1111\n")
 
 	// Gan 此时是本日干数，根据规则换算成本日首时辰干数
 	if nGan >= 5 {
