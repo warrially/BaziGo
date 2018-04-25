@@ -11,7 +11,7 @@ import (
 type TBazi struct {
 	SolarDate TDate  // 新历日期
 	BaziDate  TDate  // 八字日期
-	Sizhu     TSiZhu // 四柱
+	SiZhu     TSiZhu // 四柱
 }
 
 // 从新历获取八字(年, 月, 日, 时, 分, 秒)
@@ -34,9 +34,11 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	bazi.BaziDate.Month = bazi.BaziDate.JieQi/2 + 1
 
 	// 通过八字年来获取年柱
-	bazi.Sizhu.YearZhu = SiZhu.GetZhuFromYear(bazi.BaziDate.Year)
+	bazi.SiZhu.YearZhu = SiZhu.GetZhuFromYear(bazi.BaziDate.Year)
 	// 通过年干支和八字月
-	bazi.Sizhu.MonthZhu = SiZhu.GetZhuFromMonth(bazi.BaziDate.Month, bazi.Sizhu.YearZhu.Gan)
+	bazi.SiZhu.MonthZhu = SiZhu.GetZhuFromMonth(bazi.BaziDate.Month, bazi.SiZhu.YearZhu.Gan)
+	// 通过公历 年月日计算日柱
+	bazi.SiZhu.DayZhu = SiZhu.GetZhuFromDay(nYear, nMonth, nDay)
 	return bazi
 }
 

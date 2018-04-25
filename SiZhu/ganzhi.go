@@ -28,3 +28,20 @@ func GetZhiFromYear(nYear int) int {
 		return (nYear - 3) % 12
 	}
 }
+
+// 将干支拆分成天干地支，0-59 转换成 0-9 0-11
+func ExtractGanZhi(GanZhi int) (int, int) {
+	return (GanZhi % 10), (GanZhi % 12)
+}
+
+// 将天干地支组合成干支，0-9 0-11 转换成 0-59
+func CombineGanZhi(nGan, nZhi int) int {
+	if (nGan <= 9) && (nZhi <= 11) {
+		for i := 0; i <= 6; i++ {
+			if (i*10+nGan)%12 == nZhi {
+				return i*10 + nGan
+			}
+		}
+	}
+	return -1
+}

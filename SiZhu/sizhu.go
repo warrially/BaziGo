@@ -2,6 +2,7 @@ package SiZhu
 
 import (
 	. "github.com/warrially/BaziGo/Common"
+	"github.com/warrially/BaziGo/Days"
 	"log"
 )
 
@@ -9,22 +10,22 @@ func wary() {
 	log.Println(1)
 }
 
-// 从年获得年柱
+// 从八字年获得年柱
 func GetZhuFromYear(nYear int) TZhu {
 	var zhu TZhu
 	// 获得八字年的干支，0-59 对应 甲子到癸亥
 	zhu.GanZhi = GetGanZhiFromYear(nYear)
-	zhu.GanZhiStr = GetGanZhiFromNumber(zhu.GanZhi)
 	// 获得八字年的干0-9 对应 甲到癸
-	zhu.Gan = GetGanFromYear(nYear)
-	zhu.GanStr = GetTianGanFromNumber(zhu.Gan)
 	// 获得八字年的支0-11 对应 子到亥
-	zhu.Zhi = GetZhiFromYear(nYear)
+	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi)
+	// 转换字符串
+	zhu.GanZhiStr = GetGanZhiFromNumber(zhu.GanZhi)
+	zhu.GanStr = GetTianGanFromNumber(zhu.Gan)
 	zhu.ZhiStr = GetDiZhiFromNumber(zhu.Zhi)
 	return zhu
 }
 
-// 从月 和 年干 获得月柱
+// 从八字月 和 年干 获得月柱
 func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 	var zhu TZhu
 	// 根据口诀从本年干数计算本年首月的干数
@@ -60,14 +61,18 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 	return zhu
 }
 
-// 将天干地支组合成干支，0-9 0-11 转换成 0-59
-func CombineGanZhi(nGan, nZhi int) int {
-	if (nGan <= 9) && (nZhi <= 11) {
-		for i := 0; i <= 6; i++ {
-			if (i*10+nGan)%12 == nZhi {
-				return i*10 + nGan
-			}
-		}
-	}
-	return -1
+// 从公历天 获得日柱
+func GetZhuFromDay(nYear int, nMonth int, nDay int) TZhu {
+	var zhu TZhu
+
+	zhu.GanZhi = Days.GetGanZhiFromDay(Days.GetAllDays(nYear, nMonth, nDay))
+	zhu.GanZhiStr = GetGanZhiFromNumber(zhu.GanZhi)
+	// 获得八字日的干0-9 对应 甲到癸
+	// 获得八字日的支0-11 对应 子到亥
+	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi)
+	// 转换字符串
+	zhu.GanZhiStr = GetGanZhiFromNumber(zhu.GanZhi)
+	zhu.GanStr = GetTianGanFromNumber(zhu.Gan)
+	zhu.ZhiStr = GetDiZhiFromNumber(zhu.Zhi)
+	return zhu
 }
