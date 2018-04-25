@@ -15,10 +15,16 @@ type TDate struct {
 type TZhu struct {
 	GanZhi    int    // 干支0-59 对应 甲子到癸亥
 	GanZhiStr string // 干支的实际字符串
-	Gan       int    // 天干
-	GanStr    string // 天干实际字符串
-	Zhi       int    // 地支
-	ZhiStr    string // 地支实际字符串
+
+	Gan    int    // 天干
+	GanStr string // 天干实际字符串
+	G5X    int    // 天干五行
+	G5XStr string // 天干五行字符串
+
+	Zhi    int    // 地支
+	ZhiStr string // 地支实际字符串
+	Z5X    int    // 地支五行
+	Z5XStr string // 天干五行字符串
 }
 
 // 四柱
@@ -95,6 +101,19 @@ var DI_ZHI_STR = [12]string{
 func GetDiZhiFromNumber(nValue int) string {
 	if (nValue >= 0) && (nValue < 12) {
 		return DI_ZHI_STR[nValue]
+	}
+	return ""
+}
+
+// {* 五行字符串，以通常的金木水火土为顺序 }
+// 这里没用五行相生或者相克来排列
+var WU_XING_STR = [5]string{
+	"金", "木", "水", "火", "土"}
+
+// 从数字获得五行名, 0-4
+func GetWuXingFromNumber(nValue int) string {
+	if (nValue >= 0) && (nValue < 5) {
+		return WU_XING_STR[nValue]
 	}
 	return ""
 }

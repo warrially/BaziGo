@@ -45,3 +45,37 @@ func CombineGanZhi(nGan, nZhi int) int {
 	}
 	return -1
 }
+
+// 获得某干的五行，0-4 对应 金木水火土
+func Get5XingFromGan(nGan int) int {
+	switch nGan {
+	case 0, 1:
+		return 1
+	case 2, 3:
+		return 3
+	case 4, 5:
+		return 4
+	case 6, 7:
+		return 0
+	case 8, 9:
+		return 2
+	}
+	return -1
+}
+
+// 获得某支的五行，0-4 对应 金木水火土
+func Get5XingFromZhi(nZhi int) int {
+	switch nZhi {
+	case 8, 9:
+		return 0
+	case 2, 3:
+		return 1
+	case 0, 11:
+		return 2
+	case 5, 6:
+		return 3
+	case 1, 4, 7, 10:
+		return 4
+	}
+	return -1
+}
