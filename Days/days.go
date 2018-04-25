@@ -6,6 +6,31 @@ const (
 	ctGregorian        //格利高里
 )
 
+// 获得某公历时的天干地支，0-59 对应 甲子到癸亥
+func GetGanZhiFromHour(nHour int, nGan int) (int, int) {
+	nHour %= 24
+
+	// Zhi是时辰数(0-11)也就是支数
+	var nZhi int
+	if nHour == 23 {
+		// 次日子时
+		nGan = (nGan + 1) % 10
+		nZhi = 0
+	} else {
+		nZhi = (nHour + 1) / 2
+	}
+	print(nGan, "    1111\n")
+
+	// Gan 此时是本日干数，根据规则换算成本日首时辰干数
+	if nGan >= 5 {
+		nGan -= 5
+	}
+
+	// 计算此时辰干数
+	nGan = (2*nGan + nZhi) % 10
+	return nGan, nZhi
+}
+
 // 获得某公历日的天干地支，0-59 对应 甲子到癸亥
 func GetGanZhiFromDay(nAllDays int) int {
 	return (nAllDays + 12) % 60

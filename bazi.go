@@ -39,6 +39,9 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	bazi.SiZhu.MonthZhu = SiZhu.GetZhuFromMonth(bazi.BaziDate.Month, bazi.SiZhu.YearZhu.Gan)
 	// 通过公历 年月日计算日柱
 	bazi.SiZhu.DayZhu = SiZhu.GetZhuFromDay(nYear, nMonth, nDay)
+	//
+	bazi.SiZhu.HourZhu = SiZhu.GetZhuFromHour(nHour, bazi.SiZhu.DayZhu.Gan)
+
 	return bazi
 }
 
