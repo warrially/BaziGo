@@ -4,6 +4,7 @@ import (
 	. "github.com/warrially/BaziGo/Common"
 	"github.com/warrially/BaziGo/JieQi"
 	"github.com/warrially/BaziGo/LiChun"
+	"github.com/warrially/BaziGo/SiZhu"
 )
 
 // 八字
@@ -32,7 +33,9 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	// 节气0 是立春 是1月
 	bazi.BaziDate.Month = bazi.BaziDate.JieQi/2 + 1
 
-	// 通过日期来
+	// 通过日期来获取年柱
+	bazi.Sizhu.YearZhu = SiZhu.GetZhuFromYear(bazi.BaziDate.Year)
+
 	return bazi
 }
 
