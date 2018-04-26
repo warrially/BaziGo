@@ -5,6 +5,7 @@ import (
 	"github.com/warrially/BaziGo/JieQi"
 	"github.com/warrially/BaziGo/LiChun"
 	"github.com/warrially/BaziGo/SiZhu"
+	"log"
 )
 
 // 八字
@@ -42,10 +43,23 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	//
 	bazi.SiZhu.HourZhu = SiZhu.GetZhuFromHour(nHour, bazi.SiZhu.DayZhu.Gan)
 
+	SiZhu.CalcShiShen(&bazi.SiZhu)
+
 	return bazi
 }
 
 // 从农历获取八字
 func GetBaziFromLunar() {
 
+}
+
+// 按照特殊格式化输出(未完成)
+func PrintBazi(bazi TBazi) {
+	log.Println("新历是", bazi.SolarDate.Year, "年",
+		bazi.SolarDate.Month, "月",
+		bazi.SolarDate.Day, "日  ",
+		bazi.SolarDate.Hour, ":",
+		bazi.SolarDate.Minute, ":",
+		bazi.SolarDate.Second,
+	)
 }

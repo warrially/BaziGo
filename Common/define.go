@@ -20,11 +20,18 @@ type TZhu struct {
 	GanStr string // 天干实际字符串
 	G5X    int    // 天干五行
 	G5XStr string // 天干五行字符串
+	GSS    int    // 天干十神
+	GSSStr string // 天干十神字符串
 
 	Zhi    int    // 地支
 	ZhiStr string // 地支实际字符串
 	Z5X    int    // 地支五行
-	Z5XStr string // 天干五行字符串
+	Z5XStr string // 地支五行字符串
+
+	CangGan      [3]int    // 藏干
+	CangGanStr   [3]string // 藏干字符串
+	CangGanSS    [3]int    // 藏干十神
+	CangGanSSStr [3]string // 藏干十神字符串
 }
 
 // 四柱
@@ -114,6 +121,18 @@ var WU_XING_STR = [5]string{
 func GetWuXingFromNumber(nValue int) string {
 	if (nValue >= 0) && (nValue < 5) {
 		return WU_XING_STR[nValue]
+	}
+	return ""
+}
+
+// 十神字符串
+var SHI_SHEN_STR = [10]string{
+	"比", "劫", "食", "伤", "才",
+	"财", "杀", "官", "卩", "印"}
+
+func GetShiShenFromNumber(nValue int) string {
+	if (nValue >= 0) && (nValue < 10) {
+		return SHI_SHEN_STR[nValue]
 	}
 	return ""
 }
