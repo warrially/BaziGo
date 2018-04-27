@@ -6,19 +6,19 @@ import (
 )
 
 // 补充五行
-func supplement(zhu TZhu) TZhu {
+func supplement(pZhu *TZhu) TZhu {
 	// 转换字符串
-	zhu.GanZhiStr = GetGanZhiFromNumber(zhu.GanZhi)
-	zhu.GanStr = GetTianGanFromNumber(zhu.Gan)
-	zhu.ZhiStr = GetDiZhiFromNumber(zhu.Zhi)
+	pZhu.GanZhiStr = GetGanZhiFromNumber(pZhu.GanZhi)
+	pZhu.GanStr = GetTianGanFromNumber(pZhu.Gan)
+	pZhu.ZhiStr = GetDiZhiFromNumber(pZhu.Zhi)
 
 	// 五行
-	zhu.G5X = Get5XingFromGan(zhu.Gan)
-	zhu.Z5X = Get5XingFromZhi(zhu.Zhi)
-	zhu.G5XStr = GetWuXingFromNumber(zhu.G5X)
-	zhu.Z5XStr = GetWuXingFromNumber(zhu.Z5X)
+	pZhu.G5X = Get5XingFromGan(pZhu.Gan)
+	pZhu.Z5X = Get5XingFromZhi(pZhu.Zhi)
+	pZhu.G5XStr = GetWuXingFromNumber(pZhu.G5X)
+	pZhu.Z5XStr = GetWuXingFromNumber(pZhu.Z5X)
 
-	return zhu
+	return *pZhu
 }
 
 // 从八字年获得年柱
@@ -30,7 +30,7 @@ func GetZhuFromYear(nYear int) TZhu {
 	// 获得八字年的支0-11 对应 子到亥
 	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi)
 
-	return supplement(zhu)
+	return supplement(&zhu)
 }
 
 // 从八字月 和 年干 获得月柱
@@ -62,7 +62,7 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 	zhu.Zhi = (nMonth - 1 + 2) % 12
 	zhu.GanZhi = CombineGanZhi(zhu.Gan, zhu.Zhi)
 
-	return supplement(zhu)
+	return supplement(&zhu)
 }
 
 // 从公历天 获得日柱
@@ -74,7 +74,7 @@ func GetZhuFromDay(nYear int, nMonth int, nDay int) TZhu {
 	// 获得八字日的支0-11 对应 子到亥
 	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi)
 
-	return supplement(zhu)
+	return supplement(&zhu)
 }
 
 // 从公历小时,  获得日柱天干获取时柱
@@ -84,5 +84,5 @@ func GetZhuFromHour(nHour int, nGan int) TZhu {
 	zhu.Gan, zhu.Zhi = Days.GetGanZhiFromHour(nHour, nGan)
 	zhu.GanZhi = CombineGanZhi(zhu.Gan, zhu.Zhi)
 
-	return supplement(zhu)
+	return supplement(&zhu)
 }
