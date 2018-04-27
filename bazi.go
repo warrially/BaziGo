@@ -43,7 +43,9 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	//
 	bazi.SiZhu.HourZhu = SiZhu.GetZhuFromHour(nHour, bazi.SiZhu.DayZhu.Gan)
 
+	// 计算十神
 	SiZhu.CalcShiShen(&bazi.SiZhu)
+	SiZhu.CalcNaYin(&bazi.SiZhu)
 
 	return bazi
 }
@@ -69,7 +71,8 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.DayZhu.GanZhiStr,
 		bazi.SiZhu.HourZhu.GanZhiStr)
 
-	log.Println("命盘解析：\n\t\t",
+	log.Println("命盘解析：")
+	log.Println(
 		bazi.SiZhu.YearZhu.GanStr, "(",
 		bazi.SiZhu.YearZhu.G5XStr, ")[",
 		bazi.SiZhu.YearZhu.GSSStr, "]\t",
@@ -81,8 +84,8 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.DayZhu.GSSStr, "]\t",
 		bazi.SiZhu.HourZhu.GanStr, "(",
 		bazi.SiZhu.HourZhu.G5XStr, ")[",
-		bazi.SiZhu.HourZhu.GSSStr, "]\n\t\t",
-		//
+		bazi.SiZhu.HourZhu.GSSStr, "]")
+	log.Println(
 		bazi.SiZhu.YearZhu.ZhiStr, "(",
 		bazi.SiZhu.YearZhu.Z5XStr, ")",
 		bazi.SiZhu.YearZhu.CangGanSSStr, "\t",
@@ -94,7 +97,7 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.DayZhu.CangGanSSStr, "\t",
 		bazi.SiZhu.HourZhu.ZhiStr, "(",
 		bazi.SiZhu.HourZhu.Z5XStr, ")",
-		bazi.SiZhu.HourZhu.CangGanSSStr, "\t")
+		bazi.SiZhu.HourZhu.CangGanSSStr)
 
 	log.Println("======================================================================")
 

@@ -32,6 +32,9 @@ type TZhu struct {
 	CangGanStr   [3]string // 藏干字符串
 	CangGanSS    [3]int    // 藏干十神
 	CangGanSSStr [3]string // 藏干十神字符串
+
+	NaYin    int    // 纳音五行
+	NaYinStr string // 纳音五行字符串
 }
 
 // 四柱
@@ -133,6 +136,40 @@ var SHI_SHEN_STR = [10]string{
 func GetShiShenFromNumber(nValue int) string {
 	if (nValue >= 0) && (nValue < 10) {
 		return SHI_SHEN_STR[nValue]
+	}
+	return ""
+}
+
+//  {* 纳音五行，与相邻一对六十干支对应}
+// 甲子乙丑海中金丙寅丁卯炉中火戊辰己巳大林木
+// 庚午辛未路旁土壬申癸酉剑锋金甲戌乙亥山头火
+// 丙子丁丑涧下水戊寅己卯城头土庚辰辛巳白蜡金
+// 壬午癸未杨柳木 甲申乙酉井泉水丙戌丁亥屋上土
+// 戊子己丑霹雳火庚寅辛卯松柏木壬辰癸巳长流水
+// 甲午乙未砂中金丙申丁酉山下火戊戌己亥平地木
+// 庚子辛丑壁上土壬寅癸卯金箔金甲辰乙巳覆灯火
+// 丙午丁未天河水戊申己酉大驿土庚戌辛亥钗钏金
+// 壬子癸丑桑柘木甲寅乙卯大溪水丙辰丁巳砂中土
+// 戊午己未天上火庚申辛酉石榴木壬戌癸亥大海水
+var NA_YIN_STR = [30]string{
+	"海中金", "炉中火", "大林木",
+	"路旁土", "剑锋金", "山头火",
+
+	"涧下水", "城墙土", "白蜡金",
+	"杨柳木", "泉中水", "屋上土",
+
+	"霹雷火", "松柏木", "长流水",
+	"沙中金", "山下火", "平地木",
+
+	"壁上土", "金箔金", "佛灯火",
+	"天河水", "大驿土", "钗钏金",
+
+	"桑柘木", "大溪水", "沙中土",
+	"天上火", "石榴木", "大海水"}
+
+func GetNaYinFromNumber(nValue int) string {
+	if (nValue >= 0) && (nValue < 30) {
+		return NA_YIN_STR[nValue]
 	}
 	return ""
 }
