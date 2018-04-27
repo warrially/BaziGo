@@ -55,11 +55,47 @@ func GetBaziFromLunar() {
 
 // 按照特殊格式化输出(未完成)
 func PrintBazi(bazi TBazi) {
-	log.Println("新历是", bazi.SolarDate.Year, "年",
+	log.Println("======================================================================")
+	log.Println("出生日期新历： ", bazi.SolarDate.Year, "年",
 		bazi.SolarDate.Month, "月",
 		bazi.SolarDate.Day, "日  ",
 		bazi.SolarDate.Hour, ":",
 		bazi.SolarDate.Minute, ":",
 		bazi.SolarDate.Second,
 	)
+	log.Println("基本八字：",
+		bazi.SiZhu.YearZhu.GanZhiStr,
+		bazi.SiZhu.MonthZhu.GanZhiStr,
+		bazi.SiZhu.DayZhu.GanZhiStr,
+		bazi.SiZhu.HourZhu.GanZhiStr)
+
+	log.Println("命盘解析：\n\t\t",
+		bazi.SiZhu.YearZhu.GanStr, "(",
+		bazi.SiZhu.YearZhu.G5XStr, ")[",
+		bazi.SiZhu.YearZhu.GSSStr, "]\t",
+		bazi.SiZhu.MonthZhu.GanStr, "(",
+		bazi.SiZhu.MonthZhu.G5XStr, ")[",
+		bazi.SiZhu.MonthZhu.GSSStr, "]\t",
+		bazi.SiZhu.DayZhu.GanStr, "(",
+		bazi.SiZhu.DayZhu.G5XStr, ")[",
+		bazi.SiZhu.DayZhu.GSSStr, "]\t",
+		bazi.SiZhu.HourZhu.GanStr, "(",
+		bazi.SiZhu.HourZhu.G5XStr, ")[",
+		bazi.SiZhu.HourZhu.GSSStr, "]\n\t\t",
+		//
+		bazi.SiZhu.YearZhu.ZhiStr, "(",
+		bazi.SiZhu.YearZhu.Z5XStr, ")",
+		bazi.SiZhu.YearZhu.CangGanSSStr, "\t",
+		bazi.SiZhu.MonthZhu.ZhiStr, "(",
+		bazi.SiZhu.MonthZhu.Z5XStr, ")",
+		bazi.SiZhu.MonthZhu.CangGanSSStr, "\t",
+		bazi.SiZhu.DayZhu.ZhiStr, "(",
+		bazi.SiZhu.DayZhu.Z5XStr, ")",
+		bazi.SiZhu.DayZhu.CangGanSSStr, "\t",
+		bazi.SiZhu.HourZhu.ZhiStr, "(",
+		bazi.SiZhu.HourZhu.Z5XStr, ")",
+		bazi.SiZhu.HourZhu.CangGanSSStr, "\t")
+
+	log.Println("======================================================================")
+
 }
