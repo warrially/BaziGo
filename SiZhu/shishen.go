@@ -26,6 +26,14 @@ func GetShiShenFromGan(nGan1 int, nGan2 int) int {
 	return SHI_SHEN_LIST[nGan1][nGan2]
 }
 
+// 从日干和目标干获取十神,带字符串
+// nGan1 日干 nGan2 目标干
+func GetShiShenFromGan2(pShiShen *TShiShen, nGan1 int, nGan2 int) TShiShen {
+	pShiShen.Value = GetShiShenFromGan(nGan1, nGan2)
+	pShiShen.Str = GetShiShenFromNumber(pShiShen.Value)
+	return *pShiShen
+}
+
 // 地支藏干表
 var DI_ZHI_CANG_GAN_LIST = [12][3]int{
 	{9, -1, -1}, // 子水 藏干 癸水。
@@ -61,7 +69,7 @@ func CalcCangGan(nGan int, pCangGan *TGan) {
 	// 拿到藏干的值
 	var nCangGan = pCangGan.Value
 	if nCangGan >= 0 {
-		pCangGan.ShiShen.Value = GetShiShenFromGan(nGan, nCangGan)
+		GetShiShenFromGan2(&pCangGan.ShiShen, nGan, nCangGan)
 		pCangGan.Str = GetTianGanFromNumber(nCangGan)
 		pCangGan.ShiShen.Str = GetShiShenFromNumber(pCangGan.ShiShen.Value)
 		pCangGan.WuXing.Value = Get5XingFromGan(nCangGan)
@@ -77,13 +85,13 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 	var nGan = pSiZhu.DayZhu.Gan.Value
 	// 天干
 	// 年干
-	pSiZhu.YearZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.YearZhu.Gan.Value)
+	GetShiShenFromGan2(&pSiZhu.YearZhu.Gan.ShiShen, nGan, pSiZhu.YearZhu.Gan.Value)
 	// 月干
-	pSiZhu.MonthZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.MonthZhu.Gan.Value)
+	GetShiShenFromGan2(&pSiZhu.MonthZhu.Gan.ShiShen, nGan, pSiZhu.MonthZhu.Gan.Value)
 	// 日干
-	pSiZhu.DayZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.DayZhu.Gan.Value)
+	GetShiShenFromGan2(&pSiZhu.DayZhu.Gan.ShiShen, nGan, pSiZhu.DayZhu.Gan.Value)
 	// 时干
-	pSiZhu.HourZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.HourZhu.Gan.Value)
+	GetShiShenFromGan2(&pSiZhu.HourZhu.Gan.ShiShen, nGan, pSiZhu.HourZhu.Gan.Value)
 
 	// 地支藏干
 	pSiZhu.YearZhu.Zhi.CangGan = GetCangGanFromZhi(pSiZhu.YearZhu.Zhi.Value)
@@ -101,8 +109,5 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 	}
 
 	// 转字符串
-	pSiZhu.YearZhu.Gan.ShiShen.Str = GetShiShenFromNumber(pSiZhu.YearZhu.Gan.ShiShen.Value)
-	pSiZhu.MonthZhu.Gan.ShiShen.Str = GetShiShenFromNumber(pSiZhu.MonthZhu.Gan.ShiShen.Value)
 	pSiZhu.DayZhu.Gan.ShiShen.Str = "主"
-	pSiZhu.HourZhu.Gan.ShiShen.Str = GetShiShenFromNumber(pSiZhu.HourZhu.Gan.ShiShen.Value)
 }
