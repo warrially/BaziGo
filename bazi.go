@@ -92,16 +92,27 @@ func PrintBazi(bazi TBazi) {
 	log.Println(
 		bazi.SiZhu.YearZhu.Zhi.Str, "(",
 		bazi.SiZhu.YearZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.YearZhu.CangGanSSStr, "\t",
+		bazi.SiZhu.YearZhu.Zhi.CangGan[0].ShiShen.Str,
+		bazi.SiZhu.YearZhu.Zhi.CangGan[1].ShiShen.Str,
+		bazi.SiZhu.YearZhu.Zhi.CangGan[2].ShiShen.Str,
+		"\t",
 		bazi.SiZhu.MonthZhu.Zhi.Str, "(",
 		bazi.SiZhu.MonthZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.MonthZhu.CangGanSSStr, "\t",
+		bazi.SiZhu.MonthZhu.Zhi.CangGan[0].ShiShen.Str,
+		bazi.SiZhu.MonthZhu.Zhi.CangGan[1].ShiShen.Str,
+		bazi.SiZhu.MonthZhu.Zhi.CangGan[2].ShiShen.Str,
+		"\t",
 		bazi.SiZhu.DayZhu.Zhi.Str, "(",
 		bazi.SiZhu.DayZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.DayZhu.CangGanSSStr, "\t",
+		bazi.SiZhu.DayZhu.Zhi.CangGan[0].ShiShen.Str,
+		bazi.SiZhu.DayZhu.Zhi.CangGan[1].ShiShen.Str,
+		bazi.SiZhu.DayZhu.Zhi.CangGan[2].ShiShen.Str,
+		"\t",
 		bazi.SiZhu.HourZhu.Zhi.Str, "(",
 		bazi.SiZhu.HourZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.HourZhu.CangGanSSStr)
+		bazi.SiZhu.HourZhu.Zhi.CangGan[0].ShiShen.Str,
+		bazi.SiZhu.HourZhu.Zhi.CangGan[1].ShiShen.Str,
+		bazi.SiZhu.HourZhu.Zhi.CangGan[2].ShiShen.Str)
 
 	log.Println(
 		bazi.SiZhu.YearZhu.NaYinStr, "\t\t",

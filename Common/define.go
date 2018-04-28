@@ -47,19 +47,11 @@ type TZhi struct {
 
 // 柱子
 type TZhu struct {
-	GanZhi TGanZhi // 干支
-	Gan    TGan    // 天干
-	Zhi    TZhi    // 地支
-
-	CangGan      [3]int    // 藏干
-	CangGanStr   [3]string // 藏干字符串
-	CangGanSS    [3]int    // 藏干十神
-	CangGanSSStr [3]string // 藏干十神字符串
-	CangGan5X    [3]int    // 藏干五行
-	CangGan5XStr [3]string // 藏干五行字符串
-
-	NaYin    int    // 纳音五行
-	NaYinStr string // 纳音五行字符串
+	GanZhi   TGanZhi // 干支
+	Gan      TGan    // 天干
+	Zhi      TZhi    // 地支
+	NaYin    int     // 纳音五行
+	NaYinStr string  // 纳音五行字符串
 }
 
 // 四柱
