@@ -60,8 +60,23 @@ func GetCangGanFromZhi(nZhi int) [3]TGan {
 	}
 	for i := 0; i < 3; i++ {
 		gans[i].Value = DI_ZHI_CANG_GAN_LIST[nZhi][i]
+		gans[i].Str = GetTianGanFromNumber(gans[i].Value)
 	}
 	return gans
+}
+
+// 通过地支获取藏干
+func GetCangGanFromZhi2(pZhi *TZhi) {
+	var nZhi = pZhi.Value
+	if nZhi < 0 || nZhi >= 12 {
+		for i := 0; i < 3; i++ {
+			pZhi.CangGan[i].Value = -1
+		}
+	}
+	for i := 0; i < 3; i++ {
+		pZhi.CangGan[i].Value = DI_ZHI_CANG_GAN_LIST[nZhi][i]
+		pZhi.CangGan[i].Str = GetTianGanFromNumber(pZhi.CangGan[i].Value)
+	}
 }
 
 // 计算藏干 nGan 日干的值, 用来计算十神用
@@ -70,8 +85,6 @@ func CalcCangGan(nGan int, pCangGan *TGan) {
 	var nCangGan = pCangGan.Value
 	if nCangGan >= 0 {
 		GetShiShenFromGan2(&pCangGan.ShiShen, nGan, nCangGan)
-		pCangGan.Str = GetTianGanFromNumber(nCangGan)
-		pCangGan.ShiShen.Str = GetShiShenFromNumber(pCangGan.ShiShen.Value)
 		Get5XingFromGan2(&pCangGan.WuXing, nCangGan)
 	} else {
 		pCangGan.ShiShen.Value = -1
@@ -93,10 +106,10 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 	GetShiShenFromGan2(&pSiZhu.HourZhu.Gan.ShiShen, nGan, pSiZhu.HourZhu.Gan.Value)
 
 	// 地支藏干
-	pSiZhu.YearZhu.Zhi.CangGan = GetCangGanFromZhi(pSiZhu.YearZhu.Zhi.Value)
-	pSiZhu.MonthZhu.Zhi.CangGan = GetCangGanFromZhi(pSiZhu.MonthZhu.Zhi.Value)
-	pSiZhu.DayZhu.Zhi.CangGan = GetCangGanFromZhi(pSiZhu.DayZhu.Zhi.Value)
-	pSiZhu.HourZhu.Zhi.CangGan = GetCangGanFromZhi(pSiZhu.HourZhu.Zhi.Value)
+	GetCangGanFromZhi2(&pSiZhu.YearZhu.Zhi)
+	GetCangGanFromZhi2(&pSiZhu.MonthZhu.Zhi)
+	GetCangGanFromZhi2(&pSiZhu.DayZhu.Zhi)
+	GetCangGanFromZhi2(&pSiZhu.HourZhu.Zhi)
 
 	// 地支藏转十神
 	for i := 0; i < 3; i++ {
