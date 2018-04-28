@@ -6,18 +6,10 @@ import (
 )
 
 // 补充五行
-func supplement(pZhu *TZhu) TZhu {
-	// 转换字符串
-	pZhu.GanZhi.Str = GetGanZhiFromNumber(pZhu.GanZhi.Value)
-	pZhu.Gan.Str = GetTianGanFromNumber(pZhu.Gan.Value)
-	pZhu.Zhi.Str = GetDiZhiFromNumber(pZhu.Zhi.Value)
-
+func CalcWuXing(pZhu *TZhu) TZhu {
 	// 五行
-	pZhu.Gan.WuXing.Value = Get5XingFromGan(pZhu.Gan.Value)
-	pZhu.Zhi.WuXing.Value = Get5XingFromZhi(pZhu.Zhi.Value)
-	pZhu.Gan.WuXing.Str = GetWuXingFromNumber(pZhu.Gan.WuXing.Value)
-	pZhu.Zhi.WuXing.Str = GetWuXingFromNumber(pZhu.Zhi.WuXing.Value)
-
+	Get5XingFromGan2(&pZhu.Gan.WuXing, pZhu.Gan.Value)
+	Get5XingFromZhi2(&pZhu.Zhi.WuXing, pZhu.Zhi.Value)
 	return *pZhu
 }
 
@@ -25,12 +17,12 @@ func supplement(pZhu *TZhu) TZhu {
 func GetZhuFromYear(nYear int) TZhu {
 	var zhu TZhu
 	// 获得八字年的干支，0-59 对应 甲子到癸亥
-	zhu.GanZhi.Value = GetGanZhiFromYear(nYear)
+	GetGanZhiFromYear2(&zhu.GanZhi, nYear)
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
-	zhu.Gan.Value, zhu.Zhi.Value = ExtractGanZhi(zhu.GanZhi.Value)
+	ExtractGanZhi2(&zhu.GanZhi, &zhu.Gan, &zhu.Zhi)
 
-	return supplement(&zhu)
+	return CalcWuXing(&zhu)
 }
 
 // 从八字月 和 年干 获得月柱
@@ -60,21 +52,25 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 
 	zhu.Gan.Value = nGan % 10
 	zhu.Zhi.Value = (nMonth - 1 + 2) % 12
-	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan.Value, zhu.Zhi.Value)
+	zhu.Gan.Str = GetTianGanFromNumber(zhu.Gan.Value)
+	zhu.Zhi.Str = GetDiZhiFromNumber(zhu.Zhi.Value)
 
-	return supplement(&zhu)
+	CombineGanZhi2(&zhu.GanZhi, &zhu.Gan, &zhu.Zhi)
+
+	return CalcWuXing(&zhu)
 }
 
 // 从公历天 获得日柱
 func GetZhuFromDay(nYear int, nMonth int, nDay int) TZhu {
 	var zhu TZhu
-
+	// 通过总天数 计算当前天的一个值
 	zhu.GanZhi.Value = Days.GetGanZhiFromDay(Days.GetAllDays(nYear, nMonth, nDay))
+	zhu.GanZhi.Str = GetGanZhiFromNumber(zhu.GanZhi.Value)
 	// 获得八字日的干0-9 对应 甲到癸
 	// 获得八字日的支0-11 对应 子到亥
-	zhu.Gan.Value, zhu.Zhi.Value = ExtractGanZhi(zhu.GanZhi.Value)
+	ExtractGanZhi2(&zhu.GanZhi, &zhu.Gan, &zhu.Zhi)
 
-	return supplement(&zhu)
+	return CalcWuXing(&zhu)
 }
 
 // 从公历小时,  获得日柱天干获取时柱
@@ -82,7 +78,9 @@ func GetZhuFromHour(nHour int, nGan int) TZhu {
 	var zhu TZhu
 
 	zhu.Gan.Value, zhu.Zhi.Value = Days.GetGanZhiFromHour(nHour, nGan)
-	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan.Value, zhu.Zhi.Value)
+	zhu.Gan.Str = GetTianGanFromNumber(zhu.Gan.Value)
+	zhu.Zhi.Str = GetDiZhiFromNumber(zhu.Zhi.Value)
+	CombineGanZhi2(&zhu.GanZhi, &zhu.Gan, &zhu.Zhi)
 
-	return supplement(&zhu)
+	return CalcWuXing(&zhu)
 }

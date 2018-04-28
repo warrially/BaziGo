@@ -2,6 +2,10 @@ package SiZhu
 
 // 干支
 
+import (
+	. "github.com/warrially/BaziGo/Common"
+)
+
 // 获得八字年的干支，0-59 对应 甲子到癸亥
 func GetGanZhiFromYear(nYear int) int {
 	if nYear > 0 {
@@ -9,6 +13,13 @@ func GetGanZhiFromYear(nYear int) int {
 	} else { // 需要独立判断公元前的原因是没有公元 0 年
 		return (nYear - 3) % 60
 	}
+}
+
+// 获得八字年的干支，0-59 对应 甲子到癸亥, 加字符串
+func GetGanZhiFromYear2(pGanZhi *TGanZhi, nYear int) TGanZhi {
+	pGanZhi.Value = GetGanZhiFromYear(nYear)
+	pGanZhi.Str = GetGanZhiFromNumber(pGanZhi.Value)
+	return *pGanZhi
 }
 
 // 获得某公/农历年的天干，0-9 对应 甲到癸
@@ -34,6 +45,14 @@ func ExtractGanZhi(GanZhi int) (int, int) {
 	return (GanZhi % 10), (GanZhi % 12)
 }
 
+// 将干支拆分成天干地支，0-59 转换成 0-9 0-11, 带字符串
+func ExtractGanZhi2(pGanZhi *TGanZhi, pGan *TGan, pZhi *TZhi) (TGan, TZhi) {
+	pGan.Value, pZhi.Value = ExtractGanZhi(pGanZhi.Value)
+	pGan.Str = GetTianGanFromNumber(pGan.Value)
+	pZhi.Str = GetDiZhiFromNumber(pZhi.Value)
+	return *pGan, *pZhi
+}
+
 // 将天干地支组合成干支，0-9 0-11 转换成 0-59
 func CombineGanZhi(nGan, nZhi int) int {
 	if (nGan <= 9) && (nZhi <= 11) {
@@ -44,6 +63,13 @@ func CombineGanZhi(nGan, nZhi int) int {
 		}
 	}
 	return -1
+}
+
+// 将天干地支组合成干支，0-9 0-11 转换成 0-59 带字符串
+func CombineGanZhi2(pGanZhi *TGanZhi, pGan *TGan, pZhi *TZhi) TGanZhi {
+	pGanZhi.Value = CombineGanZhi(pGan.Value, pZhi.Value)
+	pGanZhi.Str = GetGanZhiFromNumber(pGanZhi.Value)
+	return *pGanZhi
 }
 
 // 获得某干的五行，0-4 对应 金木水火土
@@ -64,6 +90,14 @@ func Get5XingFromGan(nGan int) int {
 	return -1
 }
 
+// 获得某干的五行，0-4 对应 金木水火土, 加字符串
+// 甲乙为木，丙丁为火，戊己为土，庚辛为金，壬癸为水，
+func Get5XingFromGan2(pWuXing *TWuXing, nGan int) TWuXing {
+	pWuXing.Value = Get5XingFromGan(nGan)
+	pWuXing.Str = GetWuXingFromNumber(pWuXing.Value)
+	return *pWuXing
+}
+
 // 获得某支的五行，0-4 对应 金木水火土
 func Get5XingFromZhi(nZhi int) int {
 	switch nZhi {
@@ -79,4 +113,11 @@ func Get5XingFromZhi(nZhi int) int {
 		return 4
 	}
 	return -1
+}
+
+// 获得某支的五行，0-4 对应 金木水火土, 加字符串
+func Get5XingFromZhi2(pWuXing *TWuXing, nZhi int) TWuXing {
+	pWuXing.Value = Get5XingFromZhi(nZhi)
+	pWuXing.Str = GetWuXingFromNumber(pWuXing.Value)
+	return *pWuXing
 }

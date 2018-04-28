@@ -72,8 +72,7 @@ func CalcCangGan(nGan int, pCangGan *TGan) {
 		GetShiShenFromGan2(&pCangGan.ShiShen, nGan, nCangGan)
 		pCangGan.Str = GetTianGanFromNumber(nCangGan)
 		pCangGan.ShiShen.Str = GetShiShenFromNumber(pCangGan.ShiShen.Value)
-		pCangGan.WuXing.Value = Get5XingFromGan(nCangGan)
-		pCangGan.WuXing.Str = GetWuXingFromNumber(pCangGan.WuXing.Value)
+		Get5XingFromGan2(&pCangGan.WuXing, nCangGan)
 	} else {
 		pCangGan.ShiShen.Value = -1
 	}
