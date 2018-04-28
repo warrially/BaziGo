@@ -70,10 +70,10 @@ func PrintBazi(bazi TBazi) {
 		bazi.SolarDate.Second,
 	)
 	log.Println("基本八字：",
-		bazi.SiZhu.YearZhu.GanZhiStr,
-		bazi.SiZhu.MonthZhu.GanZhiStr,
-		bazi.SiZhu.DayZhu.GanZhiStr,
-		bazi.SiZhu.HourZhu.GanZhiStr)
+		bazi.SiZhu.YearZhu.GanZhi.Str,
+		bazi.SiZhu.MonthZhu.GanZhi.Str,
+		bazi.SiZhu.DayZhu.GanZhi.Str,
+		bazi.SiZhu.HourZhu.GanZhi.Str)
 
 	log.Println("命盘解析：")
 	log.Println(

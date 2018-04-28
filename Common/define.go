@@ -11,10 +11,30 @@ type TDate struct {
 	JieQi  int // 节气
 }
 
+// 五行属性
+type TWuXing struct {
+	Value int    // 五行
+	Str   string // 五行字符串
+}
+
+// 干支属性
+type TGanZhi struct {
+	Value int    // 干支0-59 对应 甲子到癸亥
+	Str   string // 干支字符串
+}
+
+// 干属性
+type TGan struct {
+}
+
+// 支属性
+type TZhi struct {
+	CangGan [3]TGan
+}
+
 // 柱子
 type TZhu struct {
-	GanZhi    int    // 干支0-59 对应 甲子到癸亥
-	GanZhiStr string // 干支的实际字符串
+	GanZhi TGanZhi // 干支
 
 	Gan    int    // 天干
 	GanStr string // 天干实际字符串

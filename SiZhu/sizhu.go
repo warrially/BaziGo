@@ -8,7 +8,7 @@ import (
 // 补充五行
 func supplement(pZhu *TZhu) TZhu {
 	// 转换字符串
-	pZhu.GanZhiStr = GetGanZhiFromNumber(pZhu.GanZhi)
+	pZhu.GanZhi.Str = GetGanZhiFromNumber(pZhu.GanZhi.Value)
 	pZhu.GanStr = GetTianGanFromNumber(pZhu.Gan)
 	pZhu.ZhiStr = GetDiZhiFromNumber(pZhu.Zhi)
 
@@ -25,10 +25,10 @@ func supplement(pZhu *TZhu) TZhu {
 func GetZhuFromYear(nYear int) TZhu {
 	var zhu TZhu
 	// 获得八字年的干支，0-59 对应 甲子到癸亥
-	zhu.GanZhi = GetGanZhiFromYear(nYear)
+	zhu.GanZhi.Value = GetGanZhiFromYear(nYear)
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
-	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi)
+	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi.Value)
 
 	return supplement(&zhu)
 }
@@ -60,7 +60,7 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 
 	zhu.Gan = nGan % 10
 	zhu.Zhi = (nMonth - 1 + 2) % 12
-	zhu.GanZhi = CombineGanZhi(zhu.Gan, zhu.Zhi)
+	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan, zhu.Zhi)
 
 	return supplement(&zhu)
 }
@@ -69,10 +69,10 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 func GetZhuFromDay(nYear int, nMonth int, nDay int) TZhu {
 	var zhu TZhu
 
-	zhu.GanZhi = Days.GetGanZhiFromDay(Days.GetAllDays(nYear, nMonth, nDay))
+	zhu.GanZhi.Value = Days.GetGanZhiFromDay(Days.GetAllDays(nYear, nMonth, nDay))
 	// 获得八字日的干0-9 对应 甲到癸
 	// 获得八字日的支0-11 对应 子到亥
-	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi)
+	zhu.Gan, zhu.Zhi = ExtractGanZhi(zhu.GanZhi.Value)
 
 	return supplement(&zhu)
 }
@@ -82,7 +82,7 @@ func GetZhuFromHour(nHour int, nGan int) TZhu {
 	var zhu TZhu
 
 	zhu.Gan, zhu.Zhi = Days.GetGanZhiFromHour(nHour, nGan)
-	zhu.GanZhi = CombineGanZhi(zhu.Gan, zhu.Zhi)
+	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan, zhu.Zhi)
 
 	return supplement(&zhu)
 }
