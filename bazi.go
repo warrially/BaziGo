@@ -10,9 +10,10 @@ import (
 
 // 八字
 type TBazi struct {
-	SolarDate TDate  // 新历日期
-	BaziDate  TDate  // 八字日期
-	SiZhu     TSiZhu // 四柱
+	SolarDate TDate   // 新历日期
+	BaziDate  TDate   // 八字日期
+	SiZhu     TSiZhu  // 四柱
+	XiYong    TXiYong // 喜用神
 }
 
 // 从新历获取八字(年, 月, 日, 时, 分, 秒)
@@ -45,7 +46,10 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 
 	// 计算十神
 	SiZhu.CalcShiShen(&bazi.SiZhu)
+	// 计算纳音
 	SiZhu.CalcNaYin(&bazi.SiZhu)
+	// 计算喜用神
+	bazi.XiYong = SiZhu.CalcXiYong(&bazi.SiZhu)
 
 	return bazi
 }
@@ -98,6 +102,13 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.HourZhu.ZhiStr, "(",
 		bazi.SiZhu.HourZhu.Z5XStr, ")",
 		bazi.SiZhu.HourZhu.CangGanSSStr)
+
+	log.Println(
+		bazi.SiZhu.YearZhu.NaYinStr, "\t\t",
+		bazi.SiZhu.MonthZhu.NaYinStr, "\t\t",
+		bazi.SiZhu.DayZhu.NaYinStr, "\t\t",
+		bazi.SiZhu.HourZhu.NaYinStr, "\t\t",
+	)
 
 	log.Println("======================================================================")
 
