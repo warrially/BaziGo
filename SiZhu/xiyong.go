@@ -49,8 +49,8 @@ func CalcXiYong(pSiZhu *TSiZhu) TXiYong {
 	var wuxing = [5]int{0, 0, 0, 0, 0} // 金木水火土
 
 	// 2. 拿到四柱的月支
-	var nMonthZhi = pSiZhu.MonthZhu.Zhi
-	log.Println("月支是", nMonthZhi, pSiZhu.MonthZhu.ZhiStr)
+	var nMonthZhi = pSiZhu.MonthZhu.Zhi.Value
+	log.Println("月支是", nMonthZhi, pSiZhu.MonthZhu.Zhi.Str)
 
 	// 3. 根据四柱天干, 换算强度
 	wuxing[pSiZhu.YearZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.YearZhu.Gan.Value]

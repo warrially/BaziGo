@@ -90,17 +90,17 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.HourZhu.Gan.WuXing.Str, ")[",
 		bazi.SiZhu.HourZhu.Gan.ShiShen.Str, "]")
 	log.Println(
-		bazi.SiZhu.YearZhu.ZhiStr, "(",
-		bazi.SiZhu.YearZhu.Z5XStr, ")",
+		bazi.SiZhu.YearZhu.Zhi.Str, "(",
+		bazi.SiZhu.YearZhu.Zhi.WuXing.Str, ")",
 		bazi.SiZhu.YearZhu.CangGanSSStr, "\t",
-		bazi.SiZhu.MonthZhu.ZhiStr, "(",
-		bazi.SiZhu.MonthZhu.Z5XStr, ")",
+		bazi.SiZhu.MonthZhu.Zhi.Str, "(",
+		bazi.SiZhu.MonthZhu.Zhi.WuXing.Str, ")",
 		bazi.SiZhu.MonthZhu.CangGanSSStr, "\t",
-		bazi.SiZhu.DayZhu.ZhiStr, "(",
-		bazi.SiZhu.DayZhu.Z5XStr, ")",
+		bazi.SiZhu.DayZhu.Zhi.Str, "(",
+		bazi.SiZhu.DayZhu.Zhi.WuXing.Str, ")",
 		bazi.SiZhu.DayZhu.CangGanSSStr, "\t",
-		bazi.SiZhu.HourZhu.ZhiStr, "(",
-		bazi.SiZhu.HourZhu.Z5XStr, ")",
+		bazi.SiZhu.HourZhu.Zhi.Str, "(",
+		bazi.SiZhu.HourZhu.Zhi.WuXing.Str, ")",
 		bazi.SiZhu.HourZhu.CangGanSSStr)
 
 	log.Println(

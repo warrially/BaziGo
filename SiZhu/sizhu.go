@@ -10,13 +10,13 @@ func supplement(pZhu *TZhu) TZhu {
 	// 转换字符串
 	pZhu.GanZhi.Str = GetGanZhiFromNumber(pZhu.GanZhi.Value)
 	pZhu.Gan.Str = GetTianGanFromNumber(pZhu.Gan.Value)
-	pZhu.ZhiStr = GetDiZhiFromNumber(pZhu.Zhi)
+	pZhu.Zhi.Str = GetDiZhiFromNumber(pZhu.Zhi.Value)
 
 	// 五行
 	pZhu.Gan.WuXing.Value = Get5XingFromGan(pZhu.Gan.Value)
-	pZhu.Z5X = Get5XingFromZhi(pZhu.Zhi)
+	pZhu.Zhi.WuXing.Value = Get5XingFromZhi(pZhu.Zhi.Value)
 	pZhu.Gan.WuXing.Str = GetWuXingFromNumber(pZhu.Gan.WuXing.Value)
-	pZhu.Z5XStr = GetWuXingFromNumber(pZhu.Z5X)
+	pZhu.Zhi.WuXing.Str = GetWuXingFromNumber(pZhu.Zhi.WuXing.Value)
 
 	return *pZhu
 }
@@ -28,7 +28,7 @@ func GetZhuFromYear(nYear int) TZhu {
 	zhu.GanZhi.Value = GetGanZhiFromYear(nYear)
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
-	zhu.Gan.Value, zhu.Zhi = ExtractGanZhi(zhu.GanZhi.Value)
+	zhu.Gan.Value, zhu.Zhi.Value = ExtractGanZhi(zhu.GanZhi.Value)
 
 	return supplement(&zhu)
 }
@@ -59,8 +59,8 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 	nGan += ((nMonth - 1) % 10)
 
 	zhu.Gan.Value = nGan % 10
-	zhu.Zhi = (nMonth - 1 + 2) % 12
-	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan.Value, zhu.Zhi)
+	zhu.Zhi.Value = (nMonth - 1 + 2) % 12
+	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan.Value, zhu.Zhi.Value)
 
 	return supplement(&zhu)
 }
@@ -72,7 +72,7 @@ func GetZhuFromDay(nYear int, nMonth int, nDay int) TZhu {
 	zhu.GanZhi.Value = Days.GetGanZhiFromDay(Days.GetAllDays(nYear, nMonth, nDay))
 	// 获得八字日的干0-9 对应 甲到癸
 	// 获得八字日的支0-11 对应 子到亥
-	zhu.Gan.Value, zhu.Zhi = ExtractGanZhi(zhu.GanZhi.Value)
+	zhu.Gan.Value, zhu.Zhi.Value = ExtractGanZhi(zhu.GanZhi.Value)
 
 	return supplement(&zhu)
 }
@@ -81,8 +81,8 @@ func GetZhuFromDay(nYear int, nMonth int, nDay int) TZhu {
 func GetZhuFromHour(nHour int, nGan int) TZhu {
 	var zhu TZhu
 
-	zhu.Gan.Value, zhu.Zhi = Days.GetGanZhiFromHour(nHour, nGan)
-	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan.Value, zhu.Zhi)
+	zhu.Gan.Value, zhu.Zhi.Value = Days.GetGanZhiFromHour(nHour, nGan)
+	zhu.GanZhi.Value = CombineGanZhi(zhu.Gan.Value, zhu.Zhi.Value)
 
 	return supplement(&zhu)
 }

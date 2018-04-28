@@ -64,10 +64,10 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 	pSiZhu.HourZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.HourZhu.Gan.Value)
 
 	// 地支藏干
-	pSiZhu.YearZhu.CangGan = GetCangGanFromZhi(pSiZhu.YearZhu.Zhi)
-	pSiZhu.MonthZhu.CangGan = GetCangGanFromZhi(pSiZhu.MonthZhu.Zhi)
-	pSiZhu.DayZhu.CangGan = GetCangGanFromZhi(pSiZhu.DayZhu.Zhi)
-	pSiZhu.HourZhu.CangGan = GetCangGanFromZhi(pSiZhu.HourZhu.Zhi)
+	pSiZhu.YearZhu.CangGan = GetCangGanFromZhi(pSiZhu.YearZhu.Zhi.Value)
+	pSiZhu.MonthZhu.CangGan = GetCangGanFromZhi(pSiZhu.MonthZhu.Zhi.Value)
+	pSiZhu.DayZhu.CangGan = GetCangGanFromZhi(pSiZhu.DayZhu.Zhi.Value)
+	pSiZhu.HourZhu.CangGan = GetCangGanFromZhi(pSiZhu.HourZhu.Zhi.Value)
 
 	// 地支藏转十神
 	// 年

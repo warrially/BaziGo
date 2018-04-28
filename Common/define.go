@@ -39,18 +39,17 @@ type TGan struct {
 
 // 支属性
 type TZhi struct {
-	CangGan [3]TGan
+	Value   int     // 地支
+	Str     string  // 地支实际字符串
+	WuXing  TWuXing // 地支五行
+	CangGan [3]TGan // 藏干
 }
 
 // 柱子
 type TZhu struct {
 	GanZhi TGanZhi // 干支
 	Gan    TGan    // 天干
-
-	Zhi    int    // 地支
-	ZhiStr string // 地支实际字符串
-	Z5X    int    // 地支五行
-	Z5XStr string // 地支五行字符串
+	Zhi    TZhi    // 地支
 
 	CangGan      [3]int    // 藏干
 	CangGanStr   [3]string // 藏干字符串
