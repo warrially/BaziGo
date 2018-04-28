@@ -75,6 +75,8 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 			pSiZhu.YearZhu.CangGanSS[i] = GetShiShenFromGan(nGan, nCangGan)
 			pSiZhu.YearZhu.CangGanStr[i] = GetTianGanFromNumber(nCangGan)
 			pSiZhu.YearZhu.CangGanSSStr[i] = GetShiShenFromNumber(pSiZhu.YearZhu.CangGanSS[i])
+			pSiZhu.YearZhu.CangGan5X[i] = Get5XingFromGan(nCangGan)
+			pSiZhu.YearZhu.CangGan5XStr[i] = GetWuXingFromNumber(pSiZhu.YearZhu.CangGan5X[i])
 		} else {
 			pSiZhu.YearZhu.CangGanSS[i] = -1
 		}
@@ -86,6 +88,8 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 			pSiZhu.MonthZhu.CangGanSS[i] = GetShiShenFromGan(nGan, nCangGan)
 			pSiZhu.MonthZhu.CangGanStr[i] = GetTianGanFromNumber(nCangGan)
 			pSiZhu.MonthZhu.CangGanSSStr[i] = GetShiShenFromNumber(pSiZhu.MonthZhu.CangGanSS[i])
+			pSiZhu.MonthZhu.CangGan5X[i] = Get5XingFromGan(nCangGan)
+			pSiZhu.MonthZhu.CangGan5XStr[i] = GetWuXingFromNumber(pSiZhu.MonthZhu.CangGan5X[i])
 		} else {
 			pSiZhu.MonthZhu.CangGanSS[i] = -1
 		}
@@ -97,6 +101,8 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 			pSiZhu.DayZhu.CangGanSS[i] = GetShiShenFromGan(nGan, nCangGan)
 			pSiZhu.DayZhu.CangGanStr[i] = GetTianGanFromNumber(nCangGan)
 			pSiZhu.DayZhu.CangGanSSStr[i] = GetShiShenFromNumber(pSiZhu.DayZhu.CangGanSS[i])
+			pSiZhu.DayZhu.CangGan5X[i] = Get5XingFromGan(nCangGan)
+			pSiZhu.DayZhu.CangGan5XStr[i] = GetWuXingFromNumber(pSiZhu.DayZhu.CangGan5X[i])
 		} else {
 			pSiZhu.DayZhu.CangGanSS[i] = -1
 		}
@@ -108,6 +114,8 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 			pSiZhu.HourZhu.CangGanSS[i] = GetShiShenFromGan(nGan, nCangGan)
 			pSiZhu.HourZhu.CangGanStr[i] = GetTianGanFromNumber(nCangGan)
 			pSiZhu.HourZhu.CangGanSSStr[i] = GetShiShenFromNumber(pSiZhu.HourZhu.CangGanSS[i])
+			pSiZhu.HourZhu.CangGan5X[i] = Get5XingFromGan(nCangGan)
+			pSiZhu.HourZhu.CangGan5XStr[i] = GetWuXingFromNumber(pSiZhu.HourZhu.CangGan5X[i])
 		} else {
 			pSiZhu.HourZhu.CangGanSS[i] = -1
 		}

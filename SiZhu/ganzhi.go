@@ -47,18 +47,19 @@ func CombineGanZhi(nGan, nZhi int) int {
 }
 
 // 获得某干的五行，0-4 对应 金木水火土
+// 甲乙为木，丙丁为火，戊己为土，庚辛为金，壬癸为水，
 func Get5XingFromGan(nGan int) int {
 	switch nGan {
 	case 0, 1:
-		return 1
+		return 1 // 甲 阳木 乙 阴木
 	case 2, 3:
-		return 3
+		return 3 // 丙 阳火 丁 阴火
 	case 4, 5:
-		return 4
+		return 4 // 戊 阳土 己 阴土
 	case 6, 7:
-		return 0
+		return 0 // 庚 阳金 辛 阴金
 	case 8, 9:
-		return 2
+		return 2 // 壬 阳水 癸 阴水
 	}
 	return -1
 }
