@@ -53,10 +53,10 @@ func CalcXiYong(pSiZhu *TSiZhu) TXiYong {
 	log.Println("月支是", nMonthZhi, pSiZhu.MonthZhu.ZhiStr)
 
 	// 3. 根据四柱天干, 换算强度
-	wuxing[pSiZhu.YearZhu.G5X] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.YearZhu.Gan]
-	wuxing[pSiZhu.MonthZhu.G5X] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.MonthZhu.Gan]
-	wuxing[pSiZhu.DayZhu.G5X] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.DayZhu.Gan]
-	wuxing[pSiZhu.HourZhu.G5X] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.HourZhu.Gan]
+	wuxing[pSiZhu.YearZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.YearZhu.Gan.Value]
+	wuxing[pSiZhu.MonthZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.MonthZhu.Gan.Value]
+	wuxing[pSiZhu.DayZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.DayZhu.Gan.Value]
+	wuxing[pSiZhu.HourZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.HourZhu.Gan.Value]
 
 	log.Println("计算完毕天干后的五行权值是:", wuxing)
 

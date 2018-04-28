@@ -17,6 +17,12 @@ type TWuXing struct {
 	Str   string // 五行字符串
 }
 
+// 十神属性
+type TShiShen struct {
+	Value int    // 五行
+	Str   string // 五行字符串
+}
+
 // 干支属性
 type TGanZhi struct {
 	Value int    // 干支0-59 对应 甲子到癸亥
@@ -25,6 +31,10 @@ type TGanZhi struct {
 
 // 干属性
 type TGan struct {
+	Value   int      // 天干
+	Str     string   // 天干实际字符串
+	WuXing  TWuXing  // 天干五行
+	ShiShen TShiShen // 天干十神
 }
 
 // 支属性
@@ -35,13 +45,7 @@ type TZhi struct {
 // 柱子
 type TZhu struct {
 	GanZhi TGanZhi // 干支
-
-	Gan    int    // 天干
-	GanStr string // 天干实际字符串
-	G5X    int    // 天干五行
-	G5XStr string // 天干五行字符串
-	GSS    int    // 天干十神
-	GSSStr string // 天干十神字符串
+	Gan    TGan    // 天干
 
 	Zhi    int    // 地支
 	ZhiStr string // 地支实际字符串

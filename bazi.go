@@ -38,11 +38,11 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	// 通过八字年来获取年柱
 	bazi.SiZhu.YearZhu = SiZhu.GetZhuFromYear(bazi.BaziDate.Year)
 	// 通过年干支和八字月
-	bazi.SiZhu.MonthZhu = SiZhu.GetZhuFromMonth(bazi.BaziDate.Month, bazi.SiZhu.YearZhu.Gan)
+	bazi.SiZhu.MonthZhu = SiZhu.GetZhuFromMonth(bazi.BaziDate.Month, bazi.SiZhu.YearZhu.Gan.Value)
 	// 通过公历 年月日计算日柱
 	bazi.SiZhu.DayZhu = SiZhu.GetZhuFromDay(nYear, nMonth, nDay)
 	//
-	bazi.SiZhu.HourZhu = SiZhu.GetZhuFromHour(nHour, bazi.SiZhu.DayZhu.Gan)
+	bazi.SiZhu.HourZhu = SiZhu.GetZhuFromHour(nHour, bazi.SiZhu.DayZhu.Gan.Value)
 
 	// 计算十神
 	SiZhu.CalcShiShen(&bazi.SiZhu)
@@ -77,18 +77,18 @@ func PrintBazi(bazi TBazi) {
 
 	log.Println("命盘解析：")
 	log.Println(
-		bazi.SiZhu.YearZhu.GanStr, "(",
-		bazi.SiZhu.YearZhu.G5XStr, ")[",
-		bazi.SiZhu.YearZhu.GSSStr, "]\t",
-		bazi.SiZhu.MonthZhu.GanStr, "(",
-		bazi.SiZhu.MonthZhu.G5XStr, ")[",
-		bazi.SiZhu.MonthZhu.GSSStr, "]\t",
-		bazi.SiZhu.DayZhu.GanStr, "(",
-		bazi.SiZhu.DayZhu.G5XStr, ")[",
-		bazi.SiZhu.DayZhu.GSSStr, "]\t",
-		bazi.SiZhu.HourZhu.GanStr, "(",
-		bazi.SiZhu.HourZhu.G5XStr, ")[",
-		bazi.SiZhu.HourZhu.GSSStr, "]")
+		bazi.SiZhu.YearZhu.Gan.Str, "(",
+		bazi.SiZhu.YearZhu.Gan.WuXing.Str, ")[",
+		bazi.SiZhu.YearZhu.Gan.ShiShen.Str, "]\t",
+		bazi.SiZhu.MonthZhu.Gan.Str, "(",
+		bazi.SiZhu.MonthZhu.Gan.WuXing.Str, ")[",
+		bazi.SiZhu.MonthZhu.Gan.ShiShen.Str, "]\t",
+		bazi.SiZhu.DayZhu.Gan.Str, "(",
+		bazi.SiZhu.DayZhu.Gan.WuXing.Str, ")[",
+		bazi.SiZhu.DayZhu.Gan.ShiShen.Str, "]\t",
+		bazi.SiZhu.HourZhu.Gan.Str, "(",
+		bazi.SiZhu.HourZhu.Gan.WuXing.Str, ")[",
+		bazi.SiZhu.HourZhu.Gan.ShiShen.Str, "]")
 	log.Println(
 		bazi.SiZhu.YearZhu.ZhiStr, "(",
 		bazi.SiZhu.YearZhu.Z5XStr, ")",

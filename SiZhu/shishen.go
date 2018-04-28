@@ -17,6 +17,8 @@ var SHI_SHEN_LIST = [...][10]int{
 	{2, 3, 4, 5, 6, 7, 8, 9, 0, 1}, // 壬
 	{3, 2, 5, 4, 7, 6, 9, 8, 1, 0}} // 癸
 
+// 从日干和目标干获取十神
+// nGan1 日干 nGan2 目标干
 func GetShiShenFromGan(nGan1 int, nGan2 int) int {
 	if nGan1 < 0 || nGan1 >= 10 || nGan2 < 0 || nGan2 >= 10 {
 		return -1
@@ -50,16 +52,16 @@ func GetCangGanFromZhi(nZhi int) [3]int {
 // 计算十神
 func CalcShiShen(pSiZhu *TSiZhu) {
 	// 取出日干十神作为比较
-	var nGan = pSiZhu.DayZhu.Gan
+	var nGan = pSiZhu.DayZhu.Gan.Value
 	// 天干
 	// 年干
-	pSiZhu.YearZhu.GSS = GetShiShenFromGan(nGan, pSiZhu.YearZhu.Gan)
+	pSiZhu.YearZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.YearZhu.Gan.Value)
 	// 月干
-	pSiZhu.MonthZhu.GSS = GetShiShenFromGan(nGan, pSiZhu.MonthZhu.Gan)
+	pSiZhu.MonthZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.MonthZhu.Gan.Value)
 	// 日干
-	pSiZhu.DayZhu.GSS = GetShiShenFromGan(nGan, pSiZhu.DayZhu.Gan)
+	pSiZhu.DayZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.DayZhu.Gan.Value)
 	// 时干
-	pSiZhu.HourZhu.GSS = GetShiShenFromGan(nGan, pSiZhu.HourZhu.Gan)
+	pSiZhu.HourZhu.Gan.ShiShen.Value = GetShiShenFromGan(nGan, pSiZhu.HourZhu.Gan.Value)
 
 	// 地支藏干
 	pSiZhu.YearZhu.CangGan = GetCangGanFromZhi(pSiZhu.YearZhu.Zhi)
@@ -122,8 +124,8 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 	}
 
 	// 转字符串
-	pSiZhu.YearZhu.GSSStr = GetShiShenFromNumber(pSiZhu.YearZhu.GSS)
-	pSiZhu.MonthZhu.GSSStr = GetShiShenFromNumber(pSiZhu.MonthZhu.GSS)
-	pSiZhu.DayZhu.GSSStr = "主"
-	pSiZhu.HourZhu.GSSStr = GetShiShenFromNumber(pSiZhu.HourZhu.GSS)
+	pSiZhu.YearZhu.Gan.ShiShen.Str = GetShiShenFromNumber(pSiZhu.YearZhu.Gan.ShiShen.Value)
+	pSiZhu.MonthZhu.Gan.ShiShen.Str = GetShiShenFromNumber(pSiZhu.MonthZhu.Gan.ShiShen.Value)
+	pSiZhu.DayZhu.Gan.ShiShen.Str = "主"
+	pSiZhu.HourZhu.Gan.ShiShen.Str = GetShiShenFromNumber(pSiZhu.HourZhu.Gan.ShiShen.Value)
 }
