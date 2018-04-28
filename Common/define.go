@@ -23,10 +23,17 @@ type TShiShen struct {
 	Str   string // 五行字符串
 }
 
+// 纳音
+type TNaYin struct {
+	Value int    // 纳音五行
+	Str   string // 纳音五行字符串
+}
+
 // 干支属性
 type TGanZhi struct {
 	Value int    // 干支0-59 对应 甲子到癸亥
 	Str   string // 干支字符串
+	NaYin TNaYin // 纳音
 }
 
 // 干属性
@@ -47,11 +54,10 @@ type TZhi struct {
 
 // 柱子
 type TZhu struct {
-	GanZhi   TGanZhi // 干支
-	Gan      TGan    // 天干
-	Zhi      TZhi    // 地支
-	NaYin    int     // 纳音五行
-	NaYinStr string  // 纳音五行字符串
+	GanZhi TGanZhi // 干支
+	Gan    TGan    // 天干
+	Zhi    TZhi    // 地支
+
 }
 
 // 四柱

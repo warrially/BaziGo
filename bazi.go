@@ -115,10 +115,10 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.HourZhu.Zhi.CangGan[2].ShiShen.Str)
 
 	log.Println(
-		bazi.SiZhu.YearZhu.NaYinStr, "\t\t",
-		bazi.SiZhu.MonthZhu.NaYinStr, "\t\t",
-		bazi.SiZhu.DayZhu.NaYinStr, "\t\t",
-		bazi.SiZhu.HourZhu.NaYinStr, "\t\t",
+		bazi.SiZhu.YearZhu.GanZhi.NaYin.Str, "\t\t",
+		bazi.SiZhu.MonthZhu.GanZhi.NaYin.Str, "\t\t",
+		bazi.SiZhu.DayZhu.GanZhi.NaYin.Str, "\t\t",
+		bazi.SiZhu.HourZhu.GanZhi.NaYin.Str, "\t\t",
 	)
 
 	log.Println("======================================================================")
