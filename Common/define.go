@@ -69,6 +69,10 @@ type TSiZhu struct {
 }
 
 type TXiYong struct {
+	MonthZhi  int // 月支
+	DayWuXing int // 日干五行
+	Same      int // 同类
+	Diff      int // 异类
 }
 
 var JIE_QI_STR = [24]string{
