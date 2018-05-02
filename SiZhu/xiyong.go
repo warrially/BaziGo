@@ -102,6 +102,11 @@ func CalcXiYong(pSiZhu *TSiZhu) TXiYong {
 	xiyong.Same, xiyong.Diff = CalcWuXingQiangRuo(nDayWuXing, wuxing)
 	log.Println("五行同类", xiyong.Same)
 	log.Println("五行异类", xiyong.Diff)
+	if xiyong.Same >= xiyong.Diff {
+		log.Println("身强", xiyong.Same-xiyong.Diff, float64(xiyong.Same)/float64(xiyong.Diff+xiyong.Same))
+	} else {
+		log.Println("身弱", xiyong.Diff-xiyong.Same, float64(xiyong.Diff)/float64(xiyong.Diff+xiyong.Same))
+	}
 	// 月支
 	xiyong.MonthZhi = nMonthZhi
 	// 日五行
