@@ -40,6 +40,14 @@ func CalcDaYun(pSiZhu *TSiZhu, nSex int) TDaYun {
 
 		// 年干
 		SiZhu.GetShiShenFromGan3(&dayun.Zhu[i].Gan, nDayGan)
+		// 藏干
+		SiZhu.GetCangGanFromZhi2(&dayun.Zhu[i].Zhi)
+
+		// 地支藏转十神
+		for j := 0; j < 3; j++ {
+			// 年
+			SiZhu.CalcCangGan(nDayGan, &dayun.Zhu[i].Zhi.CangGan[j])
+		}
 	}
 
 	return dayun
