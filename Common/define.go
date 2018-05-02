@@ -68,11 +68,19 @@ type TSiZhu struct {
 	HourZhu  TZhu // 时柱
 }
 
+// 喜用神
 type TXiYong struct {
 	MonthZhi  int // 月支
 	DayWuXing int // 日干五行
 	Same      int // 同类
 	Diff      int // 异类
+}
+
+// 大运
+type TDaYun struct {
+	Zhu   [12]TZhu // 柱
+	QiYun TDate    // XX年XX月开始起运
+	Year  int      // 起运年那一年
 }
 
 var JIE_QI_STR = [24]string{
@@ -200,6 +208,17 @@ var NA_YIN_STR = [30]string{
 func GetNaYinFromNumber(nValue int) string {
 	if (nValue >= 0) && (nValue < 30) {
 		return NA_YIN_STR[nValue]
+	}
+	return ""
+}
+
+// "阴", "阳"
+var YIN_YANG_STR = [2]string{
+	"阴", "阳"}
+
+func GetYinYangFromNumber(nValue int) string {
+	if (nValue >= 0) && (nValue < 2) {
+		return YIN_YANG_STR[nValue]
 	}
 	return ""
 }
