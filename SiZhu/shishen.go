@@ -34,6 +34,13 @@ func GetShiShenFromGan2(pShiShen *TShiShen, nGan1 int, nGan2 int) TShiShen {
 	return *pShiShen
 }
 
+// 从干获取十神
+func GetShiShenFromGan3(pGan *TGan, nGan int) TShiShen {
+	pGan.ShiShen.Value = GetShiShenFromGan(nGan, pGan.Value)
+	pGan.ShiShen.Str = GetShiShenFromNumber(pGan.ShiShen.Value)
+	return pGan.ShiShen
+}
+
 // 地支藏干表
 var DI_ZHI_CANG_GAN_LIST = [12][3]int{
 	{9, -1, -1}, // 子水 藏干 癸水。
@@ -97,13 +104,13 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 	var nGan = pSiZhu.DayZhu.Gan.Value
 	// 天干
 	// 年干
-	GetShiShenFromGan2(&pSiZhu.YearZhu.Gan.ShiShen, nGan, pSiZhu.YearZhu.Gan.Value)
+	GetShiShenFromGan3(&pSiZhu.YearZhu.Gan, nGan)
 	// 月干
-	GetShiShenFromGan2(&pSiZhu.MonthZhu.Gan.ShiShen, nGan, pSiZhu.MonthZhu.Gan.Value)
+	GetShiShenFromGan3(&pSiZhu.MonthZhu.Gan, nGan)
 	// 日干
-	GetShiShenFromGan2(&pSiZhu.DayZhu.Gan.ShiShen, nGan, pSiZhu.DayZhu.Gan.Value)
+	GetShiShenFromGan3(&pSiZhu.DayZhu.Gan, nGan)
 	// 时干
-	GetShiShenFromGan2(&pSiZhu.HourZhu.Gan.ShiShen, nGan, pSiZhu.HourZhu.Gan.Value)
+	GetShiShenFromGan3(&pSiZhu.HourZhu.Gan, nGan)
 
 	// 地支藏干
 	GetCangGanFromZhi2(&pSiZhu.YearZhu.Zhi)
