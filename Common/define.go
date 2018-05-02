@@ -109,6 +109,14 @@ var JIE_QI_STR = [24]string{
 	"小寒", // 节气  Slight Cold           22，这是一公历年中的第一个节气
 	"大寒"} // 中气  Great Cold            23
 
+// 从数字获得节气名, 0-23
+func GetJieQiFromNumber(nValue int) string {
+	if (nValue >= 0) && (nValue < 24) {
+		return JIE_QI_STR[nValue]
+	}
+	return "未知"
+}
+
 // 60 干支
 var GAN_ZHI_STR = [60]string{
 	"甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未", "壬申", "癸酉",
