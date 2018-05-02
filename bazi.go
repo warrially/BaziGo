@@ -11,11 +11,13 @@ import (
 
 // 八字
 type TBazi struct {
-	SolarDate TDate   // 新历日期
-	BaziDate  TDate   // 八字日期
-	SiZhu     TSiZhu  // 四柱
-	XiYong    TXiYong // 喜用神
-	DaYun     TDaYun  // 大运
+	SolarDate   TDate   // 新历日期
+	BaziDate    TDate   // 八字日期
+	PreviousJie TDate   // 上一个节(气)
+	NextJie     TDate   // 下一个节(气)
+	SiZhu       TSiZhu  // 四柱
+	XiYong      TXiYong // 喜用神
+	DaYun       TDaYun  // 大运
 }
 
 // 从新历获取八字(年, 月, 日, 时, 分, 秒)
@@ -32,8 +34,10 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 
 	// 通过立春获取当年的年份
 	bazi.BaziDate.Year = LiChun.GetLiChun(bazi.SolarDate)
-	// 通过节气获取当年的月份
-	bazi.BaziDate.JieQi = JieQi.GetJieQi(bazi.SolarDate)
+	// 通过节气获取当前后的两个节
+	bazi.PreviousJie, bazi.NextJie = JieQi.GetJieQi(bazi.SolarDate)
+	// 八字所在的节气是上一个的节气
+	bazi.BaziDate.JieQi = bazi.PreviousJie.JieQi
 	// 节气0 是立春 是1月
 	bazi.BaziDate.Month = bazi.BaziDate.JieQi/2 + 1
 
@@ -127,6 +131,25 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.HourZhu.GanZhi.NaYin.Str, "\t\t",
 	)
 
-	log.Println("======================================================================")
+	log.Println("----------------------------------------------------------------------")
+	log.Println("所属节令：")
+	log.Println(GetJieQiFromNumber(bazi.PreviousJie.JieQi), bazi.PreviousJie.Year, "年",
+		bazi.PreviousJie.Month, "月",
+		bazi.PreviousJie.Day, "日  ",
+		bazi.PreviousJie.Hour, ":",
+		bazi.PreviousJie.Minute, ":",
+		bazi.PreviousJie.Second)
+	log.Println(GetJieQiFromNumber(bazi.NextJie.JieQi), bazi.NextJie.Year, "年",
+		bazi.NextJie.Month, "月",
+		bazi.NextJie.Day, "日  ",
+		bazi.NextJie.Hour, ":",
+		bazi.NextJie.Minute, ":",
+		bazi.NextJie.Second)
 
+	var szDaYun = "大运："
+	for i := 0; i < 10; i++ {
+		szDaYun = szDaYun + " " + bazi.DaYun.Zhu[i].GanZhi.Str
+	}
+	log.Println(szDaYun)
+	log.Println("======================================================================")
 }
