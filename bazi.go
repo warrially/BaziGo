@@ -2,6 +2,7 @@ package BaziGo
 
 import (
 	. "github.com/warrially/BaziGo/Common"
+	"github.com/warrially/BaziGo/DaYun"
 	"github.com/warrially/BaziGo/JieQi"
 	"github.com/warrially/BaziGo/LiChun"
 	"github.com/warrially/BaziGo/SiZhu"
@@ -14,10 +15,11 @@ type TBazi struct {
 	BaziDate  TDate   // 八字日期
 	SiZhu     TSiZhu  // 四柱
 	XiYong    TXiYong // 喜用神
+	DaYun     TDaYun  // 大运
 }
 
 // 从新历获取八字(年, 月, 日, 时, 分, 秒)
-func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond int) TBazi {
+func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 	var bazi TBazi
 
 	// 新历年
@@ -48,6 +50,10 @@ func GetBazi(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond in
 	SiZhu.CalcShiShen(&bazi.SiZhu)
 	// 计算纳音
 	SiZhu.CalcNaYin(&bazi.SiZhu)
+
+	// 计算大运
+	bazi.DaYun = DaYun.CalcDaYun(&bazi.SiZhu, nSex)
+
 	// 计算喜用神
 	bazi.XiYong = SiZhu.CalcXiYong(&bazi.SiZhu)
 
