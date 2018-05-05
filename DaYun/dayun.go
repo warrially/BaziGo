@@ -3,6 +3,7 @@ package DaYun
 
 import (
 	. "github.com/warrially/BaziGo/Common"
+	// "github.com/warrially/BaziGo/Days"
 	"github.com/warrially/BaziGo/SiZhu"
 )
 
@@ -30,9 +31,11 @@ func CalcDaYun(pSiZhu *TSiZhu, nSex int) TDaYun {
 		if isYang == isMale {
 			//阳年出生的男性、阴年出生的女性
 			dayun.Zhu[i].GanZhi.Value = (nMonthGanZhi + 1 + i) % 60
+			dayun.ShunNi = true
 		} else {
 			// 阴年出生的男性、阳年出生的女性
 			dayun.Zhu[i].GanZhi.Value = (nMonthGanZhi - 1 - i) % 60
+			dayun.ShunNi = false
 		}
 		// 获取干支名称
 		dayun.Zhu[i].GanZhi.Str = GetGanZhiFromNumber(dayun.Zhu[i].GanZhi.Value)
@@ -58,4 +61,15 @@ func GetYinYangFromZhu(pZhu *TZhu) int {
 	// 甲丙戊庚壬 0, 2, 4, 6, 8 阳 (1)
 	// 乙丁己辛癸 1, 3, 5, 7, 9 阴 (0)
 	return (pZhu.Gan.Value + 1) % 2
+}
+
+// 计算起运时间
+func CalcQiYun(pDaYun *TDaYun, dtPreviousJie TDate, dtNextJie TDate, dtSolarDate TDate) {
+	if pDaYun.ShunNi {
+		// 顺推找下一个节
+		// Days.GetDiffSeconds()
+	} else {
+		// 逆推找上一个节
+		// Days.GetDiffSeconds()
+	}
 }

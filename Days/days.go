@@ -135,3 +135,30 @@ func GetIsLeapYear(nYear int) bool {
 	}
 
 }
+
+// 得到两个天数之间的差值
+func GetDiffDays(nYear1, nMonth1, nDay1, nYear2, nMonth2, nDay2 int) int {
+	var nAllDay1 = GetAllDays(nYear1, nMonth1, nDay1)
+	var nAllDay2 = GetAllDays(nYear2, nMonth2, nDay2)
+
+	return nAllDay2 - nAllDay1
+}
+
+// 得到两个天数之间的秒数差距
+func GetDiffSeconds(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int,
+	nYear2, nMonth2, nDay2, nHour2, nMinute2, nSecond2 int) int64 {
+
+	// 这个数据非常大, 得用64位计算
+	var Result int64 = 0
+
+	// // 先计算出天数的差异
+	// Result = GetDiffDays(nYear1, nMonth1, nDay1, nYear2, nMonth2, nDay2)
+	// Result *= 24 * 60 * 60 // 天数换成秒
+
+	// // 再计算出秒数的差异
+	// Result += (nHour2 - nHour1) * 60 * 60
+	// Result += (nMinute2 - nMinute1) * 60
+	// Result += (nSecond2 - nSecond1)
+
+	return Result
+}

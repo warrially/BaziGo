@@ -78,9 +78,9 @@ type TXiYong struct {
 
 // 大运
 type TDaYun struct {
-	Zhu   [12]TZhu // 柱
-	QiYun TDate    // XX年XX月开始起运
-	Year  int      // 起运年那一年
+	Zhu    [12]TZhu // 柱
+	QiYun  TDate    // XX年XX月开始起运
+	ShunNi bool     // 顺转还是逆转(true 顺,  false 逆)
 }
 
 var JIE_QI_STR = [24]string{

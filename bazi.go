@@ -58,6 +58,9 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 	// 计算大运
 	bazi.DaYun = DaYun.CalcDaYun(&bazi.SiZhu, nSex)
 
+	// 计算起运时间
+	DaYun.CalcQiYun(&bazi.DaYun, bazi.PreviousJie, bazi.NextJie, bazi.SolarDate)
+
 	// 计算喜用神
 	bazi.XiYong = SiZhu.CalcXiYong(&bazi.SiZhu)
 
