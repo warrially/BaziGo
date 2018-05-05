@@ -152,13 +152,30 @@ func GetDiffSeconds(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int,
 	var Result int64 = 0
 
 	// // 先计算出天数的差异
-	// Result = GetDiffDays(nYear1, nMonth1, nDay1, nYear2, nMonth2, nDay2)
-	// Result *= 24 * 60 * 60 // 天数换成秒
+	Result = int64(GetDiffDays(nYear1, nMonth1, nDay1, nYear2, nMonth2, nDay2))
+	Result *= 24 * 60 * 60 // 天数换成秒
 
 	// // 再计算出秒数的差异
-	// Result += (nHour2 - nHour1) * 60 * 60
-	// Result += (nMinute2 - nMinute1) * 60
-	// Result += (nSecond2 - nSecond1)
+	Result += int64(nHour2-nHour1) * 60 * 60
+	Result += int64(nMinute2-nMinute1) * 60
+	Result += int64(nSecond2 - nSecond1)
 
 	return Result
+}
+
+// 根据秒数, 得到新的差异的天数
+func GetDiffDate(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int, nDiffSecond int64) (int, int, int, int, int, int) {
+	var nYear2, nMonth2, nDay2, nHour2, nMinute2, nSecond2 int
+
+	if nDiffSecond == 0 {
+		return nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1
+	}
+
+	if nDiffSecond > 0 {
+		// 往前加
+
+	} else {
+		// 往后加
+	}
+
 }
