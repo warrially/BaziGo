@@ -59,7 +59,7 @@ func CalcXiYong(pSiZhu *TSiZhu) TXiYong {
 
 	// 2. 拿到四柱的月支
 	var nMonthZhi = pSiZhu.MonthZhu.Zhi.Value
-	log.Println("月支是", nMonthZhi, pSiZhu.MonthZhu.Zhi.Str)
+	// log.Println("月支是", nMonthZhi, pSiZhu.MonthZhu.Zhi.Str)
 
 	// 3. 根据四柱天干, 换算强度
 	wuxing[pSiZhu.YearZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.YearZhu.Gan.Value]
@@ -67,7 +67,7 @@ func CalcXiYong(pSiZhu *TSiZhu) TXiYong {
 	wuxing[pSiZhu.DayZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.DayZhu.Gan.Value]
 	wuxing[pSiZhu.HourZhu.Gan.WuXing.Value] += TIAN_GAN_QIANG_DU_LIST[nMonthZhi][pSiZhu.HourZhu.Gan.Value]
 
-	log.Println("计算完毕天干后的五行权值是:", wuxing)
+	// log.Println("计算完毕天干后的五行权值是:", wuxing)
 
 	// 4. 根据四柱地支, 换算强度
 	for i := 0; i < 3; i++ {
@@ -100,12 +100,12 @@ func CalcXiYong(pSiZhu *TSiZhu) TXiYong {
 	// 5. 根据日干五行, 计算出同类和异类
 	var nDayWuXing = pSiZhu.DayZhu.Gan.WuXing.Value
 	xiyong.Same, xiyong.Diff = CalcWuXingQiangRuo(nDayWuXing, wuxing)
-	log.Println("五行同类", xiyong.Same)
-	log.Println("五行异类", xiyong.Diff)
+	// log.Println("五行同类", xiyong.Same)
+	// log.Println("五行异类", xiyong.Diff)
 	if xiyong.Same >= xiyong.Diff {
-		log.Println("身强", xiyong.Same-xiyong.Diff, float64(xiyong.Same)/float64(xiyong.Diff+xiyong.Same))
+		log.Printf("身强 %d, %.2f%%\n", xiyong.Same-xiyong.Diff, float64(100*xiyong.Same)/float64(xiyong.Diff+xiyong.Same))
 	} else {
-		log.Println("身弱", xiyong.Diff-xiyong.Same, float64(xiyong.Diff)/float64(xiyong.Diff+xiyong.Same))
+		log.Printf("身弱 %d, %.2f%%\n", xiyong.Diff-xiyong.Same, float64(100*xiyong.Diff)/float64(xiyong.Diff+xiyong.Same))
 	}
 	// 月支
 	xiyong.MonthZhi = nMonthZhi

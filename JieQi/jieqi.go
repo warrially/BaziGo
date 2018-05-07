@@ -28,7 +28,6 @@ func init() {
 		pMap.DateList = append(pMap.DateList, date)
 		m_MapJieQi[date.Year] = pMap
 	}
-	// log.Println(m_MapJieQi)
 }
 
 // // 获取某个日期的节气, 并且前后两个节气
