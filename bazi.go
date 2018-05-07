@@ -21,7 +21,7 @@ type TBazi struct {
 	DaYun       TDaYun  // 大运
 }
 
-// 从新历获取八字(年, 月, 日, 时, 分, 秒)
+// 从新历获取八字(年, 月, 日, 时, 分, 秒, 性别男1,女0)
 func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 	var bazi TBazi
 
