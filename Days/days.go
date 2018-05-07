@@ -84,11 +84,18 @@ func GetGanZhiFromDay(nAllDays int) int {
 
 // 获得距公元原点的日数 这里是公历的年月日
 func GetAllDays(nYear int, nMonth int, nDay int) int {
-	return GetBasicDays(nYear, nMonth, nDay) + GetLeapDays(nYear, nMonth, nDay)
+	if GetDateIsValid(nYear, nMonth, nDay) {
+		return GetBasicDays(nYear, nMonth, nDay) + GetLeapDays(nYear, nMonth, nDay)
+	}
+	return 0
 }
 
 // 获取基本数据
 func GetBasicDays(nYear int, nMonth int, nDay int) int {
+	if !GetDateIsValid(nYear, nMonth, nDay) {
+		return 0
+	}
+
 	var Result int
 
 	// 去掉公元0年
@@ -111,6 +118,9 @@ func GetBasicDays(nYear int, nMonth int, nDay int) int {
 
 // 获取闰年天数
 func GetLeapDays(nYear int, nMonth int, nDay int) int {
+	if !GetDateIsValid(nYear, nMonth, nDay) {
+		return 0
+	}
 	var Result int
 
 	if nYear >= 0 {
@@ -139,6 +149,9 @@ func GetLeapDays(nYear int, nMonth int, nDay int) int {
 
 // 根据公历日期判断当时历法
 func GetCalendarType(nYear int, nMonth int, nDay int) int {
+	if !GetDateIsValid(nYear, nMonth, nDay) {
+		return ctInvalid
+	}
 	if nYear > 1582 {
 		return ctGregorian
 	} else if nYear < 1582 {

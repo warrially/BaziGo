@@ -160,5 +160,11 @@ func PrintBazi(bazi TBazi) {
 		szDaYun = szDaYun + " " + bazi.DaYun.Zhu[i].GanZhi.Str
 	}
 	log.Println(szDaYun)
+	log.Println("起运时间", bazi.DaYun.QiYun.Year, "年",
+		bazi.DaYun.QiYun.Month, "月",
+		bazi.DaYun.QiYun.Day, "日  ",
+		bazi.DaYun.QiYun.Hour, ":",
+		bazi.DaYun.QiYun.Minute, ":",
+		bazi.DaYun.QiYun.Second)
 	log.Println("======================================================================")
 }

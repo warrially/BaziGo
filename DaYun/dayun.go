@@ -70,15 +70,15 @@ func CalcQiYun(pDaYun *TDaYun, dtPreviousJie TDate, dtNextJie TDate, dtSolarDate
 		// 顺推找下一个节
 		nDiffSeconds = Days.GetDiffSeconds(dtSolarDate.Year, dtSolarDate.Month, dtSolarDate.Day, dtSolarDate.Hour, dtSolarDate.Minute, dtSolarDate.Second,
 			dtNextJie.Year, dtNextJie.Month, dtNextJie.Day, dtNextJie.Hour, dtNextJie.Minute, dtNextJie.Second)
-		print("秒1\n", nDiffSeconds, "\n")
 	} else {
 		// 逆推找上一个节
 		nDiffSeconds = Days.GetDiffSeconds(dtPreviousJie.Year, dtPreviousJie.Month, dtPreviousJie.Day, dtPreviousJie.Hour, dtPreviousJie.Minute, dtPreviousJie.Second,
 			dtSolarDate.Year, dtSolarDate.Month, dtSolarDate.Day, dtSolarDate.Hour, dtSolarDate.Minute, dtSolarDate.Second)
-		print("秒2\n", nDiffSeconds, "\n")
 	}
 
 	//  大运起运时间的计算方法，是以出生之日所在月令，按男女顺逆方法推算到下一个节或者上一个节，记下日数。然后按三天为一年，一天为四个月，一个时辰为十天来折算，加上出生时间就是起运的时间。
 	nDiffSeconds *= 120
 
+	// 通过计算时间来得到
+	pDaYun.QiYun = Days.GetDiffDate2(dtSolarDate, nDiffSeconds)
 }
