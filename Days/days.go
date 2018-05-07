@@ -1,5 +1,9 @@
 package Days
 
+import (
+	. "github.com/warrially/BaziGo/Common"
+)
+
 const (
 	ctInvalid   = iota //非法，
 	ctJulian           //儒略，
@@ -188,6 +192,11 @@ func GetDiffDays(nYear1, nMonth1, nDay1, nYear2, nMonth2, nDay2 int) int {
 	return nAllDay2 - nAllDay1
 }
 
+// 得到两个天数之间的差值(通过时间)
+func GetDiffDays2(dt1 TDate, dt2 TDate) int {
+	return GetDiffDays(dt1.Year, dt1.Month, dt1.Day, dt2.Year, dt2.Month, dt2.Day)
+}
+
 // 得到两个天数之间的秒数差距
 func GetDiffSeconds(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int,
 	nYear2, nMonth2, nDay2, nHour2, nMinute2, nSecond2 int) int64 {
@@ -207,20 +216,27 @@ func GetDiffSeconds(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int,
 	return Result
 }
 
+// 得到两个天数之间的秒数差距(通过日期)
+func GetDiffSeconds2(dt1 TDate, dt2 TDate) int64 {
+	return GetDiffSeconds(dt1.Year, dt1.Month, dt1.Day, dt1.Hour, dt1.Minute, dt1.Second,
+		dt2.Year, dt2.Month, dt2.Day, dt2.Hour, dt2.Minute, dt2.Second)
+}
+
 // 根据秒数, 得到新的差异的天数
 func GetDiffDate(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int, nDiffSecond int64) (int, int, int, int, int, int) {
-	// var nYear2, nMonth2, nDay2, nHour2, nMinute2, nSecond2 int
+	//
+	var nTime1 int64 = Get64TimeStamp(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1)
+	var nTime2 int64 = nTime1 + nDiffSecond
 
-	if nDiffSecond == 0 {
-		return nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1
-	}
+	var dt = GetDateFrom64TimeStamp(nTime2)
 
-	if nDiffSecond > 0 {
-		// 往前加
+	return dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second
+}
 
-	} else {
-		// 往后加
-	}
-
-	return 0, 0, 0, 0, 0, 0
+// 根据秒数, 得到新的差异天数
+func GetDiffDate2(dt1 TDate, nDiffSecond int64) TDate {
+	var nTime1 int64 = Get64TimeStampFromDate(dt1)
+	var nTime2 int64 = nTime1 + nDiffSecond
+	// 从时间戳反推时间
+	return GetDateFrom64TimeStamp(nTime2)
 }
