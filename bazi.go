@@ -3,6 +3,7 @@ package BaziGo
 import (
 	. "github.com/warrially/BaziGo/Common"
 	"github.com/warrially/BaziGo/DaYun"
+	"github.com/warrially/BaziGo/Days"
 	"github.com/warrially/BaziGo/JieQi"
 	"github.com/warrially/BaziGo/LiChun"
 	"github.com/warrially/BaziGo/SiZhu"
@@ -23,6 +24,11 @@ type TBazi struct {
 // 从新历获取八字(年, 月, 日, 时, 分, 秒)
 func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 	var bazi TBazi
+
+	if !Days.GetDateIsValid(nYear, nMonth, nDay) {
+		log.Println("无效的日期", nYear, nMonth, nDay)
+		return bazi
+	}
 
 	// 新历年
 	bazi.SolarDate.Year = nYear

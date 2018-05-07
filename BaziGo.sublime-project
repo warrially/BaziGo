@@ -2,8 +2,8 @@
 	"folders":
 	[
 		{
-			"path": ".",
-            "name":"GO语言八字库",
+			"name": "GO语言八字库",
+			"path": "."
 		}
 	]
 }

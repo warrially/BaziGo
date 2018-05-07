@@ -6,6 +6,49 @@ const (
 	ctGregorian        //格利高里
 )
 
+// 返回公历日期是否合法
+func GetDateIsValid(nYear, nMonth, nDay int) bool {
+	// 没有公元0年
+	if nYear == 0 {
+		return false
+	}
+
+	// 1月开始
+	if nMonth < 1 {
+		return false
+	}
+
+	// 12月结束
+	if nMonth > 12 {
+		return false
+	}
+
+	// 1号开始
+	if nDay < 1 {
+		return false
+	}
+
+	// 获取每个月有多少天
+	if nDay > GetMonthDays(nYear, nMonth) {
+		return false
+	}
+
+	// 1582 年的特殊情况
+	if nYear != 1582 {
+		return true
+	}
+	if nMonth != 10 {
+		return true
+	}
+	if nDay < 5 {
+		return true
+	}
+	if nDay > 14 {
+		return true
+	}
+	return false
+}
+
 // 获得某公历时的天干地支，0-59 对应 甲子到癸亥
 func GetGanZhiFromHour(nHour int, nGan int) (int, int) {
 	nHour %= 24
@@ -83,7 +126,8 @@ func GetLeapDays(nYear int, nMonth int, nDay int) int {
 			}
 		}
 		Result = ((nYear - 1) / 4) - Result // 4 年一闰数
-	} else { // 公元前
+	} else {
+		// 公元前
 		Result = -((-nYear + 3) / 4)
 	}
 	return Result
@@ -165,7 +209,7 @@ func GetDiffSeconds(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int,
 
 // 根据秒数, 得到新的差异的天数
 func GetDiffDate(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int, nDiffSecond int64) (int, int, int, int, int, int) {
-	var nYear2, nMonth2, nDay2, nHour2, nMinute2, nSecond2 int
+	// var nYear2, nMonth2, nDay2, nHour2, nMinute2, nSecond2 int
 
 	if nDiffSecond == 0 {
 		return nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1
@@ -178,4 +222,5 @@ func GetDiffDate(nYear1, nMonth1, nDay1, nHour1, nMinute1, nSecond1 int, nDiffSe
 		// 往后加
 	}
 
+	return 0, 0, 0, 0, 0, 0
 }
