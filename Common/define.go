@@ -83,6 +83,19 @@ type TDaYun struct {
 	ShunNi bool     // 顺转还是逆转(true 顺,  false 逆)
 }
 
+// 天干五合
+type TTgWuHe struct {
+	Gan1 int    // 干1
+	Gan2 int    // 干2
+	He   int    // 和的结果
+	Str  string // 描述
+}
+
+// 合化冲
+type THeHuaChong struct {
+	TgWuHe [4]TTgWuHe //天干五合
+}
+
 var JIE_QI_STR = [24]string{
 	"立春", // 节气  Beginning of Spring   0
 	"雨水", // 中气  Rain Water            1
@@ -190,7 +203,7 @@ func GetShiShenFromNumber(nValue int) string {
 // 甲子乙丑海中金丙寅丁卯炉中火戊辰己巳大林木
 // 庚午辛未路旁土壬申癸酉剑锋金甲戌乙亥山头火
 // 丙子丁丑涧下水戊寅己卯城头土庚辰辛巳白蜡金
-// 壬午癸未杨柳木 甲申乙酉井泉水丙戌丁亥屋上土
+// 壬午癸未杨柳木甲申乙酉井泉水丙戌丁亥屋上土
 // 戊子己丑霹雳火庚寅辛卯松柏木壬辰癸巳长流水
 // 甲午乙未砂中金丙申丁酉山下火戊戌己亥平地木
 // 庚子辛丑壁上土壬寅癸卯金箔金甲辰乙巳覆灯火

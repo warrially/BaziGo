@@ -6,18 +6,6 @@ import (
 	. "github.com/warrially/BaziGo/Common"
 )
 
-type THeHuaChong struct {
-	TgWuHe [4]TTgWuHe //天干五合
-}
-
-// 天干五合
-type TTgWuHe struct {
-	Gan1 int    // 干1
-	Gan2 int    // 干2
-	He   int    // 和的结果
-	Str  string // 描述
-}
-
 // 天干五合
 // 五合是专指天干而言的，地支为六合。
 // 命局中干支五行力量的对比与变化，会充分表现在天干的五行上，
@@ -50,6 +38,15 @@ func quickCheckTianGan(x, y int) int {
 	return -1
 }
 
+// 计算合
+func GetTianGanHe(nGan1, nGan2, n5x int) string {
+	if nGan1%2 == 0 {
+		return "天干" + GetTianGanFromNumber(nGan1) + GetTianGanFromNumber(nGan2) + "合" + GetWuXingFromNumber(n5x)
+	} else {
+		return "天干" + GetTianGanFromNumber(nGan2) + GetTianGanFromNumber(nGan1) + "合" + GetWuXingFromNumber(n5x)
+	}
+}
+
 // 查找天干五合
 func CheckTianGanWuHe(pSiZhu *TSiZhu, pHeHuaChong *THeHuaChong) {
 	// 查找天干五合是否存在
@@ -69,7 +66,7 @@ func CheckTianGanWuHe(pSiZhu *TSiZhu, pHeHuaChong *THeHuaChong) {
 		pHeHuaChong.TgWuHe[nCount].Gan1 = nTgYear
 		pHeHuaChong.TgWuHe[nCount].Gan2 = nTgMonth
 		pHeHuaChong.TgWuHe[nCount].He = nHe
-		pHeHuaChong.TgWuHe[nCount].Str = "合"
+		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgYear, nTgMonth, nHe)
 		nCount++
 	} else
 	// 检查月日
@@ -77,7 +74,7 @@ func CheckTianGanWuHe(pSiZhu *TSiZhu, pHeHuaChong *THeHuaChong) {
 		pHeHuaChong.TgWuHe[nCount].Gan1 = nTgMonth
 		pHeHuaChong.TgWuHe[nCount].Gan2 = nTgDay
 		pHeHuaChong.TgWuHe[nCount].He = nHe
-		pHeHuaChong.TgWuHe[nCount].Str = "合"
+		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgMonth, nTgDay, nHe)
 		nCount++
 	}
 	// 检查日时
@@ -85,7 +82,7 @@ func CheckTianGanWuHe(pSiZhu *TSiZhu, pHeHuaChong *THeHuaChong) {
 		pHeHuaChong.TgWuHe[nCount].Gan1 = nTgDay
 		pHeHuaChong.TgWuHe[nCount].Gan2 = nTgHour
 		pHeHuaChong.TgWuHe[nCount].He = nHe
-		pHeHuaChong.TgWuHe[nCount].Str = "合"
+		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgDay, nTgHour, nHe)
 		nCount++
 	}
 }

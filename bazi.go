@@ -12,13 +12,14 @@ import (
 
 // 八字
 type TBazi struct {
-	SolarDate   TDate   // 新历日期
-	BaziDate    TDate   // 八字日期
-	PreviousJie TDate   // 上一个节(气)
-	NextJie     TDate   // 下一个节(气)
-	SiZhu       TSiZhu  // 四柱
-	XiYong      TXiYong // 喜用神
-	DaYun       TDaYun  // 大运
+	SolarDate   TDate       // 新历日期
+	BaziDate    TDate       // 八字日期
+	PreviousJie TDate       // 上一个节(气)
+	NextJie     TDate       // 下一个节(气)
+	SiZhu       TSiZhu      // 四柱
+	XiYong      TXiYong     // 喜用神
+	DaYun       TDaYun      // 大运
+	HeHuaChong  THeHuaChong // 合化冲
 }
 
 // 从新历获取八字(年, 月, 日, 时, 分, 秒, 性别男1,女0)
@@ -60,6 +61,8 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 	SiZhu.CalcShiShen(&bazi.SiZhu)
 	// 计算纳音
 	SiZhu.CalcNaYin(&bazi.SiZhu)
+
+	SiZhu.CheckTianGanWuHe(&bazi.SiZhu, &bazi.HeHuaChong)
 
 	// 计算大运
 	bazi.DaYun = DaYun.CalcDaYun(&bazi.SiZhu, nSex)
@@ -138,6 +141,14 @@ func PrintBazi(bazi TBazi) {
 		bazi.SiZhu.MonthZhu.GanZhi.NaYin.Str, "\t\t",
 		bazi.SiZhu.DayZhu.GanZhi.NaYin.Str, "\t\t",
 		bazi.SiZhu.HourZhu.GanZhi.NaYin.Str, "\t\t",
+	)
+	// 天干五合
+	log.Println(
+		"天干五合：",
+		bazi.HeHuaChong.TgWuHe[0].Str,
+		bazi.HeHuaChong.TgWuHe[1].Str,
+		bazi.HeHuaChong.TgWuHe[2].Str,
+		bazi.HeHuaChong.TgWuHe[3].Str,
 	)
 
 	log.Println("----------------------------------------------------------------------")
