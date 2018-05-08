@@ -68,7 +68,7 @@ func CheckTianGanWuHe(pSiZhu *TSiZhu, pHeHuaChong *THeHuaChong) {
 		pHeHuaChong.TgWuHe[nCount].He = nHe
 		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgYear, nTgMonth, nHe)
 		nCount++
-	} else
+	}
 	// 检查月日
 	if nHe := quickCheckTianGan(nTgMonth, nTgDay); nHe >= 0 {
 		pHeHuaChong.TgWuHe[nCount].Gan1 = nTgMonth
@@ -83,6 +83,31 @@ func CheckTianGanWuHe(pSiZhu *TSiZhu, pHeHuaChong *THeHuaChong) {
 		pHeHuaChong.TgWuHe[nCount].Gan2 = nTgHour
 		pHeHuaChong.TgWuHe[nCount].He = nHe
 		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgDay, nTgHour, nHe)
+		nCount++
+	}
+
+	// 检查年日
+	if nHe := quickCheckTianGan(nTgYear, nTgDay); nHe >= 0 {
+		pHeHuaChong.TgWuHe[nCount].Gan1 = nTgYear
+		pHeHuaChong.TgWuHe[nCount].Gan2 = nTgMonth
+		pHeHuaChong.TgWuHe[nCount].He = nHe
+		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgYear, nTgDay, nHe)
+		nCount++
+	} else
+	// 检查月时
+	if nHe := quickCheckTianGan(nTgMonth, nTgHour); nHe >= 0 {
+		pHeHuaChong.TgWuHe[nCount].Gan1 = nTgMonth
+		pHeHuaChong.TgWuHe[nCount].Gan2 = nTgDay
+		pHeHuaChong.TgWuHe[nCount].He = nHe
+		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgMonth, nTgHour, nHe)
+		nCount++
+	}
+	// 检查年时
+	if nHe := quickCheckTianGan(nTgYear, nTgHour); nHe >= 0 {
+		pHeHuaChong.TgWuHe[nCount].Gan1 = nTgDay
+		pHeHuaChong.TgWuHe[nCount].Gan2 = nTgHour
+		pHeHuaChong.TgWuHe[nCount].He = nHe
+		pHeHuaChong.TgWuHe[nCount].Str = GetTianGanHe(nTgYear, nTgHour, nHe)
 		nCount++
 	}
 }

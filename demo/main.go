@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	bazi := BaziGo.GetBazi(1995, 6, 16, 19, 7, 0, 0)
+	// 年月日时分秒 性别(1男0女)
+	bazi := BaziGo.GetBazi(1986, 12, 22, 21, 30, 0, 1)
 	BaziGo.PrintBazi(bazi)
 	log.Println(bazi)
 }
