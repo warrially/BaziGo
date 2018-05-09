@@ -436,45 +436,45 @@ func CheckDiZhiLiuHai(pSiZhu *TSiZhu, pHeHuaChong *THeHuaChong) {
 
 	// 检查年月
 	if nHai, str := quickCheckDiZhiLiuHai(nDzYear, nDzMonth); nHai >= 0 {
-		pHeHuaChong.DzLiuChong[nCount].Zhi1 = nDzYear
-		pHeHuaChong.DzLiuChong[nCount].Zhi2 = nDzMonth
-		pHeHuaChong.DzLiuChong[nCount].Str = str
+		pHeHuaChong.DzLiuHai[nCount].Zhi1 = nDzYear
+		pHeHuaChong.DzLiuHai[nCount].Zhi2 = nDzMonth
+		pHeHuaChong.DzLiuHai[nCount].Str = str
 		nCount++
 	}
 	// 检查月日
 	if nHai, str := quickCheckDiZhiLiuHai(nDzMonth, nDzDay); nHai >= 0 {
-		pHeHuaChong.DzLiuChong[nCount].Zhi1 = nDzMonth
-		pHeHuaChong.DzLiuChong[nCount].Zhi2 = nDzDay
-		pHeHuaChong.DzLiuChong[nCount].Str = str
+		pHeHuaChong.DzLiuHai[nCount].Zhi1 = nDzMonth
+		pHeHuaChong.DzLiuHai[nCount].Zhi2 = nDzDay
+		pHeHuaChong.DzLiuHai[nCount].Str = str
 		nCount++
 	}
 	// 检查日时
 	if nHai, str := quickCheckDiZhiLiuHai(nDzDay, nDzHour); nHai >= 0 {
-		pHeHuaChong.DzLiuChong[nCount].Zhi1 = nDzDay
-		pHeHuaChong.DzLiuChong[nCount].Zhi2 = nDzHour
-		pHeHuaChong.DzLiuChong[nCount].Str = str
+		pHeHuaChong.DzLiuHai[nCount].Zhi1 = nDzDay
+		pHeHuaChong.DzLiuHai[nCount].Zhi2 = nDzHour
+		pHeHuaChong.DzLiuHai[nCount].Str = str
 		nCount++
 	}
 
 	// 检查年日
 	if nHai, str := quickCheckDiZhiLiuHai(nDzYear, nDzDay); nHai >= 0 {
-		pHeHuaChong.DzLiuChong[nCount].Zhi1 = nDzYear
-		pHeHuaChong.DzLiuChong[nCount].Zhi2 = nDzMonth
-		pHeHuaChong.DzLiuChong[nCount].Str = str
+		pHeHuaChong.DzLiuHai[nCount].Zhi1 = nDzYear
+		pHeHuaChong.DzLiuHai[nCount].Zhi2 = nDzMonth
+		pHeHuaChong.DzLiuHai[nCount].Str = str
 		nCount++
 	} else
 	// 检查月时
 	if nHai, str := quickCheckDiZhiLiuHai(nDzMonth, nDzHour); nHai >= 0 {
-		pHeHuaChong.DzLiuChong[nCount].Zhi1 = nDzMonth
-		pHeHuaChong.DzLiuChong[nCount].Zhi2 = nDzDay
-		pHeHuaChong.DzLiuChong[nCount].Str = str
+		pHeHuaChong.DzLiuHai[nCount].Zhi1 = nDzMonth
+		pHeHuaChong.DzLiuHai[nCount].Zhi2 = nDzDay
+		pHeHuaChong.DzLiuHai[nCount].Str = str
 		nCount++
 	}
 	// 检查年时
 	if nHai, str := quickCheckDiZhiLiuHai(nDzYear, nDzHour); nHai >= 0 {
-		pHeHuaChong.DzLiuChong[nCount].Zhi1 = nDzDay
-		pHeHuaChong.DzLiuChong[nCount].Zhi2 = nDzHour
-		pHeHuaChong.DzLiuChong[nCount].Str = str
+		pHeHuaChong.DzLiuHai[nCount].Zhi1 = nDzDay
+		pHeHuaChong.DzLiuHai[nCount].Zhi2 = nDzHour
+		pHeHuaChong.DzLiuHai[nCount].Str = str
 		nCount++
 	}
 }
