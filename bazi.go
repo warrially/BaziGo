@@ -62,7 +62,8 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 	// 计算纳音
 	SiZhu.CalcNaYin(&bazi.SiZhu)
 
-	SiZhu.CheckTianGanWuHe(&bazi.SiZhu, &bazi.HeHuaChong)
+	// 检查合化冲
+	SiZhu.CheckHeHuaChong(&bazi.SiZhu, &bazi.HeHuaChong)
 
 	// 计算大运
 	bazi.DaYun = DaYun.CalcDaYun(&bazi.SiZhu, nSex)
@@ -149,6 +150,35 @@ func PrintBazi(bazi TBazi) {
 		bazi.HeHuaChong.TgWuHe[1].Str,
 		bazi.HeHuaChong.TgWuHe[2].Str,
 		bazi.HeHuaChong.TgWuHe[3].Str,
+	)
+	// 地支三会
+	log.Println(
+		"地支三会：",
+		bazi.HeHuaChong.DzSanHui[0].Str,
+		bazi.HeHuaChong.DzSanHui[1].Str,
+	)
+	// 地支三合
+	log.Println(
+		"地支三合：",
+		bazi.HeHuaChong.DzSanHe[0].Str,
+		bazi.HeHuaChong.DzSanHe[1].Str,
+	)
+
+	// 地支六冲
+	log.Println(
+		"地支六冲：",
+		bazi.HeHuaChong.DzLiuChong[0].Str,
+		bazi.HeHuaChong.DzLiuChong[1].Str,
+		bazi.HeHuaChong.DzLiuChong[2].Str,
+		bazi.HeHuaChong.DzLiuChong[3].Str,
+	)
+	// 地支六害
+	log.Println(
+		"地支六害：",
+		bazi.HeHuaChong.DzLiuHai[0].Str,
+		bazi.HeHuaChong.DzLiuHai[1].Str,
+		bazi.HeHuaChong.DzLiuHai[2].Str,
+		bazi.HeHuaChong.DzLiuHai[3].Str,
 	)
 
 	log.Println("----------------------------------------------------------------------")

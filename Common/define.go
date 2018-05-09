@@ -91,9 +91,45 @@ type TTgWuHe struct {
 	Str  string // 描述
 }
 
+// 地支三会
+type TDzSanHui struct {
+	Zhi1 int    // 支1
+	Zhi2 int    // 支2
+	Zhi3 int    // 支3
+	Hui  int    // 三会结果
+	Str  string // 描述
+}
+
+// 地支三合
+type TDzSanHe struct {
+	Zhi1 int    // 支1
+	Zhi2 int    // 支2
+	Zhi3 int    // 支3
+	He   int    // 三合结果
+	Str  string // 描述
+}
+
+// 地支六冲
+type TDzLiuChong struct {
+	Zhi1 int    // 支1
+	Zhi2 int    // 支2
+	Str  string // 描述
+}
+
+// 地支六害
+type TDzLiuHai struct {
+	Zhi1 int    // 支1
+	Zhi2 int    // 支2
+	Str  string // 描述
+}
+
 // 合化冲
 type THeHuaChong struct {
-	TgWuHe [4]TTgWuHe //天干五合
+	TgWuHe     [4]TTgWuHe     // 天干五合
+	DzSanHui   [2]TDzSanHui   // 地支三会
+	DzSanHe    [2]TDzSanHe    // 地支三合
+	DzLiuChong [4]TDzLiuChong // 地支六冲
+	DzLiuHai   [4]TDzLiuHai   // 地支六害
 }
 
 var JIE_QI_STR = [24]string{
