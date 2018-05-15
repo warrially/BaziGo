@@ -54,7 +54,7 @@ func GetDateIsValid(nYear, nMonth, nDay int) bool {
 }
 
 // 获得某公历时的天干地支，0-59 对应 甲子到癸亥
-func GetGanZhiFromHour(nHour int, nGan int) (int, int) {
+func GetGanZhiFromHour(nHour, nGan int) (int, int) {
 	nHour %= 24
 
 	// Zhi是时辰数(0-11)也就是支数
@@ -83,7 +83,7 @@ func GetGanZhiFromDay(nAllDays int) int {
 }
 
 // 获得距公元原点的日数 这里是公历的年月日
-func GetAllDays(nYear int, nMonth int, nDay int) int {
+func GetAllDays(nYear, nMonth, nDay int) int {
 	if GetDateIsValid(nYear, nMonth, nDay) {
 		return GetBasicDays(nYear, nMonth, nDay) + GetLeapDays(nYear, nMonth, nDay)
 	}
@@ -91,7 +91,7 @@ func GetAllDays(nYear int, nMonth int, nDay int) int {
 }
 
 // 获取基本数据
-func GetBasicDays(nYear int, nMonth int, nDay int) int {
+func GetBasicDays(nYear, nMonth, nDay int) int {
 	if !GetDateIsValid(nYear, nMonth, nDay) {
 		return 0
 	}
@@ -117,7 +117,7 @@ func GetBasicDays(nYear int, nMonth int, nDay int) int {
 }
 
 // 获取闰年天数
-func GetLeapDays(nYear int, nMonth int, nDay int) int {
+func GetLeapDays(nYear, nMonth, nDay int) int {
 	if !GetDateIsValid(nYear, nMonth, nDay) {
 		return 0
 	}
@@ -148,7 +148,7 @@ func GetLeapDays(nYear int, nMonth int, nDay int) int {
 }
 
 // 根据公历日期判断当时历法
-func GetCalendarType(nYear int, nMonth int, nDay int) int {
+func GetCalendarType(nYear, nMonth, nDay int) int {
 	if !GetDateIsValid(nYear, nMonth, nDay) {
 		return ctInvalid
 	}
@@ -169,7 +169,7 @@ func GetCalendarType(nYear int, nMonth int, nDay int) int {
 }
 
 // 取本月天数，不考虑 1582 年 10 月的特殊情况
-func GetMonthDays(nYear int, nMonth int) int {
+func GetMonthDays(nYear, nMonth int) int {
 	switch nMonth {
 	case 1, 3, 5, 7, 8, 10, 12:
 		return 31
