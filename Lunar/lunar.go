@@ -268,3 +268,5 @@ func GetLunarMonthDays(nYear, nMonth int) int {
 	nBig = nBig & 1             // 取第一位
 	return nBig
 }
+
+// 获取
