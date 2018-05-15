@@ -235,11 +235,27 @@ var LEAP_MONTH_LIST = [2270]int{
 	2900, 3434, 4826, 2395, 95403, 1179, 2635, 88869, 1701, 2772, // 2260 - 2269
 	80730, 694, 35163, 2359, 1175, 26187, 3658, 3749, 83668, 1453, // 2270 - 2279
 	694, 10583, 2350, 93334, 3221, 3402, 23973, 2917, 1386, 80557, // 2280 - 2289
-	605, 96557, 2347, 2709, 93002, 1866, 2901, 83306, 1242, 2651} // 2290 - 2299
+					605, 96557, 2347, 2709, 93002, 1866, 2901, 83306, 1242, 2651} // 2290 - 2299
+var ALL_DAYS_LIST = [2270][13]int{} // 这里得到一个总数
 
 func init() {
 	// 尝试输出2017年
-	log.Println(GetLunarLeapMonth(2017))
+	log.Println(GetLeapMonth(2017))
+
+	// 目前精度只能 30年到2300年
+	// 需要在这里计算出每一年每一月的距离原点的天数
+	// 公元30年1月1日是第 10593天
+	var nTotalDays int = 10592
+	for nYear := 30; nYear < 2300; nYear++ {
+		for nMonth := 0; nMonth < 13; nMonth++ {
+			// 如果日期合法的话
+			if GetDateIsValid(nYear, nMonth, 1) {
+				// 就要把天数写到对应的内容里去
+				GetMonthDays
+			}
+		}
+
+	}
 }
 
 // 返回农历日期是否合法
@@ -254,8 +270,8 @@ func GetDateIsValid(nYear, nMonth, nDay int) bool {
 		return false
 	}
 
-	// 12月结束
-	if nMonth > 12 {
+	// 13月结束
+	if nMonth > 13 {
 		return false
 	}
 
@@ -264,40 +280,80 @@ func GetDateIsValid(nYear, nMonth, nDay int) bool {
 		return false
 	}
 
-	// 获取每个月有多少天
+	if nLeapMonth := GetLeapMonth(nYear); nLeapMonth == 0 {
+		// 没有闰月的话 nMonth 只能是 1 ~ 12
+		if nMonth == 13 {
+			return false
+		}
+	}
+
+	// 获取每个月有多少天, 超过天数的话 日期非法
 	if nDay > GetMonthDays(nYear, nMonth) {
 		return false
 	}
+
+	return true
 }
 
 // 获得某农历年的闰月，返回 1~12 对应一月到十二月，返回 0 表示无闰月
-func GetLunarLeapMonth(nYear int) int {
+func GetLeapMonth(nYear int) int {
 	if nYear < 30 || nYear >= 2300 {
 		return 0
 	}
-	var nMonth = LEAP_MONTH_LIST[nYear-30]
-	nMonth >>= 12 // 移除掉12个农历大小月
-	nMonth = nMonth & 15
-	return nMonth
+	var nLeapMonth = LEAP_MONTH_LIST[nYear-30]
+	nLeapMonth >>= 12 // 移除掉12个农历大小月
+	nLeapMonth = nLeapMonth & 15
+	return nLeapMonth
 }
 
-// 获取某农历年的某月是大月还是小月
-func GetLunarMonthDays(nYear, nMonth int) int {
+// 获取某农历年的第N个月是大月30天还是小月29天(这里的nMonth是第几个月的意思, 假如某年是闰5月, 那么七月初二就是 8月2)
+func GetMonthDays(nYear, nMonth int) int {
 	if nYear < 30 || nYear >= 2300 {
 		return 0
 	}
 
-	if nMonth < 1 || nMonth > 12 {
+	if nMonth < 1 || nMonth > 13 {
 		return 0
 	}
 
 	var nBig = LEAP_MONTH_LIST[nYear-30]
-	nBig = nBig >> (nMonth - 1) // 1月不用动, 2月右移1位
-	nBig = nBig & 1             // 取第一位
-	return nBig
+	var nLeapMonth = GetLeapMonth(nYear)
+
+	if nLeapMonth == 0 {
+		// 没有闰月的时候
+		nBig = nBig >> uint8(nMonth-1) // 1月不用动, 2月右移1位
+	} else {
+		// 有闰月的时候
+		if nMonth < nLeapMonth {
+			// 1月不用动, 2月右移1位
+			nBig = nBig >> uint8(nMonth-1)
+		} else if nMonth == nLeapMonth+1 {
+			// 刚好是闰月那月,  闰月的大小月在17位
+			nBig = nBig >> 16
+		} else {
+			// 假设是闰5月, 那么6月就是第7个月,
+			nBig = nBig >> uint8(nMonth-2)
+		}
+	}
+
+	// 取第一位
+	nBig = nBig & 1
+
+	// 如果有值(nBig == 1)那么是大月
+	if nBig > 0 {
+		return 30
+	} else {
+		return 29
+	}
 }
 
-// 获取
-func Get() int {
+// 获取距离公元原点的日数, 这里是农历来的年月日
+func GetAllDays(nYear int, nMonth int) int {
+	// 目前只能计算30年到2300年的天数, 精度不够高
+	if nYear < 30 || nYear >= 2300 {
+		return 0
+	}
+	// 公元30年1月1日是第 10593天
 
+	return 10592
 }
