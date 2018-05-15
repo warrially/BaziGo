@@ -242,6 +242,34 @@ func init() {
 	log.Println(GetLunarLeapMonth(2017))
 }
 
+// 返回农历日期是否合法
+func GetDateIsValid(nYear, nMonth, nDay int) bool {
+	// 没有公元0年
+	if nYear == 0 {
+		return false
+	}
+
+	// 1月开始
+	if nMonth < 1 {
+		return false
+	}
+
+	// 12月结束
+	if nMonth > 12 {
+		return false
+	}
+
+	// 1号开始
+	if nDay < 1 {
+		return false
+	}
+
+	// 获取每个月有多少天
+	if nDay > GetMonthDays(nYear, nMonth) {
+		return false
+	}
+}
+
 // 获得某农历年的闰月，返回 1~12 对应一月到十二月，返回 0 表示无闰月
 func GetLunarLeapMonth(nYear int) int {
 	if nYear < 30 || nYear >= 2300 {
