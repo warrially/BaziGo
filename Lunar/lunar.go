@@ -270,3 +270,6 @@ func GetLunarMonthDays(nYear, nMonth int) int {
 }
 
 // 获取
+func Get() int {
+
+}
