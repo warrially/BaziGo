@@ -67,8 +67,8 @@ var ALL_DAYS_LIST = [500][13]int{} // 这里得到一个总数
 func init() {
 	// 目前精度只能 30年到2300年
 	// 需要在这里计算出每一年每一月的距离原点的天数
-	// 公元30年1月1日是第 10645天
-	var nTotalDays int = 10644
+	// 公元1800年1月25日是第  657098 天(农历是1月1日)
+	var nTotalDays int = 657097
 	for nYear := START_YEAR; nYear < START_YEAR+500; nYear++ {
 		for nMonth := 1; nMonth <= 13; nMonth++ {
 			// 就要把天数写到对应的内容里去
@@ -153,7 +153,7 @@ func GetMonthDays(nYear, nMonth int) int {
 
 // 获取距离公元原点的日数, 这里是农历来的年月日
 func GetAllDays(nYear, nMonth, nDay int) int {
-	// 目前只能计算30年到2300年的天数, 精度不够高
+	// 目前只能计算1800年到2300年的天数, 精度不够高
 	if nYear < START_YEAR || nYear >= 2300 {
 		return 0
 	}

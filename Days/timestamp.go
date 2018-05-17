@@ -30,8 +30,11 @@ func GetDateFrom64TimeStamp(nTimeStamp int64) TDate {
 	var dt TDate
 	// 计算出年份
 	dt.Year = GetYearFrom64TimeStamp(nTimeStamp)
+	// 计算月份, 和剩余的时间零头
 	dt.Month, nTimeStamp = GetMonthFrom64TimeStamp(nTimeStamp, dt.Year)
+	// 计算日
 	dt.Day = int(nTimeStamp / (24 * 60 * 60))
+	// 扣掉日
 	nTimeStamp -= int64(dt.Day) * 24 * 60 * 60
 
 	dt.Day++ // 因为每个月的天数是从1开始的, 所以这里需要补1天

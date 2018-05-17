@@ -1,8 +1,9 @@
 package main
 
 import (
-	_ "github.com/warrially/BaziGo/Lunar"
-	_ "log"
+	"github.com/warrially/BaziGo/Days"
+	"github.com/warrially/BaziGo/Lunar"
+	"log"
 )
 
 func main() {
@@ -10,4 +11,10 @@ func main() {
 	// bazi := BaziGo.GetBazi(1995, 12, 22, 21, 30, 0, 1)
 	// log.Println(bazi)
 	// BaziGo.PrintBazi(bazi)
+
+	// 计算某一天的时间戳
+	nTimeStamp := Days.Get64TimeStamp(2018, 5, 17, 0, 0, 0)
+
+	//
+	log.Println("农历是", Lunar.GetDateFrom64TimeStamp(nTimeStamp))
 }
