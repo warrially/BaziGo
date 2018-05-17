@@ -1,7 +1,7 @@
 package Lunar
 
 import (
-	_ "log"
+	. "github.com/warrially/BaziGo/Common"
 )
 
 // { * 自公元前 850 年开始的农历闰月信息 -849~2100，移植自中国日历类}
@@ -163,4 +163,54 @@ func GetAllDays(nYear, nMonth, nDay int) int {
 	}
 
 	return ALL_DAYS_LIST[nYear-START_YEAR][nMonth-1] + nDay
+}
+
+// 传统人口述的农历月, 改成算法的农历第几个月
+func ChangeLeap(nYear, nMonth int, isLeap bool) (int, int) {
+	nLeapMonth := GetLeapMonth(nYear)
+
+	// 没有闰月, 直接返回月份
+	if nLeapMonth == 0 {
+		return nYear, nMonth
+	}
+
+	// 有闰月
+	// 闰月之前不变
+	if nMonth < nLeapMonth {
+		return nYear, nMonth
+	}
+
+	// 闰月时
+	if nMonth == nLeapMonth {
+		if isLeap {
+			return nYear, nMonth + 1 // 闰月是下一个月
+		} else {
+			return nYear, nMonth
+		}
+	}
+
+	// 超过闰月直接下一个
+	return nYear, nMonth + 1
+}
+
+func PrintLunar(dt TDate) string {
+	nLeapMonth := GetLeapMonth(dt.Year)
+
+	// 闰月正常
+	if nLeapMonth == 0 {
+		return "农历" + GetLunarMonthFromNumber(dt.Month) + GetLunarDayFromNumber(dt.Day)
+	}
+
+	// 闰月年, 但是没到闰月
+	if nLeapMonth <= dt.Month {
+		return "农历" + GetLunarMonthFromNumber(dt.Month) + GetLunarDayFromNumber(dt.Day)
+	}
+
+	// 刚好闰月,
+	if nLeapMonth == dt.Month+1 {
+		return "农历闰" + GetLunarMonthFromNumber(dt.Month-1) + GetLunarDayFromNumber(dt.Day)
+	}
+
+	// 超过闰月
+	return "农历" + GetLunarMonthFromNumber(dt.Month-1) + GetLunarDayFromNumber(dt.Day)
 }
