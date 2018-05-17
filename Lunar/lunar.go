@@ -1,7 +1,7 @@
 package Lunar
 
 import (
-	"log"
+	_ "log"
 )
 
 // { * 自公元前 850 年开始的农历闰月信息 -849~2100，移植自中国日历类}
@@ -86,13 +86,8 @@ func GetDateIsValid(nYear, nMonth, nDay int) bool {
 		return false
 	}
 
-	// 1月开始
-	if nMonth < 1 {
-		return false
-	}
-
-	// 13月结束
-	if nMonth > 13 {
+	// 1月开始, 13月结束
+	if nMonth < 1 || nMonth > 13 {
 		return false
 	}
 
@@ -137,6 +132,7 @@ func GetMonthDays(nYear, nMonth int) int {
 		return 0
 	}
 
+	// 如果有闰月, 并且闰月
 	var nLeapMonth = GetLeapMonth(nYear)
 	if nLeapMonth == 0 && nMonth == 13 {
 		return 0
