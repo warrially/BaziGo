@@ -17,23 +17,13 @@ func GetDateIsValid(nYear, nMonth, nDay int) bool {
 		return false
 	}
 
-	// 1月开始
-	if nMonth < 1 {
+	// 1月开始, 12月结束
+	if nMonth < 1 || nMonth > 12 {
 		return false
 	}
 
-	// 12月结束
-	if nMonth > 12 {
-		return false
-	}
-
-	// 1号开始
-	if nDay < 1 {
-		return false
-	}
-
-	// 获取每个月有多少天
-	if nDay > GetMonthDays(nYear, nMonth) {
+	// 1号开始, 获取每个月有多少天结束
+	if nDay < 1 || nDay > GetMonthDays(nYear, nMonth) {
 		return false
 	}
 
@@ -44,12 +34,11 @@ func GetDateIsValid(nYear, nMonth, nDay int) bool {
 	if nMonth != 10 {
 		return true
 	}
-	if nDay < 5 {
+	//
+	if nDay < 5 || nDay > 14 {
 		return true
 	}
-	if nDay > 14 {
-		return true
-	}
+
 	return false
 }
 
