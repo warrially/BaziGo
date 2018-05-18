@@ -2,6 +2,7 @@ package JieQi
 
 import (
 	. "github.com/warrially/BaziGo/Common"
+	_ "github.com/warrially/BaziGo/Days"
 )
 
 type TJieQi struct {
@@ -39,7 +40,7 @@ func GetJieQi(date TDate) (TDate, TDate) {
 	// 一口气获取3年的所有节气
 	pMap1, _ := m_MapJieQi[date.Year-1]
 	pMap2, _ := m_MapJieQi[date.Year]
-	pMap3, _ := m_MapJieQi[date.Year-1]
+	pMap3, _ := m_MapJieQi[date.Year+1]
 
 	// 上一个日期
 	var pLastDate TDate
