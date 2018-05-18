@@ -6,6 +6,7 @@ import (
 	"github.com/warrially/BaziGo/Days"
 	"github.com/warrially/BaziGo/JieQi"
 	"github.com/warrially/BaziGo/LiChun"
+	"github.com/warrially/BaziGo/Lunar"
 	"github.com/warrially/BaziGo/SiZhu"
 	"log"
 )
@@ -22,23 +23,8 @@ type TBazi struct {
 	HeHuaChong  THeHuaChong // 合化冲
 }
 
-// 从新历获取八字(年, 月, 日, 时, 分, 秒, 性别男1,女0)
-func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
-	var bazi TBazi
-
-	if !Days.GetDateIsValid(nYear, nMonth, nDay) {
-		log.Println("无效的日期", nYear, nMonth, nDay)
-		return bazi
-	}
-
-	// 新历年
-	bazi.SolarDate.Year = nYear
-	bazi.SolarDate.Month = nMonth
-	bazi.SolarDate.Day = nDay
-	bazi.SolarDate.Hour = nHour
-	bazi.SolarDate.Minute = nMinute
-	bazi.SolarDate.Second = nSecond
-
+// 计算
+func calc(bazi *TBazi) {
 	// 通过立春获取当年的年份
 	bazi.BaziDate.Year = LiChun.GetLiChun(bazi.SolarDate)
 	// 通过节气获取当前后的两个节
@@ -73,12 +59,62 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 
 	// 计算喜用神
 	bazi.XiYong = SiZhu.CalcXiYong(&bazi.SiZhu)
+}
+
+// 从新历获取八字(年, 月, 日, 时, 分, 秒, 性别男1,女0)
+func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
+	var bazi TBazi
+
+	if !Days.GetDateIsValid(nYear, nMonth, nDay) {
+		log.Println("无效的日期", nYear, nMonth, nDay)
+		return bazi
+	}
+
+	// 新历年
+	bazi.SolarDate.Year = nYear
+	bazi.SolarDate.Month = nMonth
+	bazi.SolarDate.Day = nDay
+	bazi.SolarDate.Hour = nHour
+	bazi.SolarDate.Minute = nMinute
+	bazi.SolarDate.Second = nSecond
+
+	// 转农历
+	var nTimeStamp = Days.Get64TimeStamp(nYear, nMonth, nDay, nHour, nMinute, nSecond)
+	bazi.LunarDate = Lunar.GetDateFrom64TimeStamp(nTimeStamp)
+
+	// 进行计算
+	calc(&bazi)
 
 	return bazi
 }
 
 // 从农历获取八字
-func GetBaziFromLunar() {
+func GetBaziFromLunar(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int, isLeap bool) {
+	nYear, nMonth = Lunar.ChangeLeap(nYear, nMonth, isLeap)
+
+	var bazi TBazi
+
+	if !Lunar.GetDateIsValid(nYear, nMonth, nDay) {
+		log.Println("无效的日期", nYear, nMonth, nDay)
+		return bazi
+	}
+
+	// 农历年
+	bazi.LunarDate.Year = nYear
+	bazi.LunarDate.Month = nMonth
+	bazi.LunarDate.Day = nDay
+	bazi.LunarDate.Hour = nHour
+	bazi.LunarDate.Minute = nMinute
+	bazi.LunarDate.Second = nSecond
+
+	// 转新历
+	var nTimeStamp = Lunar.Get64TimeStamp(nYear, nMonth, nDay, nHour, nMinute, nSecond)
+	bazi.LunarDate = Days.GetDateFrom64TimeStamp(nTimeStamp)
+
+	// 进行计算
+	calc(&bazi)
+
+	return bazi
 
 }
 
