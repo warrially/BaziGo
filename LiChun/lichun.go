@@ -2277,48 +2277,51 @@ var LI_CHUN_LIST = [...][6]int{
 	{2300, 2, 4, 15, 59, 19}}
 
 // 获取某个日期的立春, 并且返回八字年
-func GetLiChun(date TDate) int {
-	if (date.Year < 31) || (date.Year > 2300) {
-		return date.Year
+func GetLiChun(nYear, nMonth, nDay, nHour, nMinute, nSecond int) int {
+	if (nYear < 31) || (nYear > 2300) {
+		return nYear
 	}
 
 	// 大于2月份肯定是当年了
-	if date.Month > 2 {
-		return date.Year
+	if nMonth > 2 {
+		return nYear
 	}
 
 	// 月份对比
-	if date.Month > LI_CHUN_LIST[date.Year-31][1] {
-		return date.Year
-	} else if date.Month < LI_CHUN_LIST[date.Year-31][1] {
-		return date.Year - 1
+	if nMonth > LI_CHUN_LIST[nYear-31][1] {
+		return nYear
+	} else if nMonth < LI_CHUN_LIST[nYear-31][1] {
+		return nYear - 1
 	}
 
 	// 日期对比
-	if date.Day > LI_CHUN_LIST[date.Year-31][2] {
-		return date.Year
-	} else if date.Day < LI_CHUN_LIST[date.Year-31][2] {
-		return date.Year - 1
+	if nDay > LI_CHUN_LIST[nYear-31][2] {
+		return nYear
+	} else if nDay < LI_CHUN_LIST[nYear-31][2] {
+		return nYear - 1
 	}
 
 	// 小时对比
-	if date.Hour > LI_CHUN_LIST[date.Year-31][3] {
-		return date.Year
-	} else if date.Hour < LI_CHUN_LIST[date.Year-31][3] {
-		return date.Year - 1
+	if nHour > LI_CHUN_LIST[nYear-31][3] {
+		return nYear
+	} else if nHour < LI_CHUN_LIST[nYear-31][3] {
+		return nYear - 1
 	}
 
 	// 分钟对比
-	if date.Minute > LI_CHUN_LIST[date.Year-31][4] {
-		return date.Year
-	} else if date.Minute < LI_CHUN_LIST[date.Year-31][4] {
-		return date.Year - 1
+	if nMinute > LI_CHUN_LIST[nYear-31][4] {
+		return nYear
+	} else if nMinute < LI_CHUN_LIST[nYear-31][4] {
+		return nYear - 1
 	}
 
 	// 秒钟对比
-	if date.Second > LI_CHUN_LIST[date.Year-31][5] {
-		return date.Year
+	if nSecond > LI_CHUN_LIST[nYear-31][5] {
+		return nYear
 	}
 
-	return date.Year - 1
+	return nYear - 1
+}
+func GetLiChun2(date TDate) int {
+	GetLiChun(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second)
 }

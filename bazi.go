@@ -14,6 +14,7 @@ import (
 // 八字
 type TBazi struct {
 	SolarDate   TDate       // 新历日期
+	LunarDate   TDate       // 农历日期
 	BaziDate    TDate       // 八字日期
 	PreviousJie TDate       // 上一个节(气)
 	NextJie     TDate       // 下一个节(气)
@@ -24,9 +25,9 @@ type TBazi struct {
 }
 
 // 计算
-func calc(bazi *TBazi) {
+func calc(bazi *TBazi, nSex int) {
 	// 通过立春获取当年的年份
-	bazi.BaziDate.Year = LiChun.GetLiChun(bazi.SolarDate)
+	bazi.BaziDate.Year = LiChun.GetLiChun2(bazi.SolarDate)
 	// 通过节气获取当前后的两个节
 	bazi.PreviousJie, bazi.NextJie = JieQi.GetJieQi(bazi.SolarDate)
 	// 八字所在的节气是上一个的节气
@@ -39,9 +40,9 @@ func calc(bazi *TBazi) {
 	// 通过年干支和八字月
 	bazi.SiZhu.MonthZhu = SiZhu.GetZhuFromMonth(bazi.BaziDate.Month, bazi.SiZhu.YearZhu.Gan.Value)
 	// 通过公历 年月日计算日柱
-	bazi.SiZhu.DayZhu = SiZhu.GetZhuFromDay(nYear, nMonth, nDay)
+	bazi.SiZhu.DayZhu = SiZhu.GetZhuFromDay(bazi.SolarDate.Year, bazi.SolarDate.Month, bazi.SolarDate.Day)
 	//
-	bazi.SiZhu.HourZhu = SiZhu.GetZhuFromHour(nHour, bazi.SiZhu.DayZhu.Gan.Value)
+	bazi.SiZhu.HourZhu = SiZhu.GetZhuFromHour(bazi.SolarDate.Hour, bazi.SiZhu.DayZhu.Gan.Value)
 
 	// 计算十神
 	SiZhu.CalcShiShen(&bazi.SiZhu)
@@ -83,13 +84,13 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) TBazi {
 	bazi.LunarDate = Lunar.GetDateFrom64TimeStamp(nTimeStamp)
 
 	// 进行计算
-	calc(&bazi)
+	calc(&bazi, nSex)
 
 	return bazi
 }
 
 // 从农历获取八字
-func GetBaziFromLunar(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int, isLeap bool) {
+func GetBaziFromLunar(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int, isLeap bool) TBazi {
 	nYear, nMonth = Lunar.ChangeLeap(nYear, nMonth, isLeap)
 
 	var bazi TBazi
@@ -112,7 +113,7 @@ func GetBaziFromLunar(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int, is
 	bazi.LunarDate = Days.GetDateFrom64TimeStamp(nTimeStamp)
 
 	// 进行计算
-	calc(&bazi)
+	calc(&bazi, nSex)
 
 	return bazi
 
