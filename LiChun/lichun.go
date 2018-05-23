@@ -2323,5 +2323,5 @@ func GetLiChun(nYear, nMonth, nDay, nHour, nMinute, nSecond int) int {
 	return nYear - 1
 }
 func GetLiChun2(date TDate) int {
-	GetLiChun(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second)
+	return GetLiChun(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second)
 }
