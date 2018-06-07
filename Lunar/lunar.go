@@ -195,7 +195,6 @@ func ChangeLeap(nYear, nMonth int, isLeap bool) (int, int) {
 
 func PrintLunar(dt TDate) string {
 	nLeapMonth := GetLeapMonth(dt.Year)
-	print(nLeapMonth, "润宇月")
 	// 闰月正常
 	if nLeapMonth == 0 {
 		return "农历" + GetLunarMonthFromNumber(dt.Month) + GetLunarDayFromNumber(dt.Day)
@@ -207,7 +206,7 @@ func PrintLunar(dt TDate) string {
 	}
 
 	// 刚好闰月,
-	if nLeapMonth == dt.Month+1 {
+	if nLeapMonth == dt.Month-1 {
 		return "农历闰" + GetLunarMonthFromNumber(dt.Month-1) + GetLunarDayFromNumber(dt.Day)
 	}
 
