@@ -5,6 +5,7 @@ import (
 	. "github.com/warrially/BaziGo/Common"
 	"github.com/warrially/BaziGo/Days"
 	"github.com/warrially/BaziGo/SiZhu"
+	"log"
 )
 
 // 2、大运起排的顺序是：
@@ -30,19 +31,22 @@ func CalcDaYun(pSiZhu *TSiZhu, nSex int) TDaYun {
 	for i := 0; i < 12; i++ {
 		if isYang == isMale {
 			//阳年出生的男性、阴年出生的女性
-			dayun.Zhu[i].GanZhi.Value = (nMonthGanZhi + 1 + i) % 60
+			dayun.Zhu[i].GanZhi.Value = (nMonthGanZhi + 61 + i) % 60
 			dayun.ShunNi = true
 		} else {
 			// 阴年出生的男性、阳年出生的女性
-			dayun.Zhu[i].GanZhi.Value = (nMonthGanZhi - 1 - i) % 60
+			dayun.Zhu[i].GanZhi.Value = (nMonthGanZhi + 59 - i) % 60
 			dayun.ShunNi = false
 		}
+
+
 		// 获取干支名称
 		dayun.Zhu[i].GanZhi.Str = GetGanZhiFromNumber(dayun.Zhu[i].GanZhi.Value)
 		SiZhu.ExtractGanZhi2(&dayun.Zhu[i].GanZhi, &dayun.Zhu[i].Gan, &dayun.Zhu[i].Zhi)
 
 		// 年干
 		SiZhu.GetShiShenFromGan3(&dayun.Zhu[i].Gan, nDayGan)
+
 		// 藏干
 		SiZhu.GetCangGanFromZhi2(&dayun.Zhu[i].Zhi)
 
