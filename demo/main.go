@@ -28,5 +28,5 @@ func main() {
 	// 年月日时分秒 性别(1男0女)
 	bazi := BaziGo.GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex)
 	log.Println(bazi)
-	BaziGo.PrintBazi(bazi)
+	bazi.Print()
 }

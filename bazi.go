@@ -119,8 +119,12 @@ func GetBaziFromLunar(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int, is
 
 }
 
+func (self *TBazi) Print() {
+	PrintBazi(self)
+}
+
 // 按照特殊格式化输出(未完成)
-func PrintBazi(bazi TBazi) {
+func PrintBazi(bazi *TBazi) {
 	log.Println("======================================================================")
 	log.Println("出生日期新历： ", bazi.SolarDate.Year, "年",
 		bazi.SolarDate.Month, "月",
