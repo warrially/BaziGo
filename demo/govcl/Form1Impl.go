@@ -10,9 +10,7 @@ import (
 )
 
 func (self *TForm1) OnFormCreate(sender vcl.IObject) {
-	self.MonthCalendar1.SetOnClick(func(sender vcl.IObject) {
-		self.calcBazi()
-	})
+
 }
 
 func (self *TForm1) calcBazi() {
@@ -48,4 +46,12 @@ func (self *TForm1) calcBazi() {
 	self.Label6.SetCaption(bazi.SiZhu.MonthZhu.Zhi.Str)
 	self.Label7.SetCaption(bazi.SiZhu.DayZhu.Zhi.Str)
 	self.Label8.SetCaption(bazi.SiZhu.HourZhu.Zhi.Str)
+}
+
+func (self *TForm1) OnMonthCalendar1Click(sender vcl.IObject) {
+	self.calcBazi()
+}
+
+func (self *TForm1) OnDateTimePicker1Change(sender vcl.IObject) {
+	self.calcBazi()
 }
