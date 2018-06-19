@@ -29,6 +29,13 @@ func quickCheckTianGan(nGan1, nGan2 int) (int, string) {
 	nGan1 %= 5
 	nGan2 %= 5
 
+	if nGan1 < 0 {
+		nGan1 += 5
+	}
+	if nGan2 < 0 {
+		nGan2 += 5
+	}
+
 	if nGan1 == nGan2 {
 		switch nGan1 {
 		case 0:
@@ -313,6 +320,13 @@ func quickCheckDiZhiLiuChong(nGan1, nGan2 int) (int, string) {
 
 	nGan1 %= 6
 	nGan2 %= 6
+
+	if nGan1 < 0 {
+		nGan1 += 6
+	}
+	if nGan2 < 0 {
+		nGan2 += 6
+	}
 
 	if nGan1 == nGan2 {
 		switch nGan1 {

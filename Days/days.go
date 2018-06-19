@@ -45,6 +45,9 @@ func GetDateIsValid(nYear, nMonth, nDay int) bool {
 // 获得某公历时的天干地支，0-59 对应 甲子到癸亥
 func GetGanZhiFromHour(nHour, nGan int) (int, int) {
 	nHour %= 24
+	if nHour < 0 {
+		nHour += 24
+	}
 
 	// Zhi是时辰数(0-11)也就是支数
 	var nZhi int

@@ -27,6 +27,16 @@ func GetZhuFromYear(nYear int) TZhu {
 
 // 从八字月 和 年干 获得月柱
 func GetZhuFromMonth(nMonth int, nGan int) TZhu {
+	nMonth = nMonth % 12
+	nGan = nGan % 10
+	if nMonth <= 0 {
+		nMonth += 12
+	}
+
+	if nGan < 0 {
+		nGan += 10
+	}
+
 	var zhu TZhu
 	// 根据口诀从本年干数计算本年首月的干数
 	switch nGan {
