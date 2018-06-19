@@ -21,6 +21,5 @@ func GetNaYinFromGanZhi(nGanZhi int) int {
 
 func GetNaYinFromGanZhi2(pGanZhi *TGanZhi) TNaYin {
 	pGanZhi.NaYin.Value = GetNaYinFromGanZhi(pGanZhi.Value)
-	pGanZhi.NaYin.Str = GetNaYinFromNumber(pGanZhi.NaYin.Value)
 	return pGanZhi.NaYin
 }

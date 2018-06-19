@@ -62,8 +62,6 @@ func GetZhuFromMonth(nMonth int, nGan int) TZhu {
 
 	zhu.Gan.Value = nGan % 10
 	zhu.Zhi.Value = (nMonth - 1 + 2) % 12
-	zhu.Gan.Str = GetTianGanFromNumber(zhu.Gan.Value)
-	zhu.Zhi.Str = GetDiZhiFromNumber(zhu.Zhi.Value)
 
 	CombineGanZhi2(&zhu.GanZhi, &zhu.Gan, &zhu.Zhi)
 
@@ -75,7 +73,6 @@ func GetZhuFromDay(nYear int, nMonth int, nDay int) TZhu {
 	var zhu TZhu
 	// 通过总天数 计算当前天的一个值
 	zhu.GanZhi.Value = Days.GetGanZhiFromDay(Days.GetAllDays(nYear, nMonth, nDay))
-	zhu.GanZhi.Str = GetGanZhiFromNumber(zhu.GanZhi.Value)
 	// 获得八字日的干0-9 对应 甲到癸
 	// 获得八字日的支0-11 对应 子到亥
 	ExtractGanZhi2(&zhu.GanZhi, &zhu.Gan, &zhu.Zhi)
@@ -88,8 +85,6 @@ func GetZhuFromHour(nHour int, nGan int) TZhu {
 	var zhu TZhu
 
 	zhu.Gan.Value, zhu.Zhi.Value = Days.GetGanZhiFromHour(nHour, nGan)
-	zhu.Gan.Str = GetTianGanFromNumber(zhu.Gan.Value)
-	zhu.Zhi.Str = GetDiZhiFromNumber(zhu.Zhi.Value)
 	CombineGanZhi2(&zhu.GanZhi, &zhu.Gan, &zhu.Zhi)
 
 	return CalcWuXing(&zhu)

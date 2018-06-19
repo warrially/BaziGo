@@ -30,14 +30,12 @@ func GetShiShenFromGan(nGan1 int, nGan2 int) int {
 // nGan1 日干 nGan2 目标干
 func GetShiShenFromGan2(pShiShen *TShiShen, nGan1 int, nGan2 int) TShiShen {
 	pShiShen.Value = GetShiShenFromGan(nGan1, nGan2)
-	pShiShen.Str = GetShiShenFromNumber(pShiShen.Value)
 	return *pShiShen
 }
 
 // 从干获取十神
 func GetShiShenFromGan3(pGan *TGan, nGan int) TShiShen {
 	pGan.ShiShen.Value = GetShiShenFromGan(nGan, pGan.Value)
-	pGan.ShiShen.Str = GetShiShenFromNumber(pGan.ShiShen.Value)
 	return pGan.ShiShen
 }
 
@@ -67,7 +65,6 @@ func GetCangGanFromZhi(nZhi int) [3]TGan {
 	}
 	for i := 0; i < 3; i++ {
 		gans[i].Value = DI_ZHI_CANG_GAN_LIST[nZhi][i]
-		gans[i].Str = GetTianGanFromNumber(gans[i].Value)
 	}
 	return gans
 }
@@ -82,7 +79,6 @@ func GetCangGanFromZhi2(pZhi *TZhi) {
 	}
 	for i := 0; i < 3; i++ {
 		pZhi.CangGan[i].Value = DI_ZHI_CANG_GAN_LIST[nZhi][i]
-		pZhi.CangGan[i].Str = GetTianGanFromNumber(pZhi.CangGan[i].Value)
 	}
 }
 
@@ -128,5 +124,5 @@ func CalcShiShen(pSiZhu *TSiZhu) {
 	}
 
 	// 转字符串
-	pSiZhu.DayZhu.Gan.ShiShen.Str = "主"
+	pSiZhu.DayZhu.Gan.ShiShen.Value = -1 // 日主
 }

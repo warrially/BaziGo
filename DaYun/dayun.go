@@ -39,7 +39,6 @@ func CalcDaYun(pSiZhu *TSiZhu, nSex int) TDaYun {
 		}
 
 		// 获取干支名称
-		dayun.Zhu[i].GanZhi.Str = GetGanZhiFromNumber(dayun.Zhu[i].GanZhi.Value)
 		SiZhu.ExtractGanZhi2(&dayun.Zhu[i].GanZhi, &dayun.Zhu[i].Gan, &dayun.Zhu[i].Zhi)
 
 		// 年干

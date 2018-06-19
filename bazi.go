@@ -130,55 +130,54 @@ func PrintBazi(bazi TBazi) {
 		bazi.SolarDate.Second,
 	)
 	log.Println("基本八字：",
-		bazi.SiZhu.YearZhu.GanZhi.Str,
-		bazi.SiZhu.MonthZhu.GanZhi.Str,
-		bazi.SiZhu.DayZhu.GanZhi.Str,
-		bazi.SiZhu.HourZhu.GanZhi.Str)
+		bazi.SiZhu.YearZhu.GanZhi.ToString(),
+		bazi.SiZhu.MonthZhu.GanZhi.ToString(),
+		bazi.SiZhu.DayZhu.GanZhi.ToString(),
+		bazi.SiZhu.HourZhu.GanZhi.ToString())
 
 	log.Println("命盘解析：")
 	log.Println(
-		bazi.SiZhu.YearZhu.Gan.Str, "(",
-		bazi.SiZhu.YearZhu.Gan.WuXing.Str, ")[",
-		bazi.SiZhu.YearZhu.Gan.ShiShen.Str, "]\t",
-		bazi.SiZhu.MonthZhu.Gan.Str, "(",
-		bazi.SiZhu.MonthZhu.Gan.WuXing.Str, ")[",
-		bazi.SiZhu.MonthZhu.Gan.ShiShen.Str, "]\t",
-		bazi.SiZhu.DayZhu.Gan.Str, "(",
-		bazi.SiZhu.DayZhu.Gan.WuXing.Str, ")[",
-		bazi.SiZhu.DayZhu.Gan.ShiShen.Str, "]\t",
-		bazi.SiZhu.HourZhu.Gan.Str, "(",
-		bazi.SiZhu.HourZhu.Gan.WuXing.Str, ")[",
-		bazi.SiZhu.HourZhu.Gan.ShiShen.Str, "]")
+		bazi.SiZhu.YearZhu.Gan.ToString(), "(",
+		bazi.SiZhu.YearZhu.Gan.WuXing.ToString(), ")[",
+		bazi.SiZhu.YearZhu.Gan.ShiShen.ToString(), "]\t",
+		bazi.SiZhu.MonthZhu.Gan.ToString(), "(",
+		bazi.SiZhu.MonthZhu.Gan.WuXing.ToString(), ")[",
+		bazi.SiZhu.MonthZhu.Gan.ShiShen.ToString(), "]\t",
+		bazi.SiZhu.DayZhu.Gan.ToString(), "(",
+		bazi.SiZhu.DayZhu.Gan.WuXing.ToString(), ")[日主]\t",
+		bazi.SiZhu.HourZhu.Gan.ToString(), "(",
+		bazi.SiZhu.HourZhu.Gan.WuXing.ToString(), ")[",
+		bazi.SiZhu.HourZhu.Gan.ShiShen.ToString(), "]")
 	log.Println(
-		bazi.SiZhu.YearZhu.Zhi.Str, "(",
-		bazi.SiZhu.YearZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.YearZhu.Zhi.CangGan[0].ShiShen.Str,
-		bazi.SiZhu.YearZhu.Zhi.CangGan[1].ShiShen.Str,
-		bazi.SiZhu.YearZhu.Zhi.CangGan[2].ShiShen.Str,
+		bazi.SiZhu.YearZhu.Zhi.ToString(), "(",
+		bazi.SiZhu.YearZhu.Zhi.WuXing.ToString(), ")",
+		bazi.SiZhu.YearZhu.Zhi.CangGan[0].ShiShen.ToString(),
+		bazi.SiZhu.YearZhu.Zhi.CangGan[1].ShiShen.ToString(),
+		bazi.SiZhu.YearZhu.Zhi.CangGan[2].ShiShen.ToString(),
 		"\t",
-		bazi.SiZhu.MonthZhu.Zhi.Str, "(",
-		bazi.SiZhu.MonthZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.MonthZhu.Zhi.CangGan[0].ShiShen.Str,
-		bazi.SiZhu.MonthZhu.Zhi.CangGan[1].ShiShen.Str,
-		bazi.SiZhu.MonthZhu.Zhi.CangGan[2].ShiShen.Str,
+		bazi.SiZhu.MonthZhu.Zhi.ToString(), "(",
+		bazi.SiZhu.MonthZhu.Zhi.WuXing.ToString(), ")",
+		bazi.SiZhu.MonthZhu.Zhi.CangGan[0].ShiShen.ToString(),
+		bazi.SiZhu.MonthZhu.Zhi.CangGan[1].ShiShen.ToString(),
+		bazi.SiZhu.MonthZhu.Zhi.CangGan[2].ShiShen.ToString(),
 		"\t",
-		bazi.SiZhu.DayZhu.Zhi.Str, "(",
-		bazi.SiZhu.DayZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.DayZhu.Zhi.CangGan[0].ShiShen.Str,
-		bazi.SiZhu.DayZhu.Zhi.CangGan[1].ShiShen.Str,
-		bazi.SiZhu.DayZhu.Zhi.CangGan[2].ShiShen.Str,
+		bazi.SiZhu.DayZhu.Zhi.ToString(), "(",
+		bazi.SiZhu.DayZhu.Zhi.WuXing.ToString(), ")",
+		bazi.SiZhu.DayZhu.Zhi.CangGan[0].ShiShen.ToString(),
+		bazi.SiZhu.DayZhu.Zhi.CangGan[1].ShiShen.ToString(),
+		bazi.SiZhu.DayZhu.Zhi.CangGan[2].ShiShen.ToString(),
 		"\t",
-		bazi.SiZhu.HourZhu.Zhi.Str, "(",
-		bazi.SiZhu.HourZhu.Zhi.WuXing.Str, ")",
-		bazi.SiZhu.HourZhu.Zhi.CangGan[0].ShiShen.Str,
-		bazi.SiZhu.HourZhu.Zhi.CangGan[1].ShiShen.Str,
-		bazi.SiZhu.HourZhu.Zhi.CangGan[2].ShiShen.Str)
+		bazi.SiZhu.HourZhu.Zhi.ToString(), "(",
+		bazi.SiZhu.HourZhu.Zhi.WuXing.ToString(), ")",
+		bazi.SiZhu.HourZhu.Zhi.CangGan[0].ShiShen.ToString(),
+		bazi.SiZhu.HourZhu.Zhi.CangGan[1].ShiShen.ToString(),
+		bazi.SiZhu.HourZhu.Zhi.CangGan[2].ShiShen.ToString())
 
 	log.Println(
-		bazi.SiZhu.YearZhu.GanZhi.NaYin.Str, "\t\t",
-		bazi.SiZhu.MonthZhu.GanZhi.NaYin.Str, "\t\t",
-		bazi.SiZhu.DayZhu.GanZhi.NaYin.Str, "\t\t",
-		bazi.SiZhu.HourZhu.GanZhi.NaYin.Str, "\t\t",
+		bazi.SiZhu.YearZhu.GanZhi.NaYin.ToString(), "\t\t",
+		bazi.SiZhu.MonthZhu.GanZhi.NaYin.ToString(), "\t\t",
+		bazi.SiZhu.DayZhu.GanZhi.NaYin.ToString(), "\t\t",
+		bazi.SiZhu.HourZhu.GanZhi.NaYin.ToString(), "\t\t",
 	)
 	// 天干五合
 	log.Println(
@@ -235,7 +234,7 @@ func PrintBazi(bazi TBazi) {
 
 	var szDaYun = "大运："
 	for i := 0; i < 10; i++ {
-		szDaYun = szDaYun + " " + bazi.DaYun.Zhu[i].GanZhi.Str
+		szDaYun = szDaYun + " " + bazi.DaYun.Zhu[i].GanZhi.ToString()
 	}
 	log.Println(szDaYun)
 	log.Println("起运时间", bazi.DaYun.QiYun.Year, "年",
