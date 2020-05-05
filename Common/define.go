@@ -1,4 +1,4 @@
-package Common
+package common
 
 // 日期
 type TDate struct {
@@ -9,28 +9,6 @@ type TDate struct {
 	Minute int // 分
 	Second int // 秒
 	JieQi  int // 节气
-}
-
-// 五行属性
-type TWuXing struct {
-	Value int // 五行
-}
-
-// {* 五行字符串，以通常的金木水火土为顺序 }
-// 这里没用五行相生或者相克来排列
-var WU_XING_STR = [5]string{
-	"金", "木", "水", "火", "土"}
-
-// 从数字获得五行名, 0-4
-func GetWuXingFromNumber(nValue int) string {
-	if (nValue >= 0) && (nValue < 5) {
-		return WU_XING_STR[nValue]
-	}
-	return ""
-}
-
-func (self *TWuXing) ToString() string {
-	return GetWuXingFromNumber(self.Value)
 }
 
 // 十神属性
@@ -125,28 +103,28 @@ func (self *TGanZhi) ToString() string {
 }
 
 // 干属性
-type TGan struct {
-	Value   int      // 天干
-	WuXing  TWuXing  // 天干五行
-	ShiShen TShiShen // 天干十神
-}
+// type TGan struct {
+// 	Value   int      // 天干
+// 	WuXing  TWuXing  // 天干五行
+// 	ShiShen TShiShen // 天干十神
+// }
 
-// {* 天干字符串，Heavenly Stems}
-var TIAN_GAN_STR = [10]string{
-	"甲", "乙", "丙", "丁", "戊",
-	"己", "庚", "辛", "壬", "癸"}
+// // {* 天干字符串，Heavenly Stems}
+// var TIAN_GAN_STR = [10]string{
+// 	"甲", "乙", "丙", "丁", "戊",
+// 	"己", "庚", "辛", "壬", "癸"}
 
-// 从数字获得天干名, 0-9
-func GetTianGanFromNumber(nValue int) string {
-	if (nValue >= 0) && (nValue < 10) {
-		return TIAN_GAN_STR[nValue]
-	}
-	return ""
-}
+// // 从数字获得天干名, 0-9
+// func GetTianGanFromNumber(nValue int) string {
+// 	if (nValue >= 0) && (nValue < 10) {
+// 		return TIAN_GAN_STR[nValue]
+// 	}
+// 	return ""
+// }
 
-func (self *TGan) ToString() string {
-	return GetTianGanFromNumber(self.Value)
-}
+// func (self *TGan) ToString() string {
+// 	return GetTianGanFromNumber(self.Value)
+// }
 
 // 支属性
 type TZhi struct {
