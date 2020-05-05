@@ -1,0 +1,4 @@
+github.com/ying32/dylib v0.0.0-20200305075302-6eba4f831b29 h1:t0u0K+Yn3GqpkPQqnZ63h1hynNv93cmshn7S02PM8Ks=
+github.com/ying32/dylib v0.0.0-20200305075302-6eba4f831b29/go.mod h1:WPBTfbqg/aA1xqHFPB4fgBHETq/G/75yErbnexmaEOo=
+github.com/ying32/govcl v1.2.10 h1:n0Z0DdrzKP6ia1NII4TVDnp0WumQ0X66MvV3NSh9yQk=
+github.com/ying32/govcl v1.2.10/go.mod h1:yZVtbJ9Md1nAVxtHKIriKZn4K6TQYqI1en3sN/m9FJ8=
