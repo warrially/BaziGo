@@ -1,15 +1,15 @@
 package common
 
 // 日期
-type TDate struct {
-	Year   int // 年
-	Month  int // 月
-	Day    int // 日
-	Hour   int // 时
-	Minute int // 分
-	Second int // 秒
-	JieQi  int // 节气
-}
+// type TDate struct {
+// 	Year   int // 年
+// 	Month  int // 月
+// 	Day    int // 日
+// 	Hour   int // 时
+// 	Minute int // 分
+// 	Second int // 秒
+// 	JieQi  int // 节气
+// }
 
 // 十神属性
 type TShiShen struct {
@@ -76,80 +76,31 @@ func (self *TNaYin) ToString() string {
 }
 
 // 干支属性
-type TGanZhi struct {
-	Value int    // 干支0-59 对应 甲子到癸亥
-	NaYin TNaYin // 纳音
-}
-
-// 60 干支
-var GAN_ZHI_STR = [60]string{
-	"甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未", "壬申", "癸酉",
-	"甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰", "辛巳", "壬午", "癸未",
-	"甲申", "乙酉", "丙戌", "丁亥", "戊子", "己丑", "庚寅", "辛卯", "壬辰", "癸巳",
-	"甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑", "壬寅", "癸卯",
-	"甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑",
-	"甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥"}
-
-// 从数字获得天干地支名, 0-59
-func GetGanZhiFromNumber(nValue int) string {
-	if (nValue >= 0) && (nValue < 60) {
-		return GAN_ZHI_STR[nValue]
-	}
-	return "未知"
-}
-
-func (self *TGanZhi) ToString() string {
-	return GetGanZhiFromNumber(self.Value)
-}
-
-// 干属性
-// type TGan struct {
-// 	Value   int      // 天干
-// 	WuXing  TWuXing  // 天干五行
-// 	ShiShen TShiShen // 天干十神
+// type TGanZhi struct {
+// 	Value int    // 干支0-59 对应 甲子到癸亥
+// 	NaYin TNaYin // 纳音
 // }
 
-// // {* 天干字符串，Heavenly Stems}
-// var TIAN_GAN_STR = [10]string{
-// 	"甲", "乙", "丙", "丁", "戊",
-// 	"己", "庚", "辛", "壬", "癸"}
+// // 60 干支
+// var GAN_ZHI_STR = [60]string{
+// 	"甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未", "壬申", "癸酉",
+// 	"甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰", "辛巳", "壬午", "癸未",
+// 	"甲申", "乙酉", "丙戌", "丁亥", "戊子", "己丑", "庚寅", "辛卯", "壬辰", "癸巳",
+// 	"甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑", "壬寅", "癸卯",
+// 	"甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑",
+// 	"甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥"}
 
-// // 从数字获得天干名, 0-9
-// func GetTianGanFromNumber(nValue int) string {
-// 	if (nValue >= 0) && (nValue < 10) {
-// 		return TIAN_GAN_STR[nValue]
+// // 从数字获得天干地支名, 0-59
+// func GetGanZhiFromNumber(nValue int) string {
+// 	if (nValue >= 0) && (nValue < 60) {
+// 		return GAN_ZHI_STR[nValue]
 // 	}
-// 	return ""
+// 	return "未知"
 // }
 
-// func (self *TGan) ToString() string {
-// 	return GetTianGanFromNumber(self.Value)
+// func (self *TGanZhi) ToString() string {
+// 	return GetGanZhiFromNumber(self.Value)
 // }
-
-// 支属性
-type TZhi struct {
-	Value   int     // 地支
-	WuXing  TWuXing // 地支五行
-	CangGan [3]TGan // 藏干
-}
-
-// {* 地支字符串，Earthly Branches}
-var DI_ZHI_STR = [12]string{
-	"子", "丑", "寅", "卯",
-	"辰", "巳", "午", "未",
-	"申", "酉", "戌", "亥"}
-
-// 从数字获得地支名, 0-11
-func GetDiZhiFromNumber(nValue int) string {
-	if (nValue >= 0) && (nValue < 12) {
-		return DI_ZHI_STR[nValue]
-	}
-	return ""
-}
-
-func (self *TZhi) ToString() string {
-	return GetDiZhiFromNumber(self.Value)
-}
 
 // 柱子
 type TZhu struct {

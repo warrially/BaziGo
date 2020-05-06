@@ -1,4 +1,4 @@
-package common
+package bazi
 
 // 五行
 
@@ -19,6 +19,12 @@ func GetWuXingFromNumber(nValue int) string {
 		return "土"
 	}
 	return ""
+}
+
+// GetWuXingFromGan 获得某干的五行，0-4 对应 金木水火土
+// 甲乙为木，丙丁为火，戊己为土，庚辛为金，壬癸为水，
+func GetWuXingFromGan(pGan *TGan) *TWuXing {
+	return pGan.ToWuXing()
 }
 
 // NewWuXing 创建五行

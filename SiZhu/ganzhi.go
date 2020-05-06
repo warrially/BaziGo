@@ -39,20 +39,20 @@ func GetZhiFromYear(nYear int) int {
 	}
 }
 
-// 将干支拆分成天干地支，0-59 转换成 0-9 0-11
-func ExtractGanZhi(nGanZhi int) (int, int) {
-	nGanZhi = nGanZhi % 60
-	if nGanZhi < 0 {
-		nGanZhi += 60
-	}
-	return (nGanZhi % 10), (nGanZhi % 12)
-}
+// // 将干支拆分成天干地支，0-59 转换成 0-9 0-11
+// func ExtractGanZhi(nGanZhi int) (int, int) {
+// 	nGanZhi = nGanZhi % 60
+// 	if nGanZhi < 0 {
+// 		nGanZhi += 60
+// 	}
+// 	return (nGanZhi % 10), (nGanZhi % 12)
+// }
 
-// 将干支拆分成天干地支，0-59 转换成 0-9 0-11, 带字符串
-func ExtractGanZhi2(pGanZhi *TGanZhi, pGan *TGan, pZhi *TZhi) (TGan, TZhi) {
-	pGan.Value, pZhi.Value = ExtractGanZhi(pGanZhi.Value)
-	return *pGan, *pZhi
-}
+// // 将干支拆分成天干地支，0-59 转换成 0-9 0-11, 带字符串
+// func ExtractGanZhi2(pGanZhi *TGanZhi, pGan *TGan, pZhi *TZhi) (TGan, TZhi) {
+// 	pGan.Value, pZhi.Value = ExtractGanZhi(pGanZhi.Value)
+// 	return *pGan, *pZhi
+// }
 
 // 将天干地支组合成干支，0-9 0-11 转换成 0-59
 func CombineGanZhi(nGan, nZhi int) int {
