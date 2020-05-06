@@ -1,9 +1,13 @@
 package bazi
 
 // NewBazi 新建八字
-func NewBazi(data *TDate, nSex int) *TBazi {
+func NewBazi(pDate *TDate, nSex int) *TBazi {
+	//
+	pBazi := &TBazi{
+		pDate: pDate,
+	}
 
-	return &TBazi{}
+	return pBazi
 }
 
 // GetBazi 旧版八字接口, 八字入口

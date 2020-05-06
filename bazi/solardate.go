@@ -6,13 +6,14 @@ import (
 	"github.com/warrially/BaziGo/Days"
 )
 
-// NewDate 创建一个新时间
-func NewDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TDate {
+// NewSolarDate 创建一个新历时间
+func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate {
 	if !Days.GetDateIsValid(nYear, nMonth, nDay) {
 		log.Println("无效的日期", nYear, nMonth, nDay)
 		return nil
 	}
 
+	// 把具体时间实例化出来
 	pDate := &TDate{
 		Year:   nYear,   // 年
 		Month:  nMonth,  // 月
@@ -25,8 +26,8 @@ func NewDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TDate {
 	return pDate
 }
 
-// TDate 日期
-type TDate struct {
+// TSolarDate 日期
+type TSolarDate struct {
 	Year   int // 年
 	Month  int // 月
 	Day    int // 日
