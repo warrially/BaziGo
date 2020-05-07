@@ -125,7 +125,7 @@ func (self *TBazi) Print() {
 
 // 按照特殊格式化输出(未完成)
 func PrintBazi(bazi *TBazi) {
-	log.Println("======================================================================")
+	log.Println()
 	log.Println("出生日期新历： ", bazi.SolarDate.Year, "年",
 		bazi.SolarDate.Month, "月",
 		bazi.SolarDate.Day, "日  ",

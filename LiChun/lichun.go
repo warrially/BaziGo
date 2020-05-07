@@ -1,9 +1,5 @@
 package LiChun
 
-import (
-	. "github.com/warrially/BaziGo/Common"
-)
-
 var LI_CHUN_LIST = [...][6]int{
 	{31, 2, 5, 22, 25, 38},
 	{32, 2, 6, 4, 0, 1},
@@ -2321,7 +2317,4 @@ func GetLiChun(nYear, nMonth, nDay, nHour, nMinute, nSecond int) int {
 	}
 
 	return nYear - 1
-}
-func GetLiChun2(date TDate) int {
-	return GetLiChun(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second)
 }

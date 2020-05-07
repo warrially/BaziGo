@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"github.com/warrially/BaziGo"
-	"log"
+	"fmt"
+
+	"github.com/warrially/BaziGo/bazi"
 )
 
 func main() {
@@ -25,8 +26,6 @@ func main() {
 
 	flag.Parse() //解析输入的参数
 
-	// 年月日时分秒 性别(1男0女)
-	bazi := BaziGo.GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex)
-	log.Println(bazi)
-	bazi.Print()
+	pBazi := bazi.GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex)
+	fmt.Println(pBazi)
 }

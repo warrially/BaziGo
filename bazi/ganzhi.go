@@ -136,6 +136,16 @@ func NewGanZhi(nValue int) *TGanZhi {
 	return &ganzhi
 }
 
+// NewGanZhiFromYear 获得八字年的干支，0-59 对应 甲子到癸亥
+func NewGanZhiFromYear(nYear int) *TGanZhi {
+	if nYear > 0 {
+		return NewGanZhi((nYear - 4) % 60)
+	} else {
+		// 需要独立判断公元前的原因是没有公元 0 年
+		return NewGanZhi((nYear - 3) % 60)
+	}
+}
+
 // CombineGanZhi 将天干地支组合成干支，0-9 0-11 转换成 0-59
 func CombineGanZhi(pGan *TGan, pZhi *TZhi) *TGanZhi {
 	nGan := pGan.Value()

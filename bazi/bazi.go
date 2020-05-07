@@ -6,7 +6,7 @@ func NewBazi(pSolarDate *TSolarDate, nSex int) *TBazi {
 	pBazi := &TBazi{
 		pSolarDate: pSolarDate,
 	}
-	
+
 	return pBazi.init()
 }
 
@@ -24,22 +24,20 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) *TBazi {
 // TBazi 八字大类
 type TBazi struct {
 	pSolarDate *TSolarDate // 新历的日期
-	pBaziDate *TBaziDate // 八字历
+	pBaziDate  *TBaziDate  // 八字历
 }
 
-
 // 八字初始化
-func (self * TBazi) init() *TBazi{
+func (self *TBazi) init() *TBazi {
 	// 1. 拿到新历的情况下, 需要计算八字历
 	self.pBaziDate = self.pSolarDate.ToBaziDate()
 
-	// 2. 
-
+	// 2. 根据八字历, 准备计算四柱了
+	self.pSiZhu = self.pBaziDate.ToSiZhu()
 
 	return self
 }
 
-
-func (self * TBazi) String() string {
-	return self.pSolarDate.String() + "\n"+ self.pBaziDate.String()
+func (self *TBazi) String() string {
+	return self.pSolarDate.String() + "\n" + self.pBaziDate.String()
 }

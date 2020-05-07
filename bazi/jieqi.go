@@ -79,6 +79,12 @@ func (self *TJieQi) ToInt() int {
 	return self.Value()
 }
 
+// ToMonth 转成节气月
+func (self *TJieQi) ToMonth() int {
+	// 节气0 是立春 是1月
+	return self.Value()/2 + 1
+}
+
 
 // Value 转换成int
 func (self *TJieQi) Value() int {
