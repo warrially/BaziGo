@@ -1,14 +1,12 @@
 package bazi
 
 import (
+	"fmt"
 	"log"
-
-	"github.com/warrially/BaziGo/Days"
 )
 
 // NewSolarDate 创建一个新历时间
 func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate {
-
 	// 把具体时间实例化出来
 	pDate := &TSolarDate{
 		Year:   nYear,   // 年
@@ -19,13 +17,13 @@ func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate 
 		Second: nSecond, // 秒
 	}
 
-	if !pDate.GetDateIsValid() {
+	if !pDate.GetDateIsValid(nYear, nMonth, nDay) {
 		log.Println("无效的日期", nYear, nMonth, nDay)
 		return nil
 	}
 
 	// 计算64位时间戳值
-	pDate.Gen64TimeStamp()
+	// pDate.Get64TimeStamp()
 
 	return pDate
 }
@@ -33,8 +31,6 @@ func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate 
 // NewSolarDateFrom64TimeStamp 从64位时间戳反推日期
 func NewSolarDateFrom64TimeStamp(nTimeStamp int64) *TSolarDate {
 	pDate := &TSolarDate{}
-	pDate.TimeStamp = nTimeStamp
-
 	// 计算出年份
 	pDate.GetYearFrom64TimeStamp()
 	// 计算月份
@@ -52,13 +48,12 @@ type TSolarDate struct {
 	Day       int   // 日
 	Hour      int   // 时
 	Minute    int   // 分
-	Second    int   // 秒
-	TimeStamp int64 // 时间戳
+	Second    int   // 秒	
 }
 
-// Gen64TimeStamp 生成64位时间戳
-func (self *TSolarDate) Gen64TimeStamp() int64 {
-	nAllDays := Days.GetAllDays(self.Year, self.Month, self.Day) // 先获取公元原点的日数
+// Get64TimeStamp 生成64位时间戳
+func (self *TSolarDate) Get64TimeStamp() int64 {
+	nAllDays := self.GetAllDays(self.Year, self.Month, self.Day) // 先获取公元原点的日数
 	nResult := int64(nAllDays)
 	nResult *= 24 * 60 * 60 // 天数换成秒
 
@@ -66,8 +61,7 @@ func (self *TSolarDate) Gen64TimeStamp() int64 {
 	nResult += int64(self.Hour) * 60 * 60
 	nResult += int64(self.Minute) * 60
 	nResult += int64(self.Second)
-
-	self.TimeStamp = nResult
+	
 	return nResult
 }
 
@@ -81,9 +75,9 @@ func (self *TSolarDate) GetYearFrom64TimeStamp() *TSolarDate {
 		nMid := (nLow + nHigh) / 2
 
 		// 拿到中间年的数据
-		v := NewSolarDate(nMid, 1, 1, 0, 0, 0).Gen64TimeStamp()
+		v := NewSolarDate(nMid, 1, 1, 0, 0, 0).Get64TimeStamp()
 
-		if v <= self.TimeStamp {
+		if v <= self.Get64TimeStamp() {
 			nLow = nMid
 		} else {
 			nHigh = nMid
@@ -101,7 +95,7 @@ func (self *TSolarDate) GetYearFrom64TimeStamp() *TSolarDate {
 func (self *TSolarDate) GetMonthFrom64TimeStamp() {
 	// 这里开始特殊处理
 	for i := 1; i <= 11; i++ {
-		if self.TimeStamp < NewSolarDate(self.Year, i+1, 1, 0, 0, 0).Gen64TimeStamp() {
+		if self.Get64TimeStamp() < NewSolarDate(self.Year, i+1, 1, 0, 0, 0).Get64TimeStamp() {
 			self.Month = i
 			return
 		}
@@ -111,7 +105,7 @@ func (self *TSolarDate) GetMonthFrom64TimeStamp() {
 
 // GetDayTimeFrom64TimeStamp 从64位时间戳反推其他参数
 func (self *TSolarDate) GetDayTimeFrom64TimeStamp() {
-	nTimeStamp := self.TimeStamp - NewSolarDate(self.Year, self.Month, 1, 0, 0, 0).Gen64TimeStamp()
+	nTimeStamp := self.Get64TimeStamp() - NewSolarDate(self.Year, self.Month, 1, 0, 0, 0).Get64TimeStamp()
 
 	// 计算日
 	self.Day = int(nTimeStamp / (24 * 60 * 60))
@@ -139,9 +133,8 @@ func (self *TSolarDate) GetMonthDays(nYear, nMonth int) int {
 	case 2: // 闰年
 		if self.GetIsLeapYear(nYear) {
 			return 29
-		} else {
-			return 28
-		}
+		} 
+		return 28		
 	}
 	return 0
 }
@@ -163,7 +156,7 @@ const (
 	ctGregorian        //格利高里
 )
 
-// 根据公历日期判断当时历法
+// GetCalendarType 根据公历日期判断当时历法
 func (self *TSolarDate) GetCalendarType(nYear, nMonth, nDay int) int {
 	if !self.GetDateIsValid(nYear, nMonth, nDay) {
 		return ctInvalid
@@ -214,4 +207,83 @@ func (self *TSolarDate) GetDateIsValid(nYear, nMonth, nDay int) bool {
 	}
 
 	return false
+}
+
+
+// GetAllDays 获得距公元原点的日数 这里是公历的年月日
+func (self *TSolarDate)GetAllDays(nYear, nMonth, nDay int) int {
+	if self.GetDateIsValid(nYear, nMonth, nDay) {
+		return self.GetBasicDays(nYear, nMonth, nDay) + self.GetLeapDays(nYear, nMonth, nDay)
+	}
+	return 0
+}
+
+
+//GetBasicDays 获取基本数据
+func (self *TSolarDate)GetBasicDays(nYear, nMonth, nDay int) int {
+	if !self.GetDateIsValid(nYear, nMonth, nDay) {
+		return 0
+	}
+
+	var Result int
+
+	// 去掉公元0年
+	if nYear > 0 {
+		Result = (nYear - 1) * 365
+	} else {
+		Result = nYear * 365
+	}
+
+	// 加上月天数
+	for i := 1; i < nMonth; i++ {
+		Result += self.GetMonthDays(nYear, i)
+	}
+
+	// 加上日天数
+	Result += nDay
+	// 返回基础天数
+	return Result
+}
+
+//GetLeapDays 获取闰年天数
+func (self *TSolarDate)GetLeapDays(nYear, nMonth, nDay int) int {
+	if !self.GetDateIsValid(nYear, nMonth, nDay) {
+		return 0
+	}
+	var Result int
+
+	if nYear >= 0 {
+		// 公元后
+		if self.GetCalendarType(nYear, nMonth, nDay) < ctGregorian {
+			Result = 0
+		} else {
+			// 1582.10.5/15 前的 Julian 历只有四年一闰，历法此日后调整为 Gregorian 历
+			Result = 10 // 被 Gregory 删去的 10 天
+
+			// 修正算法简化版，从 1701 年的 11 起
+			if nYear > 1700 {
+				// 每一世纪累加一
+				Result += (1 + ((nYear - 1701) / 100))
+				// 但 400 整除的世纪不加
+				Result -= ((nYear - 1601) / 400)
+			}
+		}
+		Result = ((nYear - 1) / 4) - Result // 4 年一闰数
+	} else {
+		// 公元前
+		Result = -((-nYear + 3) / 4)
+	}
+	return Result
+}
+
+
+
+func (self *TSolarDate) String() string {
+	return fmt.Sprintf("新历:%d年%02d月%02d日 %02d:%02d:%02d",
+	self.Year,self.Month, self.Day,self.Hour,self.Minute,self.Second )
+}
+
+// ToBaziDate 转成八字日期
+func (self *TSolarDate) ToBaziDate() *TBaziDate {
+	return NewBaziDate(self)
 }
