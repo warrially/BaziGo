@@ -7,4 +7,7 @@ type TZhu struct {
 	pZhi    *TZhi    // 地支
 }
 
-
+// NewZhu 新建柱子
+func NewZhu() *TZhu {
+	return &TZhu{}
+}

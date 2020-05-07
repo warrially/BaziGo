@@ -140,10 +140,9 @@ func NewGanZhi(nValue int) *TGanZhi {
 func NewGanZhiFromYear(nYear int) *TGanZhi {
 	if nYear > 0 {
 		return NewGanZhi((nYear - 4) % 60)
-	} else {
-		// 需要独立判断公元前的原因是没有公元 0 年
-		return NewGanZhi((nYear - 3) % 60)
 	}
+	// 需要独立判断公元前的原因是没有公元 0 年
+	return NewGanZhi((nYear - 3) % 60)
 }
 
 // CombineGanZhi 将天干地支组合成干支，0-9 0-11 转换成 0-59
