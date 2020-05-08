@@ -4,18 +4,19 @@ import "fmt"
 
 // NewSiZhu 新四柱
 func NewSiZhu(pSolarDate *TSolarDate, pBaziDate *TBaziDate) *TSiZhu {
-	pSiZhuDate := &TSiZhu{}
+	pSiZhu := &TSiZhu{}
 	// 通过八字年来获取年柱
-	pSiZhuDate.genZhuFromYear(pBaziDate.Year)
+	pSiZhu.genZhuFromYear(pBaziDate.Year)
 	// 通过年干支和八字月
-	pSiZhuDate.genZhuFromMonth(pBaziDate.Month)
+	pSiZhu.genZhuFromMonth(pBaziDate.Month)
 
 	// 通过公历 年月日计算日柱
-	pSiZhuDate.genZhuFromDay(pSolarDate.GetAllDays())
+	pSiZhu.genZhuFromDay(pSolarDate.GetAllDays())
 
-	//
-	pSiZhuDate.genZhuFromHour(pSolarDate.Hour)
-	return pSiZhuDate
+	// 通过小时 获取时柱
+	pSiZhu.genZhuFromHour(pSolarDate.Hour)
+
+	return pSiZhu
 }
 
 // TSiZhu 四柱
@@ -86,7 +87,7 @@ func (self *TSiZhu) genZhuFromDay(nAllDays int) {
 
 	// 通过总天数来获取
 	// 获得八字年的干支，0-59 对应 甲子到癸亥
-	pZhu.pGanZhi = NewGanZhiFromYear(nAllDays)
+	pZhu.pGanZhi = NewGanZhiFromDay(nAllDays)
 	// 拆分干支
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
@@ -129,13 +130,30 @@ func (self *TSiZhu) genZhuFromHour(nHour int) {
 	pZhu.pGanZhi = CombineGanZhi(pZhu.pGan, pZhu.pZhi)
 
 	self.pHourZhu = pZhu
-
 }
 
+//  genShiShen 计算十神
+
 func (self *TSiZhu) String() string {
-	return fmt.Sprintf("年柱:%v\n月柱:%v\n日柱:%v\n时柱:%v\n",
-		self.pYearZhu,
-		self.pMonthZhu,
-		self.pDayZhu,
-		self.pHourZhu)
+	return fmt.Sprintf("四柱:%v %v %v %v\n命盘解析:\n%v(%v)[%v]\t%v(%v)[%v]\t%v(%v)[%v]\t%v(%v)[%v]\t\n%v(%v)    \t%v(%v)    \t%v(%v)    \t%v(%v)\n%v %v %v %v",
+		self.pYearZhu.pGanZhi,
+		self.pMonthZhu.pGanZhi,
+		self.pDayZhu.pGanZhi,
+		self.pHourZhu.pGanZhi,
+		// ----------------------------------------------------------------------------------
+		self.pYearZhu.pGan, self.pYearZhu.pGan.ToWuXing(), self.pYearZhu.pGan.ToShiShen(self.pDayZhu.pGan.Value()),
+		self.pMonthZhu.pGan, self.pMonthZhu.pGan.ToWuXing(), self.pMonthZhu.pGan.ToShiShen(self.pDayZhu.pGan.Value()),
+		self.pDayZhu.pGan, self.pDayZhu.pGan.ToWuXing(), "主",
+		self.pHourZhu.pGan, self.pHourZhu.pGan.ToWuXing(), self.pHourZhu.pGan.ToShiShen(self.pDayZhu.pGan.Value()),
+		// ----------------------------------------------------------------------------------
+		self.pYearZhu.pZhi, self.pYearZhu.pZhi.ToWuXing(),
+		self.pMonthZhu.pZhi, self.pMonthZhu.pZhi.ToWuXing(),
+		self.pDayZhu.pZhi, self.pDayZhu.pZhi.ToWuXing(),
+		self.pHourZhu.pZhi, self.pHourZhu.pZhi.ToWuXing(),
+		// ----------------------------------------------------------------------------------
+		self.pYearZhu.pZhi.ToCangGan(self.pDayZhu.pGan.Value()),
+		self.pMonthZhu.pZhi.ToCangGan(self.pDayZhu.pGan.Value()),
+		self.pDayZhu.pZhi.ToCangGan(self.pDayZhu.pGan.Value()),
+		self.pHourZhu.pZhi.ToCangGan(self.pDayZhu.pGan.Value()),
+	)
 }
