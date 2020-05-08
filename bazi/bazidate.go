@@ -30,6 +30,6 @@ type TBaziDate struct {
 }
 
 func (self *TBaziDate) String() string {
-	return fmt.Sprintf("八字历:%d年%02d月 节气:%s\n上一个:%v\n下一个:%v",
-		self.Year, self.Month, self.JieQi, self.PreviousJie, self.NextJie)
+	return fmt.Sprintf("八字历: %4d 年 %02d 月 \n上一个:%v\n下一个:%v",
+		self.Year, self.Month, self.PreviousJie, self.NextJie)
 }

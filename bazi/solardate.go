@@ -278,7 +278,7 @@ func (self *TSolarDate) GetLeapDays(nYear, nMonth, nDay int) int {
 }
 
 func (self *TSolarDate) String() string {
-	return fmt.Sprintf("新历:%d年%02d月%02d日 %02d:%02d:%02d",
+	return fmt.Sprintf("新历: %4d 年 %02d 月 %02d 日 %02d:%02d:%02d",
 		self.Year, self.Month, self.Day, self.Hour, self.Minute, self.Second)
 }
 

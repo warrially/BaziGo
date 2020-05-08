@@ -15,5 +15,5 @@ func NewZhu() *TZhu {
 }
 
 func (self *TZhu) String() string {
-	return fmt.Sprintf("干支:%v 干:%v 支:%v", self.pGanZhi, self.pGan, self.pZhi)
+	return fmt.Sprintf("%v", self.pGanZhi)
 }
