@@ -1,5 +1,7 @@
 package bazi
 
+import "fmt"
+
 // NewBazi 新建八字
 func NewBazi(pSolarDate *TSolarDate, nSex int) *TBazi {
 	//
@@ -25,6 +27,7 @@ func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) *TBazi {
 type TBazi struct {
 	pSolarDate *TSolarDate // 新历的日期
 	pBaziDate  *TBaziDate  // 八字历
+	pSiZhu     *TSiZhu     // 四柱嗯
 }
 
 // 八字初始化
@@ -33,11 +36,13 @@ func (self *TBazi) init() *TBazi {
 	self.pBaziDate = self.pSolarDate.ToBaziDate()
 
 	// 2. 根据八字历, 准备计算四柱了
-	self.pSiZhu = self.pBaziDate.ToSiZhu()
+	self.pSiZhu = NewSiZhu(self.pSolarDate, self.pBaziDate)
+
+	// 3.
 
 	return self
 }
 
 func (self *TBazi) String() string {
-	return self.pSolarDate.String() + "\n" + self.pBaziDate.String()
+	return fmt.Sprintf("%v\n%v\n%v", self.pSolarDate, self.pBaziDate, self.pSiZhu)
 }

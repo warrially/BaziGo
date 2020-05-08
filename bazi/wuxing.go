@@ -29,6 +29,7 @@ func GetWuXingFromGan(pGan *TGan) *TWuXing {
 
 // NewWuXing 创建五行
 func NewWuXing(nValue int) *TWuXing {
+	nValue %= 5
 	wuxing := TWuXing(nValue)
 	return &wuxing
 }

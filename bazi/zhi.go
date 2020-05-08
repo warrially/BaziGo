@@ -2,29 +2,33 @@ package bazi
 
 // 地支
 
-// GetTianZhiFromNumber 从数字获得地支名, 0-9
-func GetTianZhiFromNumber(nValue int) string {
+// GetDiZhiFromNumber 从数字获得地支名, 0-9
+func GetDiZhiFromNumber(nValue int) string {
 	switch nValue {
 	case 0:
-		return "甲"
+		return "子"
 	case 1:
-		return "乙"
+		return "丑"
 	case 2:
-		return "丙"
+		return "寅"
 	case 3:
-		return "丁"
+		return "卯"
 	case 4:
-		return "戊"
+		return "辰"
 	case 5:
-		return "己"
+		return "巳"
 	case 6:
-		return "庚"
+		return "午"
 	case 7:
-		return "辛"
+		return "未"
 	case 8:
-		return "壬"
+		return "申"
 	case 9:
-		return "癸"
+		return "酉"
+	case 10:
+		return "戌"
+	case 11:
+		return "亥"
 	}
 
 	return ""
@@ -32,6 +36,7 @@ func GetTianZhiFromNumber(nValue int) string {
 
 // NewZhi 创建地支
 func NewZhi(nValue int) *TZhi {
+	nValue %= 12
 	Zhi := TZhi(nValue)
 	return &Zhi
 }
@@ -75,5 +80,5 @@ func (self *TZhi) Value() int {
 
 // String 转换成可阅读的字符串
 func (self *TZhi) String() string {
-	return GetTianZhiFromNumber(self.Value())
+	return GetDiZhiFromNumber(self.Value())
 }

@@ -132,6 +132,7 @@ func GetGanZhiFromNumber(nValue int) string {
 
 // NewGanZhi 创建干支
 func NewGanZhi(nValue int) *TGanZhi {
+	nValue %= 60
 	ganzhi := TGanZhi(nValue)
 	return &ganzhi
 }
@@ -139,10 +140,15 @@ func NewGanZhi(nValue int) *TGanZhi {
 // NewGanZhiFromYear 获得八字年的干支，0-59 对应 甲子到癸亥
 func NewGanZhiFromYear(nYear int) *TGanZhi {
 	if nYear > 0 {
-		return NewGanZhi((nYear - 4) % 60)
+		return NewGanZhi(nYear - 4)
 	}
 	// 需要独立判断公元前的原因是没有公元 0 年
-	return NewGanZhi((nYear - 3) % 60)
+	return NewGanZhi(nYear - 3)
+}
+
+// NewGanZhiFromDay 获得八字天的干支, 0-59 对应 甲子到癸亥
+func NewGanZhiFromDay(nAllDays int) *TGanZhi {
+	return NewGanZhi(nAllDays + 12)
 }
 
 // CombineGanZhi 将天干地支组合成干支，0-9 0-11 转换成 0-59
@@ -167,7 +173,7 @@ func (self *TGanZhi) ToString() string {
 
 // ExtractGanZhi   将干支拆分成天干地支，0-59 转换成 0-9 0-11
 func (self *TGanZhi) ExtractGanZhi() (*TGan, *TZhi) {
-	return NewGan(self.Value() % 10), NewZhi(self.Value() % 12)
+	return NewGan(self.Value()), NewZhi(self.Value())
 }
 
 // ToInt 转换成int

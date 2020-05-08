@@ -37,6 +37,7 @@ func GetTianGanFromNumber(nValue int) string {
 
 // NewGan 创建天干
 func NewGan(nValue int) *TGan {
+	nValue %= 10
 	gan := TGan(nValue)
 	return &gan
 }

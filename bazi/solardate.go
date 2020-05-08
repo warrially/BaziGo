@@ -43,17 +43,17 @@ func NewSolarDateFrom64TimeStamp(nTimeStamp int64) *TSolarDate {
 
 // TSolarDate 日期
 type TSolarDate struct {
-	Year      int   // 年
-	Month     int   // 月
-	Day       int   // 日
-	Hour      int   // 时
-	Minute    int   // 分
-	Second    int   // 秒	
+	Year   int // 年
+	Month  int // 月
+	Day    int // 日
+	Hour   int // 时
+	Minute int // 分
+	Second int // 秒
 }
 
 // Get64TimeStamp 生成64位时间戳
 func (self *TSolarDate) Get64TimeStamp() int64 {
-	nAllDays := self.GetAllDays(self.Year, self.Month, self.Day) // 先获取公元原点的日数
+	nAllDays := self.GetAllDays() // 先获取公元原点的日数
 	nResult := int64(nAllDays)
 	nResult *= 24 * 60 * 60 // 天数换成秒
 
@@ -61,7 +61,7 @@ func (self *TSolarDate) Get64TimeStamp() int64 {
 	nResult += int64(self.Hour) * 60 * 60
 	nResult += int64(self.Minute) * 60
 	nResult += int64(self.Second)
-	
+
 	return nResult
 }
 
@@ -133,8 +133,8 @@ func (self *TSolarDate) GetMonthDays(nYear, nMonth int) int {
 	case 2: // 闰年
 		if self.GetIsLeapYear(nYear) {
 			return 29
-		} 
-		return 28		
+		}
+		return 28
 	}
 	return 0
 }
@@ -209,18 +209,19 @@ func (self *TSolarDate) GetDateIsValid(nYear, nMonth, nDay int) bool {
 	return false
 }
 
-
 // GetAllDays 获得距公元原点的日数 这里是公历的年月日
-func (self *TSolarDate)GetAllDays(nYear, nMonth, nDay int) int {
+func (self *TSolarDate) GetAllDays() int {
+	nYear := self.Year
+	nMonth := self.Month
+	nDay := self.Day
 	if self.GetDateIsValid(nYear, nMonth, nDay) {
 		return self.GetBasicDays(nYear, nMonth, nDay) + self.GetLeapDays(nYear, nMonth, nDay)
 	}
 	return 0
 }
 
-
 //GetBasicDays 获取基本数据
-func (self *TSolarDate)GetBasicDays(nYear, nMonth, nDay int) int {
+func (self *TSolarDate) GetBasicDays(nYear, nMonth, nDay int) int {
 	if !self.GetDateIsValid(nYear, nMonth, nDay) {
 		return 0
 	}
@@ -246,7 +247,7 @@ func (self *TSolarDate)GetBasicDays(nYear, nMonth, nDay int) int {
 }
 
 //GetLeapDays 获取闰年天数
-func (self *TSolarDate)GetLeapDays(nYear, nMonth, nDay int) int {
+func (self *TSolarDate) GetLeapDays(nYear, nMonth, nDay int) int {
 	if !self.GetDateIsValid(nYear, nMonth, nDay) {
 		return 0
 	}
@@ -276,11 +277,9 @@ func (self *TSolarDate)GetLeapDays(nYear, nMonth, nDay int) int {
 	return Result
 }
 
-
-
 func (self *TSolarDate) String() string {
 	return fmt.Sprintf("新历:%d年%02d月%02d日 %02d:%02d:%02d",
-	self.Year,self.Month, self.Day,self.Hour,self.Minute,self.Second )
+		self.Year, self.Month, self.Day, self.Hour, self.Minute, self.Second)
 }
 
 // ToBaziDate 转成八字日期
