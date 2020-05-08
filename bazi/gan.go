@@ -74,6 +74,11 @@ func (self *TGan) ToWuXing() *TWuXing {
 	return nil
 }
 
+//ToShiShen  根据日干获取十神
+func (self *TGan) ToShiShen(nDayGan int) *TShiShen {
+	return GetShiShenFromGan(nDayGan, self)
+}
+
 // Value 转换成int
 func (self *TGan) Value() int {
 	return (int)(*self)
