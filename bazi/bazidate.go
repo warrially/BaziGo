@@ -7,11 +7,11 @@ import (
 // NewBaziDate 从新历转成八字历
 func NewBaziDate(pSolarDate *TSolarDate) *TBaziDate {
 	pBaziDate := &TBaziDate{}
-	pBaziDate.Year = GetLiChunYear(pSolarDate)                          // 拿到八字年, 根据立春来的
-	pBaziDate.PreviousJie, pBaziDate.NextJie = GetJieQiDate(pSolarDate) // 拿到前后两个的日期
-	nJieQi := pBaziDate.PreviousJie.JieQi
-	pBaziDate.JieQi = &nJieQi
-	pBaziDate.Month = pBaziDate.JieQi.ToMonth()
+	pBaziDate.nYear = GetLiChunYear(pSolarDate)                           // 拿到八字年, 根据立春来的
+	pBaziDate.pPreviousJie, pBaziDate.pNextJie = GetJieQiDate(pSolarDate) // 拿到前后两个的日期
+	nJieQi := pBaziDate.pPreviousJie.JieQi
+	pBaziDate.pJieQi = &nJieQi
+	pBaziDate.nMonth = pBaziDate.pJieQi.ToMonth()
 
 	return pBaziDate
 }
@@ -19,17 +19,37 @@ func NewBaziDate(pSolarDate *TSolarDate) *TBaziDate {
 // TBaziDate 八字历法
 // 八字历法的年  和 新历的 和 农历的都不一样. 八字历法是按照立春为1年. 然后每个节气为月
 type TBaziDate struct {
-	Year  int // 年. 立春
-	Month int // 月.
-	Day   int // 天
-	Hour  int // xiaohsi
+	nYear  int // 年. 立春
+	nMonth int // 月.
+	nDay   int // 天
+	nHour  int // xiaohsi
 
-	JieQi       *TJieQi     // 节气名称
-	PreviousJie *TJieQiDate // 上一个节(气)
-	NextJie     *TJieQiDate // 下一个节(气)
+	pJieQi       *TJieQi     // 节气名称
+	pPreviousJie *TJieQiDate // 上一个节(气)
+	pNextJie     *TJieQiDate // 下一个节(气)
 }
 
 func (self *TBaziDate) String() string {
 	return fmt.Sprintf("八字历: %4d 年 %02d 月 \n上一个:%v\n下一个:%v",
-		self.Year, self.Month, self.PreviousJie, self.NextJie)
+		self.nYear, self.nMonth, self.pPreviousJie, self.pNextJie)
+}
+
+// Year  年. 立春
+func (self *TBaziDate) Year() int {
+	return self.nYear
+}
+
+// Month  月.
+func (self *TBaziDate) Month() int {
+	return self.nMonth
+}
+
+// Day  天
+func (self *TBaziDate) Day() int {
+	return self.nDay
+}
+
+// Hour 小时
+func (self *TBaziDate) Hour() int {
+	return self.nHour
 }

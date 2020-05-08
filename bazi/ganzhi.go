@@ -133,8 +133,8 @@ func GetGanZhiFromNumber(nValue int) string {
 // NewGanZhi 创建干支
 func NewGanZhi(nValue int) *TGanZhi {
 	nValue %= 60
-	ganzhi := TGanZhi(nValue)
-	return &ganzhi
+	pGanZhi := TGanZhi(nValue)
+	return &pGanZhi
 }
 
 // NewGanZhiFromYear 获得八字年的干支，0-59 对应 甲子到癸亥

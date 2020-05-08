@@ -6,15 +6,15 @@ import "fmt"
 func NewSiZhu(pSolarDate *TSolarDate, pBaziDate *TBaziDate) *TSiZhu {
 	pSiZhu := &TSiZhu{}
 	// 通过八字年来获取年柱
-	pSiZhu.genZhuFromYear(pBaziDate.Year)
+	pSiZhu.genZhuFromYear(pBaziDate.Year())
 	// 通过年干支和八字月
-	pSiZhu.genZhuFromMonth(pBaziDate.Month)
+	pSiZhu.genZhuFromMonth(pBaziDate.Month())
 
 	// 通过公历 年月日计算日柱
 	pSiZhu.genZhuFromDay(pSolarDate.GetAllDays())
 
 	// 通过小时 获取时柱
-	pSiZhu.genZhuFromHour(pSolarDate.Hour)
+	pSiZhu.genZhuFromHour(pSolarDate.Hour())
 
 	return pSiZhu
 }
