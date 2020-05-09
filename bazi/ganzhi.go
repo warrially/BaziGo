@@ -176,6 +176,11 @@ func (self *TGanZhi) ExtractGanZhi() (*TGan, *TZhi) {
 	return NewGan(self.Value()), NewZhi(self.Value())
 }
 
+// ToNaYin 纳音
+func (self *TGanZhi) ToNaYin() *TNaYin {
+	return NewNaYin(self.Value() / 2)
+}
+
 // ToInt 转换成int
 func (self *TGanZhi) ToInt() int {
 	return self.Value()
