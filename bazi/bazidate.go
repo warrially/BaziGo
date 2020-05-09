@@ -6,14 +6,9 @@ import (
 
 // NewBaziDate 从新历转成八字历
 func NewBaziDate(pSolarDate *TSolarDate) *TBaziDate {
-	pBaziDate := &TBaziDate{}
-	pBaziDate.nYear = GetLiChunYear(pSolarDate)                           // 拿到八字年, 根据立春来的
-	pBaziDate.pPreviousJie, pBaziDate.pNextJie = GetJieQiDate(pSolarDate) // 拿到前后两个的日期
-	nJieQi := pBaziDate.pPreviousJie.JieQi
-	pBaziDate.pJieQi = &nJieQi
-	pBaziDate.nMonth = pBaziDate.pJieQi.ToMonth()
-
-	return pBaziDate
+	p := &TBaziDate{}
+	p.init(pSolarDate)
+	return p
 }
 
 // TBaziDate 八字历法
@@ -27,6 +22,17 @@ type TBaziDate struct {
 	pJieQi       *TJieQi     // 节气名称
 	pPreviousJie *TJieQiDate // 上一个节(气)
 	pNextJie     *TJieQiDate // 下一个节(气)
+}
+
+func (self *TBaziDate) init(pSolarDate *TSolarDate) *TBaziDate {
+	self.nYear = GetLiChunYear(pSolarDate)                      // 拿到八字年, 根据立春来的
+	self.pPreviousJie, self.pNextJie = GetJieQiDate(pSolarDate) // 拿到前后两个的日期
+	// 节气
+	nJieQi := self.pPreviousJie.JieQi
+	self.pJieQi = &nJieQi
+	// 月
+	self.nMonth = self.pJieQi.Month()
+	return self
 }
 
 func (self *TBaziDate) String() string {
