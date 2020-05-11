@@ -2,7 +2,6 @@ package bazi
 
 import (
 	"fmt"
-	"log"
 )
 
 // NewSolarDate 创建一个新历时间
@@ -18,7 +17,7 @@ func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate 
 	}
 
 	if !pDate.GetDateIsValid(nYear, nMonth, nDay) {
-		log.Println("无效的日期", nYear, nMonth, nDay)
+		fmt.Println("无效的日期", nYear, nMonth, nDay)
 		return nil
 	}
 

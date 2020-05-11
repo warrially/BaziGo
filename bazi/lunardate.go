@@ -23,6 +23,7 @@ func NewLunarDate(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSeco
 		return nil
 	}
 
+	return pDate
 }
 
 // TLunarDate 农历日期
@@ -63,7 +64,7 @@ func (self *TLunarDate) GetDateIsValid() bool {
 	}
 
 	// 获取每个月有多少天, 超过天数的话 日期非法
-	if self.nDay > self.GetMonthDays(self.nYear, self.nMonth) {
+	if self.nDay > self.GetMonthDays() {
 		return false
 	}
 
@@ -168,4 +169,32 @@ func (self *TLunarDate) GetLeapMonth() int {
 	nLeapMonth >>= 13 // 移除掉12个农历大小月
 	self.nLeapMonth = nLeapMonth & 0x0F
 	return self.nLeapMonth
+}
+
+// GetMonthDays 获取某农历年的第N个月是大月30天还是小月29天
+func (self *TLunarDate) GetMonthDays() int {
+	if self.nYear < 1800 || self.nYear >= 2300 {
+		return 0
+	}
+
+	if self.nMonth < 1 || self.nMonth > 13 {
+		return 0
+	}
+
+	// 如果有闰月, 并且闰月
+	if self.nLeapMonth == 0 && self.nMonth == 13 {
+		return 0
+	}
+
+	var nBig = leapMonthList[self.nYear-1800]
+	nBig = nBig >> uint8(13-self.nMonth)
+	// 取第一位
+	nBig = nBig & 1
+
+	// 如果有值(nBig == 1)那么是大月
+	if nBig > 0 {
+		return 30
+	} else {
+		return 29
+	}
 }
