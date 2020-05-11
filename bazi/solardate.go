@@ -31,11 +31,11 @@ func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate 
 func NewSolarDateFrom64TimeStamp(nTimeStamp int64) *TSolarDate {
 	pDate := &TSolarDate{}
 	// 计算出年份
-	pDate.GetYearFrom64TimeStamp()
+	pDate.GetYearFrom64TimeStamp(nTimeStamp)
 	// 计算月份
-	pDate.GetMonthFrom64TimeStamp()
+	pDate.GetMonthFrom64TimeStamp(nTimeStamp)
 	// 计算其他参数
-	pDate.GetDayTimeFrom64TimeStamp()
+	pDate.GetDayTimeFrom64TimeStamp(nTimeStamp)
 
 	return pDate
 }
@@ -65,7 +65,7 @@ func (self *TSolarDate) Get64TimeStamp() int64 {
 }
 
 // GetYearFrom64TimeStamp 从64位时间戳反推年
-func (self *TSolarDate) GetYearFrom64TimeStamp() *TSolarDate {
+func (self *TSolarDate) GetYearFrom64TimeStamp(nTimeStamp int64) *TSolarDate {
 	// 准备进行二分法
 	nLow := 0
 	nHigh := 3001
@@ -76,7 +76,7 @@ func (self *TSolarDate) GetYearFrom64TimeStamp() *TSolarDate {
 		// 拿到中间年的数据
 		v := NewSolarDate(nMid, 1, 1, 0, 0, 0).Get64TimeStamp()
 
-		if v <= self.Get64TimeStamp() {
+		if v <= nTimeStamp {
 			nLow = nMid
 		} else {
 			nHigh = nMid
@@ -91,10 +91,10 @@ func (self *TSolarDate) GetYearFrom64TimeStamp() *TSolarDate {
 }
 
 // GetMonthFrom64TimeStamp 从64位时间戳反推月,
-func (self *TSolarDate) GetMonthFrom64TimeStamp() {
+func (self *TSolarDate) GetMonthFrom64TimeStamp(nTimeStamp int64) {
 	// 这里开始特殊处理
 	for i := 1; i <= 11; i++ {
-		if self.Get64TimeStamp() < NewSolarDate(self.nYear, i+1, 1, 0, 0, 0).Get64TimeStamp() {
+		if nTimeStamp < NewSolarDate(self.nYear, i+1, 1, 0, 0, 0).Get64TimeStamp() {
 			self.nMonth = i
 			return
 		}
@@ -103,8 +103,8 @@ func (self *TSolarDate) GetMonthFrom64TimeStamp() {
 }
 
 // GetDayTimeFrom64TimeStamp 从64位时间戳反推其他参数
-func (self *TSolarDate) GetDayTimeFrom64TimeStamp() {
-	nTimeStamp := self.Get64TimeStamp() - NewSolarDate(self.nYear, self.nMonth, 1, 0, 0, 0).Get64TimeStamp()
+func (self *TSolarDate) GetDayTimeFrom64TimeStamp(nTimeStamp int64) {
+	nTimeStamp -= NewSolarDate(self.nYear, self.nMonth, 1, 0, 0, 0).Get64TimeStamp()
 
 	// 计算日
 	self.nDay = int(nTimeStamp / (24 * 60 * 60))
@@ -314,4 +314,9 @@ func (self *TSolarDate) Minute() int {
 // Second 秒
 func (self *TSolarDate) Second() int {
 	return self.nSecond
+}
+
+// ToLunarDate 转成农历年
+func (self *TSolarDate) ToLunarDate() *TLunarDate {
+	return NewLunarDateFrom64TimeStamp(self.Get64TimeStamp())
 }
