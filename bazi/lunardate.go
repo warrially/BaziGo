@@ -166,9 +166,8 @@ func (self *TLunarDate) genLeap(isLeap bool) {
 			// 闰月是下一个月
 			self.nMonth++
 			return
-		} else {
-			return
 		}
+		return
 	}
 
 	// 超过闰月月
