@@ -9,9 +9,6 @@ func NewBazi(pSolarDate *TSolarDate, nSex int) *TBazi {
 		pSolarDate: pSolarDate,
 		nSex:       nSex,
 	}
-
-	fmt.Println("pSolarDate ", pSolarDate)
-	fmt.Println("pBazi", pBazi)
 	return pBazi.init()
 }
 
@@ -29,7 +26,6 @@ func NewBaziFromLunarDate(pLunarDate *TLunarDate, nSex int) *TBazi {
 func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) *TBazi {
 	// 先解决时间问题. 然后开始处理八字问题
 	pSolarDate := NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond)
-	fmt.Println(pSolarDate)
 	if pSolarDate == nil {
 		return nil
 	}
