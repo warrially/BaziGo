@@ -43,7 +43,12 @@ func (self *TXiYong) init(pSiZhu *TSiZhu) {
 	self.wuxingList[pSiZhu.HourZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.HourZhu().Gan().Value()]
 
 	// 4. 根据四柱地支, 换算强度
-	pSiZhu.YearZhu().Zhi().CangGan()
+	pYearCangGan := pSiZhu.YearZhu().Zhi().CangGan()
+
+	for i := 0; i < pYearCangGan.Size(); i++ {
+		nCangGan := pYearCangGan.Index(i).Value()
+		self.wuxingList[pYearCangGan.Index(i).ToWuXing().Value()]
+	}
 
 	for i := 0; i < 3; i++ {
 		// 年
