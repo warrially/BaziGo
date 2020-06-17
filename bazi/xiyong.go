@@ -43,37 +43,29 @@ func (self *TXiYong) init(pSiZhu *TSiZhu) {
 	self.wuxingList[pSiZhu.HourZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.HourZhu().Gan().Value()]
 
 	// 4. 根据四柱地支, 换算强度
-	pYearCangGan := pSiZhu.YearZhu().Zhi().CangGan()
 
+	pYearCangGan := pSiZhu.YearZhu().CangGan()
 	for i := 0; i < pYearCangGan.Size(); i++ {
-		nCangGan := pYearCangGan.Index(i).Value()
-		self.wuxingList[pYearCangGan.Index(i).ToWuXing().Value()]
+		nCangGan := pYearCangGan.Gan(i).Value()
+		self.wuxingList[pYearCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
 	}
 
-	for i := 0; i < 3; i++ {
-		// 年
-		var nCangGan = pSiZhu.YearZhu.Zhi.CangGan[i].Value
-		if nCangGan >= 0 {
-			wuxing[pSiZhu.YearZhu.Zhi.CangGan[i].WuXing.Value] += DI_ZHI_QIANG_DU_LIST[nMonthZhi][pSiZhu.YearZhu.Zhi.CangGan[i].Value]
-		}
+	pMonthCangGan := pSiZhu.MonthZhu().CangGan()
+	for i := 0; i < pMonthCangGan.Size(); i++ {
+		nCangGan := pMonthCangGan.Gan(i).Value()
+		self.wuxingList[pMonthCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
+	}
 
-		// 月
-		nCangGan = pSiZhu.MonthZhu.Zhi.CangGan[i].Value
-		if nCangGan >= 0 {
-			wuxing[pSiZhu.MonthZhu.Zhi.CangGan[i].WuXing.Value] += DI_ZHI_QIANG_DU_LIST[nMonthZhi][pSiZhu.MonthZhu.Zhi.CangGan[i].Value]
-		}
+	pDayCangGan := pSiZhu.DayZhu().CangGan()
+	for i := 0; i < pDayCangGan.Size(); i++ {
+		nCangGan := pDayCangGan.Gan(i).Value()
+		self.wuxingList[pDayCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
+	}
 
-		// 日
-		nCangGan = pSiZhu.DayZhu.Zhi.CangGan[i].Value
-		if nCangGan >= 0 {
-			wuxing[pSiZhu.DayZhu.Zhi.CangGan[i].WuXing.Value] += DI_ZHI_QIANG_DU_LIST[nMonthZhi][pSiZhu.DayZhu.Zhi.CangGan[i].Value]
-		}
-
-		// 时
-		nCangGan = pSiZhu.HourZhu.Zhi.CangGan[i].Value
-		if nCangGan >= 0 {
-			wuxing[pSiZhu.HourZhu.Zhi.CangGan[i].WuXing.Value] += DI_ZHI_QIANG_DU_LIST[nMonthZhi][pSiZhu.HourZhu.Zhi.CangGan[i].Value]
-		}
+	pHourCangGan := pSiZhu.HourZhu().CangGan()
+	for i := 0; i < pHourCangGan.Size(); i++ {
+		nCangGan := pHourCangGan.Gan(i).Value()
+		self.wuxingList[pHourCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
 	}
 }
 
@@ -96,7 +88,7 @@ var tianganqiangdulist = [12][10]int{
 	{1200, 1200, 1000, 1000, 1000, 1000, 1000, 1000, 1140, 1140}} //亥月
 
 // 地支强度表
-var DI_ZHI_QIANG_DU_LIST = [12][36]int{
+var dizhiqiangdulist = [12][36]int{
 	// 子 子 子  丑   丑   丑   寅   寅  寅  卯   卯  卯 辰   辰   辰   巳  巳  巳   午   午  午 未   未   未   申  申  申   酉   酉 酉  戌   戌   戌   亥   亥   亥
 	// 癸        己   癸   辛   甲   丙      乙          戊   乙   癸   丙  戊  庚   丁   己     己   乙   丁   庚      壬   辛          戊   辛   丁   壬   甲
 	{1000, 0, 0, 530, 300, 200, 798, 360, 0, 1140, 0, 0, 530, 342, 200, 840, 0, 300, 1200, 0, 0, 530, 228, 360, 700, 0, 300, 1000, 0, 0, 530, 300, 240, 700, 342, 0}, // 寅月

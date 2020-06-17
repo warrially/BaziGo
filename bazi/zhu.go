@@ -4,9 +4,10 @@ import "fmt"
 
 // TZhu 柱
 type TZhu struct {
-	pGanZhi *TGanZhi // 干支
-	pGan    *TGan    // 天干
-	pZhi    *TZhi    // 地支
+	pGanZhi  *TGanZhi  // 干支
+	pGan     *TGan     // 天干
+	pZhi     *TZhi     // 地支
+	pCangGan *TCangGan // 藏干
 }
 
 // NewZhu 新建柱子
@@ -27,8 +28,9 @@ func (self *TZhu) genYearGanZhi(nYear int, nDayGan int) *TZhu {
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
 	self.pGan, self.pZhi = self.pGanZhi.ExtractGanZhi()
+
 	// 在这里计算藏干
-	self.pZhi.ToCangGan(nDayGan)
+	self.pCangGan = NewCangGan(nDayGan, self.pZhi)
 	return self
 }
 
@@ -63,7 +65,7 @@ func (self *TZhu) genMonthGanZhi(nMonth int, nYearGan, nDayGan int) *TZhu {
 	// 组合干支
 	self.pGanZhi = CombineGanZhi(self.pGan, self.pZhi)
 	// 在这里计算藏干
-	self.pZhi.ToCangGan(nDayGan)
+	self.pCangGan = NewCangGan(nDayGan, self.pZhi)
 	return self
 }
 
@@ -78,7 +80,7 @@ func (self *TZhu) genDayGanZhi(nAllDays int) *TZhu {
 	self.pGan, self.pZhi = self.pGanZhi.ExtractGanZhi()
 
 	// 在这里计算藏干
-	self.pZhi.ToCangGan(self.pGan.Value())
+	self.pCangGan = NewCangGan(self.pGan.Value(), self.pZhi)
 
 	return self
 }
@@ -113,7 +115,7 @@ func (self *TZhu) genHourGanZhi(nHour, nDayGan int) *TZhu {
 	self.pGanZhi = CombineGanZhi(self.pGan, self.pZhi)
 
 	// 在这里计算藏干
-	self.pZhi.ToCangGan(nDayGan)
+	self.pCangGan = NewCangGan(nDayGan, self.pZhi)
 	return self
 }
 
@@ -130,4 +132,9 @@ func (self *TZhu) Zhi() *TZhi {
 // GanZhi 获取干支
 func (self *TZhu) GanZhi() *TGanZhi {
 	return self.pGanZhi
+}
+
+// CangGan 获取藏干
+func (self *TZhu) CangGan() *TCangGan {
+	return self.pCangGan
 }
