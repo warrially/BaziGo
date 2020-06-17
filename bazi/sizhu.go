@@ -18,12 +18,13 @@ func NewSiZhu(pSolarDate *TSolarDate, pBaziDate *TBaziDate) *TSiZhu {
 
 // TSiZhu 四柱
 type TSiZhu struct {
-	pYearZhu   *TZhu       // 年柱
-	pMonthZhu  *TZhu       // 月柱
-	pDayZhu    *TZhu       // 日柱
-	pHourZhu   *TZhu       // 时柱
-	pSolarDate *TSolarDate // 新历日期
-	pBaziDate  *TBaziDate  // 八字历日期
+	pYearZhu    *TZhu        // 年柱
+	pMonthZhu   *TZhu        // 月柱
+	pDayZhu     *TZhu        // 日柱
+	pHourZhu    *TZhu        // 时柱
+	pHeHuaChong *THeHuaChong // 荷花冲
+	pSolarDate  *TSolarDate  // 新历日期
+	pBaziDate   *TBaziDate   // 八字历日期
 }
 
 func (self *TSiZhu) init() *TSiZhu {

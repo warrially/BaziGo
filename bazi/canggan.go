@@ -44,7 +44,7 @@ func (self *TCangGan) Size() int {
 	return len(self.cangGanList)
 }
 
-// Index 获取具体某个索引
+// Gan 获取具体某个索引
 func (self *TCangGan) Gan(nIdx int) *TGan {
 	if nIdx < 0 {
 		return nil
