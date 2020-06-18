@@ -39,6 +39,22 @@ type TCangGan struct {
 	nDayGan     int // 记录用日干
 }
 
+// Size 内容
+func (self *TCangGan) Size() int {
+	return len(self.cangGanList)
+}
+
+// Gan 获取具体某个索引
+func (self *TCangGan) Gan(nIdx int) *TGan {
+	if nIdx < 0 {
+		return nil
+	}
+	if nIdx >= self.Size() {
+		return nil
+	}
+	return self.cangGanList[nIdx]
+}
+
 func (self *TCangGan) String() string {
 	strResult := ""
 

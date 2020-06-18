@@ -267,9 +267,8 @@ func (self *TLunarDate) GetMonthDays() int {
 	// 如果有值(nBig == 1)那么是大月
 	if nBig > 0 {
 		return 30
-	} else {
-		return 29
 	}
+	return 29
 }
 
 // GetYearFrom64TimeStamp 从64位时间戳反推年

@@ -4,9 +4,10 @@ import "fmt"
 
 // TZhu 柱
 type TZhu struct {
-	pGanZhi *TGanZhi // 干支
-	pGan    *TGan    // 天干
-	pZhi    *TZhi    // 地支
+	pGanZhi  *TGanZhi  // 干支
+	pGan     *TGan     // 天干
+	pZhi     *TZhi     // 地支
+	pCangGan *TCangGan // 藏干
 }
 
 // NewZhu 新建柱子
@@ -19,7 +20,7 @@ func (self *TZhu) String() string {
 }
 
 // 生成年干支
-func (self *TZhu) genYearGanZhi(nYear int) *TZhu {
+func (self *TZhu) genYearGanZhi(nYear int, nDayGan int) *TZhu {
 	// 通过年获取干支
 	// 获得八字年的干支，0-59 对应 甲子到癸亥
 	self.pGanZhi = NewGanZhiFromYear(nYear)
@@ -27,11 +28,14 @@ func (self *TZhu) genYearGanZhi(nYear int) *TZhu {
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
 	self.pGan, self.pZhi = self.pGanZhi.ExtractGanZhi()
+
+	// 在这里计算藏干
+	self.pCangGan = NewCangGan(nDayGan, self.pZhi)
 	return self
 }
 
 //
-func (self *TZhu) genMonthGanZhi(nMonth int, nYearGan int) *TZhu {
+func (self *TZhu) genMonthGanZhi(nMonth int, nYearGan, nDayGan int) *TZhu {
 	// 根据口诀从本年干数计算本年首月的干数
 	switch nYearGan {
 	case 0, 5:
@@ -60,7 +64,8 @@ func (self *TZhu) genMonthGanZhi(nMonth int, nYearGan int) *TZhu {
 
 	// 组合干支
 	self.pGanZhi = CombineGanZhi(self.pGan, self.pZhi)
-
+	// 在这里计算藏干
+	self.pCangGan = NewCangGan(nDayGan, self.pZhi)
 	return self
 }
 
@@ -73,6 +78,10 @@ func (self *TZhu) genDayGanZhi(nAllDays int) *TZhu {
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
 	self.pGan, self.pZhi = self.pGanZhi.ExtractGanZhi()
+
+	// 在这里计算藏干
+	self.pCangGan = NewCangGan(self.pGan.Value(), self.pZhi)
+
 	return self
 }
 
@@ -105,6 +114,8 @@ func (self *TZhu) genHourGanZhi(nHour, nDayGan int) *TZhu {
 	// 组合干支
 	self.pGanZhi = CombineGanZhi(self.pGan, self.pZhi)
 
+	// 在这里计算藏干
+	self.pCangGan = NewCangGan(nDayGan, self.pZhi)
 	return self
 }
 
@@ -128,4 +139,9 @@ func (self *TZhu) ToYinYang() int {
 	// 甲丙戊庚壬 0, 2, 4, 6, 8 阳 (1)
 	// 乙丁己辛癸 1, 3, 5, 7, 9 阴 (0)
 	return (self.Gan().Value() + 1) % 2
+}
+
+// CangGan 获取藏干
+func (self *TZhu) CangGan() *TCangGan {
+	return self.pCangGan
 }

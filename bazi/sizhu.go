@@ -18,23 +18,25 @@ func NewSiZhu(pSolarDate *TSolarDate, pBaziDate *TBaziDate) *TSiZhu {
 
 // TSiZhu 四柱
 type TSiZhu struct {
-	pYearZhu   *TZhu       // 年柱
-	pMonthZhu  *TZhu       // 月柱
-	pDayZhu    *TZhu       // 日柱
-	pHourZhu   *TZhu       // 时柱
-	pSolarDate *TSolarDate // 新历日期
-	pBaziDate  *TBaziDate  // 八字历日期
+	pYearZhu    *TZhu        // 年柱
+	pMonthZhu   *TZhu        // 月柱
+	pDayZhu     *TZhu        // 日柱
+	pHourZhu    *TZhu        // 时柱
+	pHeHuaChong *THeHuaChong // 荷花冲
+	pSolarDate  *TSolarDate  // 新历日期
+	pBaziDate   *TBaziDate   // 八字历日期
 }
 
 func (self *TSiZhu) init() *TSiZhu {
-	// 通过八字年来获取年柱
-	self.pYearZhu.genYearGanZhi(self.pBaziDate.Year())
-	// 通过年干支和八字月
-	self.pMonthZhu.genMonthGanZhi(self.pBaziDate.Month(), self.pYearZhu.Gan().Value())
+
 	// 通过公历 年月日计算日柱
-	self.pDayZhu.genDayGanZhi(self.pSolarDate.GetAllDays())
+	nDayGan := self.pDayZhu.genDayGanZhi(self.pSolarDate.GetAllDays()).Gan().Value() // 获取日干(日主)
 	// 通过小时 获取时柱
-	self.pHourZhu.genHourGanZhi(self.pSolarDate.Hour(), self.pDayZhu.Gan().Value())
+	self.pHourZhu.genHourGanZhi(self.pSolarDate.Hour(), nDayGan)
+	// 通过八字年来获取年柱
+	nYearGan := self.pYearZhu.genYearGanZhi(self.pBaziDate.Year(), nDayGan).Gan().Value()
+	// 通过年干支和八字月
+	self.pMonthZhu.genMonthGanZhi(self.pBaziDate.Month(), nYearGan, nDayGan)
 
 	return self
 }
@@ -58,13 +60,33 @@ func (self *TSiZhu) String() string {
 		self.pDayZhu.Zhi(), self.pDayZhu.Zhi().ToWuXing(),
 		self.pHourZhu.Zhi(), self.pHourZhu.Zhi().ToWuXing(),
 		// ----------------------------------------------------------------------------------
-		self.pYearZhu.Zhi().ToCangGan(self.pDayZhu.Gan().Value()),
-		self.pMonthZhu.Zhi().ToCangGan(self.pDayZhu.Gan().Value()),
-		self.pDayZhu.Zhi().ToCangGan(self.pDayZhu.Gan().Value()),
-		self.pHourZhu.Zhi().ToCangGan(self.pDayZhu.Gan().Value()),
+		self.pYearZhu.CangGan(),
+		self.pMonthZhu.CangGan(),
+		self.pDayZhu.CangGan(),
+		self.pHourZhu.CangGan(),
 		self.pYearZhu.GanZhi().ToNaYin(),
 		self.pMonthZhu.GanZhi().ToNaYin(),
 		self.pDayZhu.GanZhi().ToNaYin(),
 		self.pHourZhu.GanZhi().ToNaYin(),
 	)
+}
+
+// YearZhu 返回年柱
+func (self *TSiZhu) YearZhu() *TZhu {
+	return self.pYearZhu
+}
+
+// MonthZhu 返回月柱
+func (self *TSiZhu) MonthZhu() *TZhu {
+	return self.pMonthZhu
+}
+
+// DayZhu 返回日柱
+func (self *TSiZhu) DayZhu() *TZhu {
+	return self.pDayZhu
+}
+
+// HourZhu 返回时柱
+func (self *TSiZhu) HourZhu() *TZhu {
+	return self.pHourZhu
 }

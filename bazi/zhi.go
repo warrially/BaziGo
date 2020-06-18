@@ -71,11 +71,6 @@ func (self *TZhi) ToWuXing() *TWuXing {
 	return nil
 }
 
-// ToCangGan 地支转藏干
-func (self *TZhi) ToCangGan(nDayGan int) *TCangGan {
-	return NewCangGan(nDayGan, self)
-}
-
 // Value 转换成int
 func (self *TZhi) Value() int {
 	return (int)(*self)
