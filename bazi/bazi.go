@@ -40,6 +40,7 @@ type TBazi struct {
 	pBaziDate  *TBaziDate  // 八字历
 	pSiZhu     *TSiZhu     // 四柱嗯
 	nSex       int         // 性别1男其他女
+	pDaYun     *TDaYun     // 大运
 }
 
 // 八字初始化
@@ -63,11 +64,12 @@ func (self *TBazi) init() *TBazi {
 	// 2. 根据八字历, 准备计算四柱了
 	self.pSiZhu = NewSiZhu(self.pSolarDate, self.pBaziDate)
 
-	// 3.
+	// 3. 计算大运
+	self.pDaYun = NewDaYun(self.pSiZhu, self.nSex)
 
 	return self
 }
 
 func (self *TBazi) String() string {
-	return fmt.Sprintf("%v\n %v\n %v\n%v", self.pSolarDate, self.pLunarDate, self.pBaziDate, self.pSiZhu)
+	return fmt.Sprintf("%v\n %v\n %v\n%v\n%v", self.pSolarDate, self.pLunarDate, self.pBaziDate, self.pSiZhu, self.pDaYun)
 }

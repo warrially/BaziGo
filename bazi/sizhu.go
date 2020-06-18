@@ -35,6 +35,7 @@ func (self *TSiZhu) init() *TSiZhu {
 	self.pDayZhu.genDayGanZhi(self.pSolarDate.GetAllDays())
 	// 通过小时 获取时柱
 	self.pHourZhu.genHourGanZhi(self.pSolarDate.Hour(), self.pDayZhu.Gan().Value())
+
 	return self
 }
 

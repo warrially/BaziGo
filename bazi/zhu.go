@@ -122,3 +122,10 @@ func (self *TZhu) Zhi() *TZhi {
 func (self *TZhu) GanZhi() *TGanZhi {
 	return self.pGanZhi
 }
+
+// ToYinYang 从柱里获取阴阳 (阴 == 0,  阳 == 1)
+func (self *TZhu) ToYinYang() int {
+	// 甲丙戊庚壬 0, 2, 4, 6, 8 阳 (1)
+	// 乙丁己辛癸 1, 3, 5, 7, 9 阴 (0)
+	return (self.Gan().Value() + 1) % 2
+}
