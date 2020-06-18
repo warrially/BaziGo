@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/warrially/BaziGo/bazi"
+	bazi "github.com/warrially/BaziGo"
 )
 
 func main() {
