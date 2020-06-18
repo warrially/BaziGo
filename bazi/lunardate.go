@@ -61,8 +61,7 @@ func NewLunarDateFrom64TimeStamp(nTimeStamp int64) *TLunarDate {
 	// 计算其他参数
 	pDate.GetDayTimeFrom64TimeStamp(nTimeStamp)
 
-	//
-	fmt.Println("这里  时间戳反推")
+	// fmt.Println("这里  时间戳反推")
 	pDate.genNormal() // 第几个月转行成闰月
 
 	// 检查日期合法性
@@ -120,8 +119,6 @@ func (self *TLunarDate) GetDateIsValid() bool {
 
 func (self *TLunarDate) genNormal() {
 	self.GetLeapMonth() // 获取闰月信息
-
-	fmt.Println("这里为什么是0?", self.nConventionalMonth)
 
 	// 没有闰月, 不用改
 	if self.nLeapMonth == 0 {

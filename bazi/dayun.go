@@ -19,9 +19,7 @@ func (self *TDaYun) init(pSiZhu *TSiZhu, nSex int) *TDaYun {
 		self.pZhuList[i] = NewZhu() // 新建12个柱
 	}
 
-	isYang = pSiZhu.
-
-
+	// isYang = pSiZhu.
 
 	return self
 }
