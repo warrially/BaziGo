@@ -186,7 +186,7 @@ func (self *TZhu) CangGan() *TCangGan {
 	return self.pCangGan
 }
 
-//
+// ShiShen 获取十神
 func (self *TZhu) ShiShen() *TShiShen {
 	return self.pShiShen
 }
