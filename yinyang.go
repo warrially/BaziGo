@@ -1,7 +1,7 @@
-package 
+package bazi
 
 // 阴阳
-// 从柱里获取阴阳 
+// 从柱里获取阴阳
 
 // GetYinYangFromNumber (阴 == 0,  阳 == 1)
 func GetYinYangFromNumber(nValue int) string {
@@ -13,7 +13,6 @@ func GetYinYangFromNumber(nValue int) string {
 	}
 	return ""
 }
-
 
 // func GetYinYangFromZhu(pZhu *TZhu) int {
 
@@ -27,29 +26,27 @@ func NewYinYang(nValue int) *TYinYang {
 	return &yinyang
 }
 
-
 // NewYinYangFromZhu 从柱里创建阴阳
 func NewYinYangFromZhu(pZhu *TZhu) *TYinYang {
-	return NewYinYangFromGan(pZhu.Gan()) 
+	return NewYinYangFromGan(pZhu.Gan())
 }
 
 // NewYinYangFromGan 从干里创建阴阳
 func NewYinYangFromGan(pGan *TGan) *TYinYang {
 	nGan := pGan.Value()
-	switch nGan{
-		// 甲丙戊庚壬 0, 2, 4, 6, 8 阳 (1)
-	case 0,2,4,6,8:
+	switch nGan {
+	// 甲丙戊庚壬 0, 2, 4, 6, 8 阳 (1)
+	case 0, 2, 4, 6, 8:
 		return NewYinYang(1)
-	// 乙丁己辛癸 1, 3, 5, 7, 9 阴 (0)	 
-	case 1,3,5,7,9:
+	// 乙丁己辛癸 1, 3, 5, 7, 9 阴 (0)
+	case 1, 3, 5, 7, 9:
 		return NewYinYang(0)
-	}	
+	}
 	return nil
 }
 
-// TYinYang  阴阳 
+// TYinYang  阴阳
 type TYinYang int
-
 
 // ToString 转换成可阅读的字符串
 func (self *TYinYang) ToString() string {
