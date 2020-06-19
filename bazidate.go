@@ -59,3 +59,13 @@ func (self *TBaziDate) Day() int {
 func (self *TBaziDate) Hour() int {
 	return self.nHour
 }
+
+// PreviousJie 上一个节气
+func (self *TBaziDate) PreviousJie() *TJieQiDate {
+	return self.pPreviousJie
+}
+
+// NextJie 下一个节气
+func (self *TBaziDate) NextJie() *TJieQiDate {
+	return self.pNextJie
+}

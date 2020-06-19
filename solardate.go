@@ -50,6 +50,13 @@ type TSolarDate struct {
 	nSecond int // 秒
 }
 
+// GetDiffSeconds 获取两个日期之间相差的秒数
+func (self *TSolarDate) GetDiffSeconds(other *TSolarDate) int64 {
+	return other.Get64TimeStamp() - self.Get64TimeStamp()
+}
+
+
+
 // Get64TimeStamp 生成64位时间戳
 func (self *TSolarDate) Get64TimeStamp() int64 {
 	nAllDays := self.GetAllDays() // 先获取公元原点的日数
