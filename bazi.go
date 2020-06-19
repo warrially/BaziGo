@@ -73,3 +73,8 @@ func (self *TBazi) init() *TBazi {
 func (self *TBazi) String() string {
 	return fmt.Sprintf("%v\n %v\n %v\n%v\n%v", self.pSolarDate, self.pLunarDate, self.pBaziDate, self.pSiZhu, self.pDaYun)
 }
+
+// SiZhu 四柱
+func (self *TBazi) SiZhu() *TSiZhu {
+	return self.pSiZhu
+}
