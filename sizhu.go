@@ -32,11 +32,11 @@ func (self *TSiZhu) init() *TSiZhu {
 	// 通过公历 年月日计算日柱
 	nDayGan := self.pDayZhu.genDayGanZhi(self.pSolarDate.GetAllDays()).Gan().Value() // 获取日干(日主)
 	// 通过小时 获取时柱
-	self.pHourZhu.genHourGanZhi(self.pSolarDate.Hour(), nDayGan)
+	self.pHourZhu.setDayGan(nDayGan).genHourGanZhi(self.pSolarDate.Hour())
 	// 通过八字年来获取年柱
-	nYearGan := self.pYearZhu.genYearGanZhi(self.pBaziDate.Year(), nDayGan).Gan().Value()
+	nYearGan := self.pYearZhu.setDayGan(nDayGan).genYearGanZhi(self.pBaziDate.Year()).Gan().Value()
 	// 通过年干支和八字月
-	self.pMonthZhu.genMonthGanZhi(self.pBaziDate.Month(), nYearGan, nDayGan)
+	self.pMonthZhu.setDayGan(nDayGan).genMonthGanZhi(self.pBaziDate.Month(), nYearGan)
 
 	return self
 }
@@ -44,26 +44,26 @@ func (self *TSiZhu) init() *TSiZhu {
 //  genShiShen 计算十神
 
 func (self *TSiZhu) String() string {
-	return fmt.Sprintf("四柱:%v %v %v %v\n命盘解析:\n%v(%v)[%v]\t%v(%v)[%v]\t%v(%v)[%v]\t%v(%v)[%v]\t\n%v(%v)    \t%v(%v)    \t%v(%v)    \t%v(%v)\n%v %v %v %v\n%v %v %v %v",
+	return fmt.Sprintf("四柱:%v %v %v %v\n命盘解析:\n%v(%v)[%v]\t%v(%v)[%v]\t%v(%v)[%v]\t%v(%v)[%v]\t",
 		self.pYearZhu.GanZhi(),
 		self.pMonthZhu.GanZhi(),
 		self.pDayZhu.GanZhi(),
 		self.pHourZhu.GanZhi(),
-		// ----------------------------------------------------------------------------------
-		self.pYearZhu.Gan(), self.pYearZhu.Gan().ToWuXing(), self.pYearZhu.Gan().ToShiShen(self.pDayZhu.Gan().Value()),
-		self.pMonthZhu.Gan(), self.pMonthZhu.Gan().ToWuXing(), self.pMonthZhu.Gan().ToShiShen(self.pDayZhu.Gan().Value()),
+		self.pYearZhu.Gan(), self.pYearZhu.Gan().ToWuXing(), self.pYearZhu.ShiShen(),
+		self.pMonthZhu.Gan(), self.pMonthZhu.Gan().ToWuXing(), self.pMonthZhu.ShiShen(),
 		self.pDayZhu.Gan(), self.pDayZhu.Gan().ToWuXing(), "主",
-		self.pHourZhu.Gan(), self.pHourZhu.Gan().ToWuXing(), self.pHourZhu.Gan().ToShiShen(self.pDayZhu.Gan().Value()),
-		// ----------------------------------------------------------------------------------
+		self.pHourZhu.Gan(), self.pHourZhu.Gan().ToWuXing(), self.pHourZhu.ShiShen(),
+	) + fmt.Sprintf("\n%v(%v)   \t%v(%v)   \t%v(%v)   \t%v(%v) \n",
 		self.pYearZhu.Zhi(), self.pYearZhu.Zhi().ToWuXing(),
 		self.pMonthZhu.Zhi(), self.pMonthZhu.Zhi().ToWuXing(),
 		self.pDayZhu.Zhi(), self.pDayZhu.Zhi().ToWuXing(),
 		self.pHourZhu.Zhi(), self.pHourZhu.Zhi().ToWuXing(),
-		// ----------------------------------------------------------------------------------
+	) + fmt.Sprintf("藏干:\n%v   \t%v    \t%v    \t%v\n",
 		self.pYearZhu.CangGan(),
 		self.pMonthZhu.CangGan(),
 		self.pDayZhu.CangGan(),
 		self.pHourZhu.CangGan(),
+	) + fmt.Sprintf("纳音:\n%v   \t%v    \t%v    \t%v\n",
 		self.pYearZhu.GanZhi().ToNaYin(),
 		self.pMonthZhu.GanZhi().ToNaYin(),
 		self.pDayZhu.GanZhi().ToNaYin(),
