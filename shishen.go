@@ -49,9 +49,9 @@ var shishenlist = [...][10]int{
 	{2, 3, 4, 5, 6, 7, 8, 9, 0, 1}, // 壬
 	{3, 2, 5, 4, 7, 6, 9, 8, 1, 0}} // 癸
 
-// GetShiShenFromGan 从日干和目标干获取十神
+// NewShiShenFromGan 从日干和目标干获取十神
 // nDayGan 日干 Gan2 目标干
-func GetShiShenFromGan(nDayGan int, pGan2 *TGan) *TShiShen {
+func NewShiShenFromGan(nDayGan int, pGan2 *TGan) *TShiShen {
 	return NewShiShen(shishenlist[nDayGan][pGan2.Value()])
 }
 
