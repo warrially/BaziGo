@@ -21,6 +21,25 @@ func GetWuXingFromNumber(nValue int) string {
 	return ""
 }
 
+// GetWuXingColorFromNumber 获取五行的颜色
+func GetWuXingColorFromNumber(nValue int) string {
+	// {* 五行字符串，以通常的金木水火土为顺序 }
+	// 这里没用五行相生或者相克来排列
+	switch nValue {
+	case 0:
+		return "gold"
+	case 1:
+		return "green"
+	case 2:
+		return "black"
+	case 3:
+		return "red"
+	case 4:
+		return "brown"
+	}
+	return ""
+}
+
 // GetWuXingFromGan 获得某干的五行，0-4 对应 金木水火土
 // 甲乙为木，丙丁为火，戊己为土，庚辛为金，壬癸为水，
 func GetWuXingFromGan(pGan *TGan) *TWuXing {
@@ -55,4 +74,9 @@ func (self *TWuXing) Value() int {
 // String 转换成可阅读的字符串
 func (self *TWuXing) String() string {
 	return GetWuXingFromNumber(self.Value())
+}
+
+// Color 五行颜色
+func (self *TWuXing) Color() string {
+	return GetWuXingColorFromNumber(self.Value())
 }
