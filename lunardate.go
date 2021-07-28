@@ -1064,3 +1064,8 @@ func (m *TLunarDate) String() string {
 
 	return strResult
 }
+
+// ToLunarDate 转成农历年
+func (m *TLunarDate) ToSolarDate() *TSolarDate {
+	return NewSolarDateFrom64TimeStamp(m.Get64TimeStamp())
+}
