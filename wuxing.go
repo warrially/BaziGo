@@ -57,26 +57,26 @@ func NewWuXing(nValue int) *TWuXing {
 type TWuXing int
 
 // ToString 转换成可阅读的字符串
-func (self *TWuXing) ToString() string {
-	return self.String()
+func (m *TWuXing) ToString() string {
+	return m.String()
 }
 
 // ToInt 转换成int
-func (self *TWuXing) ToInt() int {
-	return self.Value()
+func (m *TWuXing) ToInt() int {
+	return m.Value()
 }
 
 // Value 转换成int
-func (self *TWuXing) Value() int {
-	return (int)(*self)
+func (m *TWuXing) Value() int {
+	return (int)(*m)
 }
 
 // String 转换成可阅读的字符串
-func (self *TWuXing) String() string {
-	return GetWuXingFromNumber(self.Value())
+func (m *TWuXing) String() string {
+	return GetWuXingFromNumber(m.Value())
 }
 
 // Color 五行颜色
-func (self *TWuXing) Color() string {
-	return GetWuXingColorFromNumber(self.Value())
+func (m *TWuXing) Color() string {
+	return GetWuXingColorFromNumber(m.Value())
 }

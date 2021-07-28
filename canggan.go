@@ -17,7 +17,9 @@ var cangganlist = [12][3]int{
 
 // NewCangGan 新建藏干
 func NewCangGan(nDayGan int, pZhi *TZhi) *TCangGan {
-	pCangGan := &TCangGan{}
+	pCangGan := &TCangGan{
+		nDayGan: nDayGan,
+	}
 
 	pCangGan.init(nDayGan, pZhi)
 
@@ -31,8 +33,7 @@ type TCangGan struct {
 	nDayGan     int // 记录用日干
 }
 
-func (self *TCangGan) init(nDayGan int, pZhi *TZhi) {
-
+func (m *TCangGan) init(nDayGan int, pZhi *TZhi) {
 	nZhi := pZhi.Value()
 	for i := 0; i < 3; i++ {
 		// 判断藏干有效性
@@ -40,8 +41,8 @@ func (self *TCangGan) init(nDayGan int, pZhi *TZhi) {
 			// 添加藏干
 			pGan := NewGan(cangganlist[nZhi][i])
 			pShiShen := NewShiShenFromGan(nDayGan, pGan)
-			self.cangGanList = append(self.cangGanList, pGan)
-			self.shishenList = append(self.shishenList, pShiShen)
+			m.cangGanList = append(m.cangGanList, pGan)
+			m.shishenList = append(m.shishenList, pShiShen)
 			// 添加十神
 		} else {
 			break
@@ -50,37 +51,37 @@ func (self *TCangGan) init(nDayGan int, pZhi *TZhi) {
 }
 
 // Size 内容
-func (self *TCangGan) Size() int {
-	return len(self.cangGanList)
+func (m *TCangGan) Size() int {
+	return len(m.cangGanList)
 }
 
 // Gan 获取具体某个索引
-func (self *TCangGan) Gan(nIdx int) *TGan {
+func (m *TCangGan) Gan(nIdx int) *TGan {
 	if nIdx < 0 {
 		return nil
 	}
-	if nIdx >= self.Size() {
+	if nIdx >= m.Size() {
 		return nil
 	}
-	return self.cangGanList[nIdx]
+	return m.cangGanList[nIdx]
 }
 
 // ShiShen 十神
-func (self *TCangGan) ShiShen(nIdx int) *TShiShen {
+func (m *TCangGan) ShiShen(nIdx int) *TShiShen {
 	if nIdx < 0 {
 		return nil
 	}
-	if nIdx >= self.Size() {
+	if nIdx >= m.Size() {
 		return nil
 	}
-	return self.shishenList[nIdx]
+	return m.shishenList[nIdx]
 }
 
-func (self *TCangGan) String() string {
+func (m *TCangGan) String() string {
 	strResult := ""
 
-	for i := 0; i < self.Size(); i++ {
-		strResult += self.Gan(i).String() + "[" + self.ShiShen(i).String() + "]"
+	for i := 0; i < m.Size(); i++ {
+		strResult += m.Gan(i).String() + "[" + m.ShiShen(i).String() + "]"
 	}
 
 	return strResult

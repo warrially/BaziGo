@@ -1,6 +1,8 @@
 package bazi
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // NewLunarDate 新建一个农历日期,  顺序月
 func NewLunarDate(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond int) *TLunarDate {
@@ -72,6 +74,62 @@ func NewLunarDateFrom64TimeStamp(nTimeStamp int64) *TLunarDate {
 	return pDate
 }
 
+func GetChnChar(nNumber int) string {
+	switch nNumber {
+	case 1:
+		return "一"
+
+	case 2:
+		return "二"
+
+	case 3:
+		return "三"
+
+	case 4:
+		return "四"
+
+	case 5:
+		return "五"
+
+	case 6:
+		return "六"
+
+	case 7:
+		return "七"
+
+	case 8:
+		return "八"
+
+	case 9:
+		return "九"
+
+	case 0:
+		return "〇"
+
+	}
+	return ""
+}
+
+// GetChnCharFromYear 年份转成汉字形式
+func GetChnCharFromYear(nYear int) string {
+	if nYear < 0 {
+		return ""
+	}
+
+	strYear := ""
+
+	for {
+		if nYear <= 0 {
+			break
+		}
+
+		strYear = GetChnChar(nYear%10) + strYear
+		nYear = nYear / 10
+	}
+
+	return strYear
+}
+
 // TLunarDate 农历日期
 type TLunarDate struct {
 	nYear              int
@@ -86,89 +144,87 @@ type TLunarDate struct {
 }
 
 // GetDateIsValid 返回日期是否合法
-func (self *TLunarDate) GetDateIsValid() bool {
+func (m *TLunarDate) GetDateIsValid() bool {
 
-	if self.nYear < 1800 || self.nYear > 2299 {
+	if m.nYear < 1800 || m.nYear > 2299 {
 		return false // 1800 之前的年份已经严重不精确  2299 也一样
 	}
 
 	// 1月开始, 13月结束
-	if self.nMonth < 1 || self.nMonth > 13 {
+	if m.nMonth < 1 || m.nMonth > 13 {
 		return false
 	}
 
 	// 1号开始
-	if self.nDay < 1 {
+	if m.nDay < 1 {
 		return false
 	}
 
-	if self.nLeapMonth == 0 {
+	if m.nLeapMonth == 0 {
 		// 没有闰月的话 nMonth 只能是 1 ~ 12
-		if self.nMonth == 13 {
+		if m.nMonth == 13 {
 			return false
 		}
 	}
 
 	// 获取每个月有多少天, 超过天数的话 日期非法
-	if self.nDay > self.GetMonthDays() {
+	if m.nDay > m.GetMonthDays() {
 		return false
 	}
 
 	return true
 }
 
-func (self *TLunarDate) genNormal() {
-	self.GetLeapMonth() // 获取闰月信息
+func (m *TLunarDate) genNormal() {
+	m.GetLeapMonth() // 获取闰月信息
 
 	// 没有闰月, 不用改
-	if self.nLeapMonth == 0 {
-		self.nConventionalMonth = self.nMonth
+	if m.nLeapMonth == 0 {
+		m.nConventionalMonth = m.nMonth
 		return
 	}
 
 	// 有闰月
 	// 闰月之前不变
-	if self.nMonth < self.nLeapMonth {
-		self.nConventionalMonth = self.nMonth
+	if m.nMonth < m.nLeapMonth {
+		m.nConventionalMonth = m.nMonth
 		return
 	}
 
-	if self.nMonth == self.nLeapMonth+1 {
-		self.isLeap = true // 刚好是闰月
+	if m.nMonth == m.nLeapMonth+1 {
+		m.isLeap = true // 刚好是闰月
 	}
 
-	self.nConventionalMonth = self.nMonth - 1
-	return
-
+	m.nConventionalMonth = m.nMonth - 1
 }
 
 // genLeap 闰月改变成第几月
-func (self *TLunarDate) genLeap(isLeap bool) {
-	self.GetLeapMonth() // 获取闰月信息
+func (m *TLunarDate) genLeap(isLeap bool) {
+	m.GetLeapMonth() // 获取闰月信息
 
 	// 没有闰月, 不用改
-	if self.nLeapMonth == 0 {
+	if m.nLeapMonth == 0 {
 		return
 	}
 
 	// 有闰月
 	// 闰月之前不变
-	if self.nMonth < self.nLeapMonth {
+	if m.nMonth < m.nLeapMonth {
 		return
 	}
 
 	// 闰月时
-	if self.nMonth == self.nLeapMonth {
+	if m.nMonth == m.nLeapMonth {
 		if isLeap {
 			// 闰月是下一个月
-			self.nMonth++
+			m.nMonth++
 			return
 		}
 		return
 	}
 
 	// 超过闰月月
-	self.nMonth++
+	m.nMonth++
 
 }
 
@@ -230,34 +286,34 @@ var leapMonthList = [500]int{
 }
 
 // GetLeapMonth 获取闰月
-func (self *TLunarDate) GetLeapMonth() int {
-	if self.nYear < 1800 || self.nYear > 2299 {
-		self.nLeapMonth = 0
+func (m *TLunarDate) GetLeapMonth() int {
+	if m.nYear < 1800 || m.nYear > 2299 {
+		m.nLeapMonth = 0
 		return 0
 	}
-	nLeapMonth := leapMonthList[self.nYear-1800]
+	nLeapMonth := leapMonthList[m.nYear-1800]
 	nLeapMonth >>= 13 // 移除掉12个农历大小月
-	self.nLeapMonth = nLeapMonth & 0x0F
-	return self.nLeapMonth
+	m.nLeapMonth = nLeapMonth & 0x0F
+	return m.nLeapMonth
 }
 
 // GetMonthDays 获取某农历年的第N个月是大月30天还是小月29天
-func (self *TLunarDate) GetMonthDays() int {
-	if self.nYear < 1800 || self.nYear >= 2300 {
+func (m *TLunarDate) GetMonthDays() int {
+	if m.nYear < 1800 || m.nYear >= 2300 {
 		return 0
 	}
 
-	if self.nMonth < 1 || self.nMonth > 13 {
+	if m.nMonth < 1 || m.nMonth > 13 {
 		return 0
 	}
 
 	// 如果有闰月, 并且闰月
-	if self.nLeapMonth == 0 && self.nMonth == 13 {
+	if m.nLeapMonth == 0 && m.nMonth == 13 {
 		return 0
 	}
 
-	var nBig = leapMonthList[self.nYear-1800]
-	nBig = nBig >> uint8(13-self.nMonth)
+	var nBig = leapMonthList[m.nYear-1800]
+	nBig = nBig >> uint8(13-m.nMonth)
 	// 取第一位
 	nBig = nBig & 1
 
@@ -269,7 +325,7 @@ func (self *TLunarDate) GetMonthDays() int {
 }
 
 // GetYearFrom64TimeStamp 从64位时间戳反推年
-func (self *TLunarDate) GetYearFrom64TimeStamp(nTimeStamp int64) *TLunarDate {
+func (m *TLunarDate) GetYearFrom64TimeStamp(nTimeStamp int64) *TLunarDate {
 	// 准备进行二分法
 	nLow := 1900
 	nHigh := 2100
@@ -289,56 +345,56 @@ func (self *TLunarDate) GetYearFrom64TimeStamp(nTimeStamp int64) *TLunarDate {
 		}
 	}
 
-	self.nYear = nLow
-	return self
+	m.nYear = nLow
+	return m
 }
 
 // GetMonthFrom64TimeStamp .
-func (self *TLunarDate) GetMonthFrom64TimeStamp(nTimeStamp int64) {
+func (m *TLunarDate) GetMonthFrom64TimeStamp(nTimeStamp int64) {
 	// 这里开始特殊处理
 	// 全年一共几个月
 	nTotalMonth := 12
-	if self.nLeapMonth == 0 {
+	if m.nLeapMonth == 0 {
 		nTotalMonth++
 	}
 
 	for i := 1; i <= nTotalMonth-1; i++ {
-		if nTimeStamp < NewLunarDate(self.nYear, i+1, 1, 0, 0, 0).Get64TimeStamp() {
-			self.nMonth = i
-			self.nConventionalMonth = i
+		if nTimeStamp < NewLunarDate(m.nYear, i+1, 1, 0, 0, 0).Get64TimeStamp() {
+			m.nMonth = i
+			m.nConventionalMonth = i
 			return
 		}
 	}
-	self.nMonth = nTotalMonth
-	self.nConventionalMonth = nTotalMonth
+	m.nMonth = nTotalMonth
+	m.nConventionalMonth = nTotalMonth
 }
 
 // GetDayTimeFrom64TimeStamp 从64位时间戳反推其他参数
-func (self *TLunarDate) GetDayTimeFrom64TimeStamp(nTimeStamp int64) {
-	nTimeStamp -= NewLunarDate(self.nYear, self.nMonth, 1, 0, 0, 0).Get64TimeStamp()
+func (m *TLunarDate) GetDayTimeFrom64TimeStamp(nTimeStamp int64) {
+	nTimeStamp -= NewLunarDate(m.nYear, m.nMonth, 1, 0, 0, 0).Get64TimeStamp()
 
-	self.nDay = int(nTimeStamp / (24 * 60 * 60))
+	m.nDay = int(nTimeStamp / (24 * 60 * 60))
 
 	// 扣掉日
-	nTimeStamp -= int64(self.nDay) * 24 * 60 * 60
+	nTimeStamp -= int64(m.nDay) * 24 * 60 * 60
 
-	self.nDay++ // 因为每个月的天数是从1开始的, 所以这里需要补1天
-	self.nHour = int(nTimeStamp / (60 * 60))
-	nTimeStamp -= int64(self.nHour) * 60 * 60
-	self.nMinute = int(nTimeStamp / 60)
-	nTimeStamp -= int64(self.nMinute) * 60
-	self.nSecond = int(nTimeStamp)
+	m.nDay++ // 因为每个月的天数是从1开始的, 所以这里需要补1天
+	m.nHour = int(nTimeStamp / (60 * 60))
+	nTimeStamp -= int64(m.nHour) * 60 * 60
+	m.nMinute = int(nTimeStamp / 60)
+	nTimeStamp -= int64(m.nMinute) * 60
+	m.nSecond = int(nTimeStamp)
 }
 
 // Get64TimeStamp 获取64位时间戳
-func (self *TLunarDate) Get64TimeStamp() int64 {
-	nAllDays := self.GetAllDays()
+func (m *TLunarDate) Get64TimeStamp() int64 {
+	nAllDays := m.GetAllDays()
 	nResult := int64(nAllDays)
 	nResult *= 24 * 60 * 60 // 天数换成秒
 	//再计算出秒数
-	nResult += int64(self.nHour) * 60 * 60
-	nResult += int64(self.nMinute) * 60
-	nResult += int64(self.nSecond)
+	nResult += int64(m.nHour) * 60 * 60
+	nResult += int64(m.nMinute) * 60
+	nResult += int64(m.nSecond)
 	return nResult
 }
 
@@ -846,28 +902,28 @@ var allDayList = [500][13]int{
 }
 
 // GetAllDays 获取距离公元原点的日数, 这里是农历来的年月日
-func (self *TLunarDate) GetAllDays() int {
+func (m *TLunarDate) GetAllDays() int {
 	// 目前只能计算1800年到2300年的天数, 精度不够高
-	if self.nYear < 1800 || self.nYear >= 2300 {
+	if m.nYear < 1800 || m.nYear >= 2300 {
 		return 0
 	}
 
-	if self.nMonth < 1 || self.nMonth > 13 {
+	if m.nMonth < 1 || m.nMonth > 13 {
 		return 0
 	}
 
-	return allDayList[self.nYear-1800][self.nMonth-1] + self.nDay
+	return allDayList[m.nYear-1800][m.nMonth-1] + m.nDay
 
 }
 
-func (self *TLunarDate) String() string {
-	strResult := fmt.Sprintf("农历: %d年", self.nYear)
+func (m *TLunarDate) String() string {
+	strResult := fmt.Sprintf("农历: %d年", m.nYear)
 
-	if self.nConventionalMonth == self.nMonth-1 {
+	if m.nConventionalMonth == m.nMonth-1 {
 		strResult += "闰"
 	}
 
-	switch self.nConventionalMonth {
+	switch m.nConventionalMonth {
 	case 1:
 		strResult += "一月"
 	case 2:
@@ -894,7 +950,7 @@ func (self *TLunarDate) String() string {
 		strResult += "腊月"
 	}
 
-	switch self.nDay {
+	switch m.nDay {
 	case 1:
 		strResult += "初一"
 	case 2:

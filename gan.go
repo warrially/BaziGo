@@ -46,20 +46,20 @@ func NewGan(nValue int) *TGan {
 type TGan int
 
 // ToString 转换成可阅读的字符串
-func (self *TGan) ToString() string {
-	return self.String()
+func (m *TGan) ToString() string {
+	return m.String()
 }
 
 // ToInt 转换成int
-func (self *TGan) ToInt() int {
-	return self.Value()
+func (m *TGan) ToInt() int {
+	return m.Value()
 }
 
 // ToWuXing 天干转化成五行
-func (self *TGan) ToWuXing() *TWuXing {
+func (m *TGan) ToWuXing() *TWuXing {
 	// todo
 	// 甲木、乙木、丙火、丁火、戊土、己土、庚金、辛金、壬水、癸水，其中甲 丙 戊 庚 壬为阳性，乙丁己辛癸为阴性
-	switch self.Value() {
+	switch m.Value() {
 	case 0, 1:
 		return NewWuXing(1) // 甲 阳木 乙 阴木
 	case 2, 3:
@@ -75,11 +75,11 @@ func (self *TGan) ToWuXing() *TWuXing {
 }
 
 // Value 转换成int
-func (self *TGan) Value() int {
-	return (int)(*self)
+func (m *TGan) Value() int {
+	return (int)(*m)
 }
 
 // String 转换成可阅读的字符串
-func (self *TGan) String() string {
-	return GetTianGanFromNumber(self.Value())
+func (m *TGan) String() string {
+	return GetTianGanFromNumber(m.Value())
 }

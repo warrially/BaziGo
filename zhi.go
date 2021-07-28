@@ -45,18 +45,18 @@ func NewZhi(nValue int) *TZhi {
 type TZhi int
 
 // ToString 转换成可阅读的字符串
-func (self *TZhi) ToString() string {
-	return self.String()
+func (m *TZhi) ToString() string {
+	return m.String()
 }
 
 // ToInt 转换成int
-func (self *TZhi) ToInt() int {
-	return self.Value()
+func (m *TZhi) ToInt() int {
+	return m.Value()
 }
 
 // ToWuXing 地支转化成五行
-func (self *TZhi) ToWuXing() *TWuXing {
-	switch self.Value() {
+func (m *TZhi) ToWuXing() *TWuXing {
+	switch m.Value() {
 	case 8, 9:
 		return NewWuXing(0)
 	case 2, 3:
@@ -72,11 +72,11 @@ func (self *TZhi) ToWuXing() *TWuXing {
 }
 
 // Value 转换成int
-func (self *TZhi) Value() int {
-	return (int)(*self)
+func (m *TZhi) Value() int {
+	return (int)(*m)
 }
 
 // String 转换成可阅读的字符串
-func (self *TZhi) String() string {
-	return GetDiZhiFromNumber(self.Value())
+func (m *TZhi) String() string {
+	return GetDiZhiFromNumber(m.Value())
 }

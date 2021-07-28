@@ -49,21 +49,21 @@ func NewYinYangFromGan(pGan *TGan) *TYinYang {
 type TYinYang int
 
 // ToString 转换成可阅读的字符串
-func (self *TYinYang) ToString() string {
-	return self.String()
+func (m *TYinYang) ToString() string {
+	return m.String()
 }
 
 // ToInt 转换成int
-func (self *TYinYang) ToInt() int {
-	return self.Value()
+func (m *TYinYang) ToInt() int {
+	return m.Value()
 }
 
 // Value 转换成int
-func (self *TYinYang) Value() int {
-	return (int)(*self)
+func (m *TYinYang) Value() int {
+	return (int)(*m)
 }
 
 // String 转换成可阅读的字符串
-func (self *TYinYang) String() string {
-	return GetYinYangFromNumber(self.Value())
+func (m *TYinYang) String() string {
+	return GetYinYangFromNumber(m.Value())
 }

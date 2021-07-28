@@ -25,11 +25,11 @@ type TXiYong struct {
 
 }
 
-func (self *TXiYong) init(pSiZhu *TSiZhu) {
-	self.pSiZhu = pSiZhu
+func (m *TXiYong) init(pSiZhu *TSiZhu) {
+	m.pSiZhu = pSiZhu
 	// 初始化五行列表
-	for i := 0; i < len(self.wuxingList); i++ {
-		self.wuxingList[i] = 0
+	for i := 0; i < len(m.wuxingList); i++ {
+		m.wuxingList[i] = 0
 	}
 
 	// 2. 拿到四柱的月支
@@ -37,35 +37,35 @@ func (self *TXiYong) init(pSiZhu *TSiZhu) {
 	// log.Println("月支是", nMonthZhi, pSiZhu.MonthZhu.Zhi.Str)
 
 	// 3. 根据四柱天干, 换算强度
-	self.wuxingList[pSiZhu.YearZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.YearZhu().Gan().Value()]
-	self.wuxingList[pSiZhu.MonthZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.MonthZhu().Gan().Value()]
-	self.wuxingList[pSiZhu.DayZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.DayZhu().Gan().Value()]
-	self.wuxingList[pSiZhu.HourZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.HourZhu().Gan().Value()]
+	m.wuxingList[pSiZhu.YearZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.YearZhu().Gan().Value()]
+	m.wuxingList[pSiZhu.MonthZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.MonthZhu().Gan().Value()]
+	m.wuxingList[pSiZhu.DayZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.DayZhu().Gan().Value()]
+	m.wuxingList[pSiZhu.HourZhu().Gan().ToWuXing().Value()] += tianganqiangdulist[nMonthZhi][pSiZhu.HourZhu().Gan().Value()]
 
 	// 4. 根据四柱地支, 换算强度
 
 	pYearCangGan := pSiZhu.YearZhu().CangGan()
 	for i := 0; i < pYearCangGan.Size(); i++ {
 		nCangGan := pYearCangGan.Gan(i).Value()
-		self.wuxingList[pYearCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
+		m.wuxingList[pYearCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
 	}
 
 	pMonthCangGan := pSiZhu.MonthZhu().CangGan()
 	for i := 0; i < pMonthCangGan.Size(); i++ {
 		nCangGan := pMonthCangGan.Gan(i).Value()
-		self.wuxingList[pMonthCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
+		m.wuxingList[pMonthCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
 	}
 
 	pDayCangGan := pSiZhu.DayZhu().CangGan()
 	for i := 0; i < pDayCangGan.Size(); i++ {
 		nCangGan := pDayCangGan.Gan(i).Value()
-		self.wuxingList[pDayCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
+		m.wuxingList[pDayCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
 	}
 
 	pHourCangGan := pSiZhu.HourZhu().CangGan()
 	for i := 0; i < pHourCangGan.Size(); i++ {
 		nCangGan := pHourCangGan.Gan(i).Value()
-		self.wuxingList[pHourCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
+		m.wuxingList[pHourCangGan.Gan(i).ToWuXing().Value()] += dizhiqiangdulist[nMonthZhi][nCangGan]
 	}
 }
 

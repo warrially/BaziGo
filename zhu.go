@@ -1,5 +1,7 @@
 package bazi
 
+// 这里是柱， 四柱之一
+
 import "fmt"
 
 // TZhu 柱
@@ -17,59 +19,60 @@ func NewZhu() *TZhu {
 	return &TZhu{}
 }
 
-func (self *TZhu) String() string {
-	return fmt.Sprintf("%v", self.pGanZhi)
+// String 打印
+func (m *TZhu) String() string {
+	return fmt.Sprintf("%v", m.pGanZhi)
 }
 
 // 设置日干值
-func (self *TZhu) setDayGan(nDayGan int) *TZhu {
-	self.nDayGan = nDayGan
-	return self
+func (m *TZhu) setDayGan(nDayGan int) *TZhu {
+	m.nDayGan = nDayGan
+	return m
 }
 
 // 生成藏干
-func (self *TZhu) genCangGan() {
+func (m *TZhu) genCangGan() {
 	// 生成藏干数据
-	if self.pZhi != nil {
-		self.pCangGan = NewCangGan(self.nDayGan, self.pZhi)
+	if m.pZhi != nil {
+		m.pCangGan = NewCangGan(m.nDayGan, m.pZhi)
 	}
 }
 
 // 生成十神
-func (self *TZhu) genShiShen() {
-	self.pShiShen = NewShiShenFromGan(self.nDayGan, self.pGan)
+func (m *TZhu) genShiShen() {
+	m.pShiShen = NewShiShenFromGan(m.nDayGan, m.pGan)
 }
 
 //
-func (self *TZhu) genBaseGanZhi(nGanZhi int) *TZhu {
+func (m *TZhu) genBaseGanZhi(nGanZhi int) *TZhu {
 	// 直接设置成品干支
-	self.pGanZhi = NewGanZhi(nGanZhi)
+	m.pGanZhi = NewGanZhi(nGanZhi)
 	// 拆分干支
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
-	self.pGan, self.pZhi = self.pGanZhi.ExtractGanZhi()
+	m.pGan, m.pZhi = m.pGanZhi.ExtractGanZhi()
 
-	return self
+	return m
 }
 
-// 生成年干支
-func (self *TZhu) genYearGanZhi(nYear int) *TZhu {
+// genYearGanZhi 生成年干支
+func (m *TZhu) genYearGanZhi(nYear int) *TZhu {
 	// 通过年获取干支
 	// 获得八字年的干支，0-59 对应 甲子到癸亥
-	self.pGanZhi = NewGanZhiFromYear(nYear)
+	m.pGanZhi = NewGanZhiFromYear(nYear)
 	// 拆分干支
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
-	self.pGan, self.pZhi = self.pGanZhi.ExtractGanZhi()
+	m.pGan, m.pZhi = m.pGanZhi.ExtractGanZhi()
 
 	// 在这里计算藏干
-	self.genCangGan()
-	self.genShiShen()
-	return self
+	m.genCangGan()
+	m.genShiShen()
+	return m
 }
 
-//
-func (self *TZhu) genMonthGanZhi(nMonth int, nYearGan int) *TZhu {
+// genMonthGanZhi 生成月干支
+func (m *TZhu) genMonthGanZhi(nMonth int, nYearGan int) *TZhu {
 	// 根据口诀从本年干数计算本年首月的干数
 	switch nYearGan {
 	case 0, 5:
@@ -93,39 +96,41 @@ func (self *TZhu) genMonthGanZhi(nMonth int, nYearGan int) *TZhu {
 	nYearGan += ((nMonth - 1) % 10)
 
 	// 拆干
-	self.pGan = NewGan(nYearGan % 10)
-	self.pZhi = NewZhi((nMonth - 1 + 2) % 12)
+	m.pGan = NewGan(nYearGan % 10)
+	m.pZhi = NewZhi((nMonth - 1 + 2) % 12)
 
 	// 组合干支
-	self.pGanZhi = CombineGanZhi(self.pGan, self.pZhi)
+	m.pGanZhi = CombineGanZhi(m.pGan, m.pZhi)
 	// 在这里计算藏干
-	self.genCangGan()
-	self.genShiShen()
-	return self
+	m.genCangGan()
+	m.genShiShen()
+	return m
 }
 
-func (self *TZhu) genDayGanZhi(nAllDays int) *TZhu {
+// genDayGanZhi 生成日干支
+func (m *TZhu) genDayGanZhi(nAllDays int) *TZhu {
 
 	// 通过总天数来获取
 	// 获得八字年的干支，0-59 对应 甲子到癸亥
-	self.pGanZhi = NewGanZhiFromDay(nAllDays)
+	m.pGanZhi = NewGanZhiFromDay(nAllDays)
 	// 拆分干支
 	// 获得八字年的干0-9 对应 甲到癸
 	// 获得八字年的支0-11 对应 子到亥
-	self.pGan, self.pZhi = self.pGanZhi.ExtractGanZhi()
+	m.pGan, m.pZhi = m.pGanZhi.ExtractGanZhi()
 
 	// 直接保存日干
-	self.setDayGan(self.pGan.Value())
+	m.setDayGan(m.pGan.Value())
 
 	// 在这里计算藏干
-	self.genCangGan()
-	self.genShiShen()
-	return self
+	m.genCangGan()
+	m.genShiShen()
+	return m
 }
 
-func (self *TZhu) genHourGanZhi(nHour int) *TZhu {
+// genHourGanZhi 生成时干支
+func (m *TZhu) genHourGanZhi(nHour int) *TZhu {
 	// 取出日干
-	nGan := self.nDayGan
+	nGan := m.nDayGan
 
 	// 24小时校验
 	nHour %= 24
@@ -149,44 +154,44 @@ func (self *TZhu) genHourGanZhi(nHour int) *TZhu {
 	// 计算此时辰干数
 	nGan = (2*nGan + nZhi) % 10
 
-	self.pGan = NewGan(nGan)
-	self.pZhi = NewZhi(nZhi)
+	m.pGan = NewGan(nGan)
+	m.pZhi = NewZhi(nZhi)
 
 	// 组合干支
-	self.pGanZhi = CombineGanZhi(self.pGan, self.pZhi)
+	m.pGanZhi = CombineGanZhi(m.pGan, m.pZhi)
 
 	// 在这里计算藏干
-	self.genCangGan()
-	self.genShiShen()
-	return self
+	m.genCangGan()
+	m.genShiShen()
+	return m
 }
 
 // Gan 获取干
-func (self *TZhu) Gan() *TGan {
-	return self.pGan
+func (m *TZhu) Gan() *TGan {
+	return m.pGan
 }
 
 // Zhi 获取支
-func (self *TZhu) Zhi() *TZhi {
-	return self.pZhi
+func (m *TZhu) Zhi() *TZhi {
+	return m.pZhi
 }
 
 // GanZhi 获取干支
-func (self *TZhu) GanZhi() *TGanZhi {
-	return self.pGanZhi
+func (m *TZhu) GanZhi() *TGanZhi {
+	return m.pGanZhi
 }
 
 // ToYinYang 从柱里获取阴阳 (阴 == 0,  阳 == 1)
-func (self *TZhu) ToYinYang() *TYinYang {
-	return NewYinYangFromZhu(self)
+func (m *TZhu) ToYinYang() *TYinYang {
+	return NewYinYangFromZhu(m)
 }
 
 // CangGan 获取藏干
-func (self *TZhu) CangGan() *TCangGan {
-	return self.pCangGan
+func (m *TZhu) CangGan() *TCangGan {
+	return m.pCangGan
 }
 
 // ShiShen 获取十神
-func (self *TZhu) ShiShen() *TShiShen {
-	return self.pShiShen
+func (m *TZhu) ShiShen() *TShiShen {
+	return m.pShiShen
 }

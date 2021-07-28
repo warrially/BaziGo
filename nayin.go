@@ -1,16 +1,16 @@
 package bazi
 
 //  {* 纳音五行，与相邻一对六十干支对应}
-// 甲子乙丑海中金丙寅丁卯炉中火戊辰己巳大林木
-// 庚午辛未路旁土壬申癸酉剑锋金甲戌乙亥山头火
-// 丙子丁丑涧下水戊寅己卯城头土庚辰辛巳白蜡金
-// 壬午癸未杨柳木甲申乙酉井泉水丙戌丁亥屋上土
-// 戊子己丑霹雳火庚寅辛卯松柏木壬辰癸巳长流水
-// 甲午乙未砂中金丙申丁酉山下火戊戌己亥平地木
-// 庚子辛丑壁上土壬寅癸卯金箔金甲辰乙巳覆灯火
-// 丙午丁未天河水戊申己酉大驿土庚戌辛亥钗钏金
-// 壬子癸丑桑柘木甲寅乙卯大溪水丙辰丁巳砂中土
-// 戊午己未天上火庚申辛酉石榴木壬戌癸亥大海水
+// 甲子乙丑海中金 丙寅丁卯炉中火 戊辰己巳大林木
+// 庚午辛未路旁土 壬申癸酉剑锋金 甲戌乙亥山头火
+// 丙子丁丑涧下水 戊寅己卯城头土 庚辰辛巳白蜡金
+// 壬午癸未杨柳木 甲申乙酉井泉水 丙戌丁亥屋上土
+// 戊子己丑霹雳火 庚寅辛卯松柏木 壬辰癸巳长流水
+// 甲午乙未砂中金 丙申丁酉山下火 戊戌己亥平地木
+// 庚子辛丑壁上土 壬寅癸卯金箔金 甲辰乙巳覆灯火
+// 丙午丁未天河水 戊申己酉大驿土 庚戌辛亥钗钏金
+// 壬子癸丑桑柘木 甲寅乙卯大溪水 丙辰丁巳砂中土
+// 戊午己未天上火 庚申辛酉石榴木 壬戌癸亥大海水
 
 // GetNaYinFromNumber 从数字获得纳音名, 0-29
 func GetNaYinFromNumber(nValue int) string {
@@ -101,11 +101,19 @@ func NewNaYin(nValue int) *TNaYin {
 type TNaYin int
 
 // Value 转换成int
-func (self *TNaYin) Value() int {
-	return (int)(*self)
+func (m *TNaYin) Value() int {
+	return (int)(*m)
+}
+
+func (m *TNaYin) ToInt() int {
+	return m.Value()
 }
 
 // String 转换成可阅读的字符串
-func (self *TNaYin) String() string {
-	return GetNaYinFromNumber(self.Value())
+func (m *TNaYin) String() string {
+	return GetNaYinFromNumber(m.Value())
+}
+
+func (m *TNaYin) ToString() string {
+	return m.String()
 }

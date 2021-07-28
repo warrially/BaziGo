@@ -167,31 +167,31 @@ func CombineGanZhi(pGan *TGan, pZhi *TZhi) *TGanZhi {
 type TGanZhi int
 
 // ToString 转换成可阅读的字符串
-func (self *TGanZhi) ToString() string {
-	return self.String()
+func (m *TGanZhi) ToString() string {
+	return m.String()
 }
 
 // ExtractGanZhi   将干支拆分成天干地支，0-59 转换成 0-9 0-11
-func (self *TGanZhi) ExtractGanZhi() (*TGan, *TZhi) {
-	return NewGan(self.Value()), NewZhi(self.Value())
+func (m *TGanZhi) ExtractGanZhi() (*TGan, *TZhi) {
+	return NewGan(m.Value()), NewZhi(m.Value())
 }
 
 // ToNaYin 纳音
-func (self *TGanZhi) ToNaYin() *TNaYin {
-	return NewNaYin(self.Value() / 2)
+func (m *TGanZhi) ToNaYin() *TNaYin {
+	return NewNaYin(m.Value() / 2)
 }
 
 // ToInt 转换成int
-func (self *TGanZhi) ToInt() int {
-	return self.Value()
+func (m *TGanZhi) ToInt() int {
+	return m.Value()
 }
 
 // Value 转换成int
-func (self *TGanZhi) Value() int {
-	return (int)(*self)
+func (m *TGanZhi) Value() int {
+	return (int)(*m)
 }
 
 // String 转换成可阅读的字符串
-func (self *TGanZhi) String() string {
-	return GetGanZhiFromNumber(self.Value())
+func (m *TGanZhi) String() string {
+	return GetGanZhiFromNumber(m.Value())
 }

@@ -24,48 +24,48 @@ type TBaziDate struct {
 	pNextJie     *TJieQiDate // 下一个节(气)
 }
 
-func (self *TBaziDate) init(pSolarDate *TSolarDate) *TBaziDate {
-	self.nYear = GetLiChunYear(pSolarDate)                      // 拿到八字年, 根据立春来的
-	self.pPreviousJie, self.pNextJie = GetJieQiDate(pSolarDate) // 拿到前后两个的日期
+func (m *TBaziDate) init(pSolarDate *TSolarDate) *TBaziDate {
+	m.nYear = GetLiChunYear(pSolarDate)                   // 拿到八字年, 根据立春来的
+	m.pPreviousJie, m.pNextJie = GetJieQiDate(pSolarDate) // 拿到前后两个的日期
 	// 节气
-	nJieQi := self.pPreviousJie.JieQi
-	self.pJieQi = &nJieQi
+	nJieQi := m.pPreviousJie.JieQi
+	m.pJieQi = &nJieQi
 	// 月
-	self.nMonth = self.pJieQi.Month()
-	return self
+	m.nMonth = m.pJieQi.Month()
+	return m
 }
 
-func (self *TBaziDate) String() string {
+func (m *TBaziDate) String() string {
 	return fmt.Sprintf("八字历: %4d 年 %02d 月 \n上一个:%v\n下一个:%v",
-		self.nYear, self.nMonth, self.pPreviousJie, self.pNextJie)
+		m.nYear, m.nMonth, m.pPreviousJie, m.pNextJie)
 }
 
 // Year  年. 立春
-func (self *TBaziDate) Year() int {
-	return self.nYear
+func (m *TBaziDate) Year() int {
+	return m.nYear
 }
 
 // Month  月.
-func (self *TBaziDate) Month() int {
-	return self.nMonth
+func (m *TBaziDate) Month() int {
+	return m.nMonth
 }
 
 // Day  天
-func (self *TBaziDate) Day() int {
-	return self.nDay
+func (m *TBaziDate) Day() int {
+	return m.nDay
 }
 
 // Hour 小时
-func (self *TBaziDate) Hour() int {
-	return self.nHour
+func (m *TBaziDate) Hour() int {
+	return m.nHour
 }
 
 // PreviousJie 上一个节气
-func (self *TBaziDate) PreviousJie() *TJieQiDate {
-	return self.pPreviousJie
+func (m *TBaziDate) PreviousJie() *TJieQiDate {
+	return m.pPreviousJie
 }
 
 // NextJie 下一个节气
-func (self *TBaziDate) NextJie() *TJieQiDate {
-	return self.pNextJie
+func (m *TBaziDate) NextJie() *TJieQiDate {
+	return m.pNextJie
 }
