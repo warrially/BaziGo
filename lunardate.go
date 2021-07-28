@@ -1,9 +1,5 @@
 package bazi
 
-import (
-	"fmt"
-)
-
 // NewLunarDate 新建一个农历日期,  顺序月
 func NewLunarDate(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond int) *TLunarDate {
 	pDate := &TLunarDate{
@@ -916,9 +912,14 @@ func (m *TLunarDate) GetAllDays() int {
 
 }
 
-func (m *TLunarDate) String() string {
-	strResult := fmt.Sprintf("农历: %d年", m.nYear)
+// Year 年
+func (m *TLunarDate) Year() string {
+	return GetChnCharFromYear(m.nYear)
+}
 
+// Month 月
+func (m *TLunarDate) Month() string {
+	strResult := ""
 	if m.nConventionalMonth == m.nMonth-1 {
 		strResult += "闰"
 	}
@@ -950,71 +951,116 @@ func (m *TLunarDate) String() string {
 		strResult += "腊月"
 	}
 
+	return strResult
+}
+
+// Day 日
+func (m *TLunarDate) Day() string {
 	switch m.nDay {
 	case 1:
-		strResult += "初一"
+		return "初一"
 	case 2:
-		strResult += "初二"
+		return "初二"
 	case 3:
-		strResult += "初三"
+		return "初三"
 	case 4:
-		strResult += "初四"
+		return "初四"
 	case 5:
-		strResult += "初五"
+		return "初五"
 	case 6:
-		strResult += "初六"
+		return "初六"
 	case 7:
-		strResult += "初七"
+		return "初七"
 	case 8:
-		strResult += "初八"
+		return "初八"
 	case 9:
-		strResult += "初九"
+		return "初九"
 	case 10:
-		strResult += "初十"
+		return "初十"
 
 	case 11:
-		strResult += "十一"
+		return "十一"
 	case 12:
-		strResult += "十二"
+		return "十二"
 	case 13:
-		strResult += "十三"
+		return "十三"
 	case 14:
-		strResult += "十四"
+		return "十四"
 	case 15:
-		strResult += "十五"
+		return "十五"
 	case 16:
-		strResult += "十六"
+		return "十六"
 	case 17:
-		strResult += "十七"
+		return "十七"
 	case 18:
-		strResult += "十八"
+		return "十八"
 	case 19:
-		strResult += "十九"
+		return "十九"
 	case 20:
-		strResult += "二十"
+		return "二十"
 
 	case 21:
-		strResult += "廿一"
+		return "廿一"
 	case 22:
-		strResult += "廿二"
+		return "廿二"
 	case 23:
-		strResult += "廿三"
+		return "廿三"
 	case 24:
-		strResult += "廿四"
+		return "廿四"
 	case 25:
-		strResult += "廿五"
+		return "廿五"
 	case 26:
-		strResult += "廿六"
+		return "廿六"
 	case 27:
-		strResult += "廿七"
+		return "廿七"
 	case 28:
-		strResult += "廿八"
+		return "廿八"
 	case 29:
-		strResult += "廿九"
+		return "廿九"
 	case 30:
-		strResult += "三十"
+		return "三十"
 
 	}
+	return ""
+}
+
+// Hour 时
+func (m *TLunarDate) Hour() string {
+	switch m.nDay {
+	case 23, 0:
+		return "子时" // 子时——晚11点钟到凌晨1点钟；
+	case 1, 2:
+		return "丑时" // 丑时——1点钟至3点钟；
+	case 3, 4:
+		return "寅时" // 寅时——3点钟至5点钟；
+	case 5, 6:
+		return "卯时" // 卯时——5点钟至7点钟；
+	case 7, 8:
+		return "辰时" // 辰时——7点钟至9点钟；
+	case 9, 10:
+		return "巳时" // 巳时——9点钟至11点钟；
+	case 11, 12:
+		return "午时" // 午时——11点钟至下午1点钟；
+	case 13, 14:
+		return "未时" // 未时——13点钟至15点钟；
+	case 15, 16:
+		return "申时" // 申时——下午3点钟至5点钟；
+	case 17, 18:
+		return "酉时" // 酉时——下午5点钟至7点钟；
+	case 19, 20:
+		return "戌时" // 戌时——下午7点钟至晚9点钟；
+	case 21, 22:
+		return "亥时" // 亥时——晚9点钟至11点钟。
+	}
+	return ""
+}
+
+func (m *TLunarDate) String() string {
+	strResult := `农历:`
+	strResult += m.Year() + "年"
+	strResult += m.Month()
+	strResult += m.Day()
+	strResult += m.Hour()
 
 	return strResult
 }
