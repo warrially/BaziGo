@@ -54497,8 +54497,8 @@ var jieqilist = []*TJieQiDate{
 }
 
 // ToSolarDate 节气日期 转成 普通日期用
-func (self *TJieQiDate) ToSolarDate() *TSolarDate {
-	return NewSolarDate(self.Year, self.Month, self.Day, self.Hour, self.Minute, self.Second)
+func (m *TJieQiDate) ToSolarDate() *TSolarDate {
+	return NewSolarDate(m.Year, m.Month, m.Day, m.Hour, m.Minute, m.Second)
 }
 
 // GetJieQiDate 获取某个日期的节气, 和前后两个节气的日期
@@ -54525,7 +54525,7 @@ func GetJieQiDate(pSolarDate *TSolarDate) (*TJieQiDate, *TJieQiDate) {
 }
 
 // String
-func (self *TJieQiDate) String() string {
+func (m *TJieQiDate) String() string {
 	return fmt.Sprintf("节气:%d年%02d月%02d日 %02d:%02d:%02d (%v)",
-		self.Year, self.Month, self.Day, self.Hour, self.Minute, self.Second, self.JieQi.String())
+		m.Year, m.Month, m.Day, m.Hour, m.Minute, m.Second, m.JieQi.String())
 }

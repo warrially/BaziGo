@@ -59,41 +59,38 @@ func GetJieQiFromNumber(nValue int) string {
 }
 
 // IsJie 节气是否是节,   节气分成节和气,
-func (self *TJieQi) IsJie() bool {
-	n := self.Value()
-	if n%2 == 0 {
-		return true
-	}
-	return false
+func (m *TJieQi) IsJie() bool {
+	n := m.Value()
+	return n%2 == 0
 }
 
 // ToString 转换成可阅读的字符串
-func (self *TJieQi) ToString() string {
-	return self.String()
+func (m *TJieQi) ToString() string {
+	return m.String()
 }
 
 // ToInt 转换成int
-func (self *TJieQi) ToInt() int {
-	return self.Value()
+func (m *TJieQi) ToInt() int {
+	return m.Value()
 }
 
 // Month 节气月份
-func (self *TJieQi) Month() int {
-	return self.ToMonth()
+func (m *TJieQi) Month() int {
+	return m.ToMonth()
 }
 
 // ToMonth 转成节气月
-func (self *TJieQi) ToMonth() int {
+func (m *TJieQi) ToMonth() int {
 	// 节气0 是立春 是1月
-	return self.Value()/2 + 1
+	return m.Value()/2 + 1
 }
 
 // Value 转换成int
-func (self *TJieQi) Value() int {
-	return (int)(*self)
+func (m *TJieQi) Value() int {
+	return (int)(*m)
 }
 
 // String 转换成可阅读的字符串
-func (self *TJieQi) String() string {
-	return GetJieQiFromNumber(self.Value())
+func (m *TJieQi) String() string {
+	return GetJieQiFromNumber(m.Value())
 }
