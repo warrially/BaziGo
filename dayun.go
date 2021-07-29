@@ -8,7 +8,6 @@ package bazi
 推排流年有两种作用：第一种是给求测从生至死的每一年的事情；第二种是答复求测人所问某一年的吉凶。
 比如一个人要问45那年的吉凶如何？就从出生年起推出45那年是什么干支，再结合命局与大运进行分析，定其吉凶祸福。
 */
-import "fmt"
 
 // NewDaYun 新大运
 func NewDaYun(pSiZhu *TSiZhu, nSex int) *TDaYun {
@@ -34,11 +33,7 @@ func (m *TDaYun) init(pSiZhu *TSiZhu, nSex int) *TDaYun {
 
 	// 月柱的干支
 	nMonthGanZhi := pSiZhu.MonthZhu().GanZhi().Value()
-	// 取出日干十神作为比较
-	nDayGan := pSiZhu.DayZhu().Gan().Value()
-	fmt.Println(nDayGan)
 
-	//
 	for i := 0; i < 12; i++ {
 		if yinyang.Value() == nSex {
 			m.isShunNi = true
