@@ -1026,7 +1026,7 @@ func (m *TLunarDate) Day() string {
 
 // Hour 时
 func (m *TLunarDate) Hour() string {
-	switch m.nDay {
+	switch m.nHour {
 	case 23, 0:
 		return "子时" // 子时——晚11点钟到凌晨1点钟；
 	case 1, 2:
