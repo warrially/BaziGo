@@ -19,6 +19,7 @@ func NewDaYun(pSiZhu *TSiZhu, nSex int) *TDaYun {
 // TDaYun 大运
 type TDaYun struct {
 	zhuList  [12]*TZhu // 12个大运柱列表
+	nAge     [12]int   // 12个大运对应年龄
 	isShunNi bool      // 顺转还是逆转(true 顺,  false 逆)
 }
 
@@ -62,4 +63,21 @@ func (m *TDaYun) String() string {
 // ShunNi 顺逆
 func (m *TDaYun) ShunNi() bool {
 	return m.isShunNi
+}
+
+// Zhu 获取柱
+func (m *TDaYun) Zhu(nIndex int) *TZhu {
+	nIndex %= 12
+	return m.zhuList[nIndex]
+}
+
+// Size 容量就是12
+func (m *TDaYun) Size() int {
+	return 12
+}
+
+// Age 获取年龄
+func (m *TDaYun) Age(nIndex int) int {
+	nIndex %= 12
+	return m.nAge[nIndex]
 }

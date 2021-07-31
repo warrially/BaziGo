@@ -70,9 +70,16 @@ func (m *TBazi) init() *TBazi {
 	// 4. 计算起运时间
 	m.pQiYunDate = NewQiYun(m.pDaYun.ShunNi(), m.pBaziDate.PreviousJie().ToSolarDate(), m.pBaziDate.NextJie().ToSolarDate(), m.pSolarDate)
 
+	// 5. 起运时间融入到大运中
+	nAge := m.QiYunDate().Year() - m.Date().Year()
+	for i := 0; i < 12; i++ {
+		m.pDaYun.nAge[i] = nAge + 10*i
+	}
+
 	return m
 }
 
+// String 打印用
 func (m *TBazi) String() string {
 	return fmt.Sprintf("%v\n %v\n %v\n%v\n%v \n起运时间%v", m.pSolarDate, m.pLunarDate, m.pBaziDate, m.pSiZhu, m.pDaYun, m.pQiYunDate)
 }
@@ -82,17 +89,27 @@ func (m *TBazi) SiZhu() *TSiZhu {
 	return m.pSiZhu
 }
 
-// 获取日期， 默认就是新历
+// Date 获取日期， 默认就是新历
 func (m *TBazi) Date() *TSolarDate {
 	return m.pSolarDate
 }
 
-// 获取新历日期
+// SolarData 获取新历日期
 func (m *TBazi) SolarData() *TSolarDate {
 	return m.Date()
 }
 
-// 获取农历日期
+// LunarDate 获取农历日期
 func (m *TBazi) LunarDate() *TLunarDate {
 	return m.pLunarDate
+}
+
+// DaYun 获取大运
+func (m *TBazi) DaYun() *TDaYun {
+	return m.pDaYun
+}
+
+// QiYunDate 起运时间
+func (m *TBazi) QiYunDate() *TSolarDate {
+	return m.pQiYunDate
 }
