@@ -3,7 +3,7 @@ package bazi
 import "fmt"
 
 // ToHTML 转换成网页形式
-func (self *TBazi) ToHTML() string {
+func (m *TBazi) ToHTML() string {
 	strHTML := `<!DOCTYPE html>`
 	strHTML += `<html>`
 	strHTML += `<head>`
@@ -16,119 +16,172 @@ func (self *TBazi) ToHTML() string {
 	strHTML += `<body> <div>`
 
 	strHTML += `<div class="div_row">`
+	// ---------------------------------------------------------------------------------------------------------
 	strHTML += `<div class="div_flex div_column">`
-	strHTML += `<div>`
-	strHTML += `<p>`
-	strHTML += fmt.Sprintf(`<font color="gray" size="2">%d年</font>`, self.pSolarDate.nYear)
-	strHTML += `</p>`
-	strHTML += `<p>`
-	strHTML += `<font color="gray" size="2">一九八六</font>`
-	strHTML += `</p>`
-	strHTML += `</div>`
-	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += `<div>`
 
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().YearZhu().Gan().ToWuXing().Color(), self.SiZhu().YearZhu().Gan().String())
+	strHTML += `<div>`
+	strHTML += fmt.Sprintf(`<p><font color="gray" size="2">%d年</font></p>`, m.Date().Year())
+	strHTML += fmt.Sprintf(`<p><font color="gray" size="2">%s</font></p>`, m.LunarDate().Year())
+	strHTML += `</div>`
+
+	strHTML += `<div class="div_row" style="padding: 10px;">`
+	strHTML += `<div>`
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().YearZhu().Gan().ToWuXing().Color(), m.SiZhu().YearZhu().Gan().String())
 	strHTML += `</div>`
 	strHTML += `<div>`
-	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, self.SiZhu().YearZhu().Gan().ToWuXing().Color(), self.SiZhu().YearZhu().ShiShen().String())
+	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, m.SiZhu().YearZhu().Gan().ToWuXing().Color(), m.SiZhu().YearZhu().ShiShen().String())
 	strHTML += `</div>`
 	strHTML += `</div>`
 	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().YearZhu().Zhi().ToWuXing().Color(), self.SiZhu().YearZhu().Zhi().String())
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().YearZhu().Zhi().ToWuXing().Color(), m.SiZhu().YearZhu().Zhi().String())
 	strHTML += `<div class="div_column">`
-	for i := 0; i < self.SiZhu().YearZhu().CangGan().Size(); i++ {
+	for i := 0; i < m.SiZhu().YearZhu().CangGan().Size(); i++ {
 		strHTML += fmt.Sprintf(`<font color="%s">%s</font>`,
-			self.SiZhu().YearZhu().CangGan().Gan(i).ToWuXing().Color(),
-			self.SiZhu().YearZhu().CangGan().ShiShen(i).String())
+			m.SiZhu().YearZhu().CangGan().Gan(i).ToWuXing().Color(),
+			m.SiZhu().YearZhu().CangGan().ShiShen(i).String())
 	}
-	strHTML += `</div>`
-	strHTML += `</div>`
-	strHTML += `</div>`
+	strHTML += `</div></div></div>`
+	// ---------------------------------------------------------------------------------------------------------
 	strHTML += `<div class="div_flex div_column">`
 	strHTML += `<div>`
 	strHTML += `<p>`
-	strHTML += `<font color="gray" size="2">09月</font>`
+	strHTML += fmt.Sprintf(`<font color="gray" size="2">%02d月</font>`, m.pSolarDate.nMonth)
 	strHTML += `</p>`
 	strHTML += `<p>`
 	strHTML += `<font color="gray" size="2">八月</font>`
 	strHTML += `</p>`
 	strHTML += `</div>`
 	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().MonthZhu().Gan().ToWuXing().Color(), self.SiZhu().MonthZhu().Gan().String())
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().MonthZhu().Gan().ToWuXing().Color(), m.SiZhu().MonthZhu().Gan().String())
 	strHTML += `<div>`
-	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, self.SiZhu().MonthZhu().Gan().ToWuXing().Color(), self.SiZhu().MonthZhu().ShiShen().String())
+	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, m.SiZhu().MonthZhu().Gan().ToWuXing().Color(), m.SiZhu().MonthZhu().ShiShen().String())
 	strHTML += `</div>`
 	strHTML += `</div>`
 	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().MonthZhu().Zhi().ToWuXing().Color(), self.SiZhu().MonthZhu().Zhi().String())
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().MonthZhu().Zhi().ToWuXing().Color(), m.SiZhu().MonthZhu().Zhi().String())
 	strHTML += `<div class="div_column">`
-	for i := 0; i < self.SiZhu().MonthZhu().CangGan().Size(); i++ {
+	for i := 0; i < m.SiZhu().MonthZhu().CangGan().Size(); i++ {
 		strHTML += fmt.Sprintf(`<font color="%s">%s</font>`,
-			self.SiZhu().MonthZhu().CangGan().Gan(i).ToWuXing().Color(),
-			self.SiZhu().MonthZhu().CangGan().ShiShen(i).String())
+			m.SiZhu().MonthZhu().CangGan().Gan(i).ToWuXing().Color(),
+			m.SiZhu().MonthZhu().CangGan().ShiShen(i).String())
 	}
 
-	strHTML += `</div>`
-	strHTML += `</div>`
-	strHTML += `</div>`
+	strHTML += `</div></div></div>`
+	// ---------------------------------------------------------------------------------------------------------
 	strHTML += `<div class="div_flex div_column">`
 	strHTML += `<div>`
 	strHTML += `<p>`
-	strHTML += `<font color="gray" size="2">22日</font>`
+	strHTML += fmt.Sprintf(`<font color="gray" size="2">%d日</font>`, m.Date().Day())
 	strHTML += `</p>`
 	strHTML += `<p>`
-	strHTML += `<font color="gray" size="2">十九日</font>`
+	strHTML += fmt.Sprintf(`<font color="gray" size="2">%s日</font>`, m.LunarDate().Day())
 	strHTML += `</p>`
 	strHTML += `</div>`
 	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().DayZhu().Gan().ToWuXing().Color(), self.SiZhu().DayZhu().Gan().String())
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().DayZhu().Gan().ToWuXing().Color(), m.SiZhu().DayZhu().Gan().String())
 	strHTML += `<div>`
-	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, self.SiZhu().DayZhu().Gan().ToWuXing().Color(), self.SiZhu().DayZhu().ShiShen().String())
+	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, m.SiZhu().DayZhu().Gan().ToWuXing().Color(), "主")
 	strHTML += `</div>`
 	strHTML += `</div>`
 	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().DayZhu().Zhi().ToWuXing().Color(), self.SiZhu().DayZhu().Zhi().String())
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().DayZhu().Zhi().ToWuXing().Color(), m.SiZhu().DayZhu().Zhi().String())
 	strHTML += `<div class="div_column">`
-	for i := 0; i < self.SiZhu().DayZhu().CangGan().Size(); i++ {
+	for i := 0; i < m.SiZhu().DayZhu().CangGan().Size(); i++ {
 		strHTML += fmt.Sprintf(`<font color="%s">%s</font>`,
-			self.SiZhu().DayZhu().CangGan().Gan(i).ToWuXing().Color(),
-			self.SiZhu().DayZhu().CangGan().ShiShen(i).String())
+			m.SiZhu().DayZhu().CangGan().Gan(i).ToWuXing().Color(),
+			m.SiZhu().DayZhu().CangGan().ShiShen(i).String())
 	}
-	strHTML += `</div>`
-	strHTML += `</div>`
-	strHTML += `</div>`
+	strHTML += `</div></div></div>`
+	// ---------------------------------------------------------------------------------------------------------
 	strHTML += `<div class="div_flex div_column">`
 	strHTML += `<div>`
 	strHTML += `<p>`
-	strHTML += `<font color="gray" size="2">12时</font>`
+	strHTML += fmt.Sprintf(`<font color="gray" size="2">%d时</font>`, m.Date().Hour())
 	strHTML += `</p>`
 	strHTML += `<p>`
-	strHTML += `<font color="gray" size="2">午时</font>`
+	fmt.Println(m.LunarDate())
+	strHTML += fmt.Sprintf(`<font color="gray" size="2">%s</font>`, m.LunarDate().Hour())
 	strHTML += `</p>`
 	strHTML += `</div>`
 	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().HourZhu().Gan().ToWuXing().Color(), self.SiZhu().HourZhu().Gan().String())
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().HourZhu().Gan().ToWuXing().Color(), m.SiZhu().HourZhu().Gan().String())
 	strHTML += `<div>`
-	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, self.SiZhu().HourZhu().Gan().ToWuXing().Color(), self.SiZhu().HourZhu().ShiShen().String())
+	strHTML += fmt.Sprintf(`<font color="%s">%s</font>`, m.SiZhu().HourZhu().Gan().ToWuXing().Color(), m.SiZhu().HourZhu().ShiShen().String())
 
 	strHTML += `</div>`
 	strHTML += `</div>`
 	strHTML += `<div class="div_row" style="padding: 10px;">`
-	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, self.SiZhu().HourZhu().Zhi().ToWuXing().Color(), self.SiZhu().HourZhu().Zhi().String())
+	strHTML += fmt.Sprintf(`<font color="%s" size="8">%s</font>`, m.SiZhu().HourZhu().Zhi().ToWuXing().Color(), m.SiZhu().HourZhu().Zhi().String())
 	strHTML += `<div class="div_column">`
-	for i := 0; i < self.SiZhu().HourZhu().CangGan().Size(); i++ {
+	for i := 0; i < m.SiZhu().HourZhu().CangGan().Size(); i++ {
 		strHTML += fmt.Sprintf(`<font color="%s">%s</font>`,
-			self.SiZhu().HourZhu().CangGan().Gan(i).ToWuXing().Color(),
-			self.SiZhu().HourZhu().CangGan().ShiShen(i).String())
+			m.SiZhu().HourZhu().CangGan().Gan(i).ToWuXing().Color(),
+			m.SiZhu().HourZhu().CangGan().ShiShen(i).String())
+	}
+	strHTML += `</div></div></div>`
+	strHTML += `</div>`
+	strHTML += `</div>`
+
+	// ---------------------------------------------------------------------------------------------------------
+	strHTML += `<div style="background-color: rgb(238, 238, 238); height: 5px;"></div>`
+
+	// ---------------------------------------------------------------------------------------------------------
+	strHTML += `<div style="margin: 10px;">`
+	strHTML += `大运`
+	strHTML += `<font color="green">庚子</font>`
+	strHTML += `</div>`
+
+	// ---------------------------------------------------------------------------------------------------------
+	strHTML += `<div style="background-color: lightgray;">`
+	strHTML += `<div class="div_row">`
+
+	for i := 0; i < 5; i++ {
+		strHTML += `<div class="div_column div_flex" style="background-color: white; margin: 1px;">`
+		strHTML += `<div style="margin: 10px;">`
+		strHTML += fmt.Sprintf(`<font color="gray" size="2">%d</font>`, m.DaYun().Age(i)+m.Date().Year())
+		strHTML += `</div>`
+		strHTML += `<div style="margin: 3px;">`
+		strHTML += fmt.Sprintf(`<font color="%s" size="5">%s</font>`, m.DaYun().Zhu(i).Gan().ToWuXing().Color(), m.DaYun().Zhu(i).Gan().String())
+		strHTML += `</div>`
+		strHTML += `<div style="margin: 3px;">`
+		strHTML += fmt.Sprintf(`<font color="%s" size="5">%s</font>`, m.DaYun().Zhu(i).Zhi().ToWuXing().Color(), m.DaYun().Zhu(i).Zhi().String())
+		strHTML += `</div>`
+		strHTML += `<div style="margin: 10px;">`
+		strHTML += fmt.Sprintf(`<font color="gray" size="2">%d</font>`, m.DaYun().Age(i))
+		strHTML += `</div>`
+		strHTML += `</div>`
 	}
 	strHTML += `</div>`
 	strHTML += `</div>`
+
+	// ---------------------------------------------------------------------------------------------------------
+	strHTML += `<div style="background-color: lightgray;">`
+	strHTML += `<div class="div_row">`
+
+	for i := 5; i < 10; i++ {
+		strHTML += `<div class="div_column div_flex" style="background-color: white; margin: 1px;">`
+		strHTML += `<div style="margin: 10px;">`
+		strHTML += fmt.Sprintf(`<font color="gray" size="2">%d</font>`, m.DaYun().Age(i)+m.Date().Year())
+		strHTML += `</div>`
+		strHTML += `<div style="margin: 3px;">`
+		strHTML += fmt.Sprintf(`<font color="%s" size="5">%s</font>`, m.DaYun().Zhu(i).Gan().ToWuXing().Color(), m.DaYun().Zhu(i).Gan().String())
+		strHTML += `</div>`
+		strHTML += `<div style="margin: 3px;">`
+		strHTML += fmt.Sprintf(`<font color="%s" size="5">%s</font>`, m.DaYun().Zhu(i).Zhi().ToWuXing().Color(), m.DaYun().Zhu(i).Zhi().String())
+		strHTML += `</div>`
+		strHTML += `<div style="margin: 10px;">`
+		strHTML += fmt.Sprintf(`<font color="gray" size="2">%d</font>`, m.DaYun().Age(i))
+		strHTML += `</div>`
+		strHTML += `</div>`
+	}
+
 	strHTML += `</div>`
 	strHTML += `</div>`
+	// ---------------------------------------------------------------------------------------------------------
 
-	strHTML += `</div> </body>`
+	strHTML += `</div>`
 
+	strHTML += `</body>`
 	strHTML += `</html>`
 
 	return strHTML
