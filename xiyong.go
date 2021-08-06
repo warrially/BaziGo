@@ -1,5 +1,7 @@
 package bazi
 
+import "fmt"
+
 // 喜用神
 // 喜用神是中国传统八字命理学上的术语， 喜用神是喜神与用神的合称。
 // 八字，即把人出生的年、月、日、时分作四柱，每柱配有一天干和地支，合共八字。
@@ -69,6 +71,18 @@ func (m *TXiYong) init(pSiZhu *TSiZhu) {
 	}
 }
 
+func (m *TXiYong) String() string {
+	strResult := ""
+
+	strResult += fmt.Sprintf("金强度 = %d\n", m.wuxingList[0])
+	strResult += fmt.Sprintf("木强度 = %d\n", m.wuxingList[1])
+	strResult += fmt.Sprintf("水强度 = %d\n", m.wuxingList[2])
+	strResult += fmt.Sprintf("火强度 = %d\n", m.wuxingList[3])
+	strResult += fmt.Sprintf("土强度 = %d\n", m.wuxingList[4])
+
+	return strResult
+}
+
 // 天干地支强度测试
 
 // 天干强度表
@@ -89,7 +103,7 @@ var tianganqiangdulist = [12][10]int{
 
 // 地支强度表
 var dizhiqiangdulist = [12][36]int{
-	// 子 子 子  丑   丑   丑   寅   寅  寅  卯   卯  卯 辰   辰   辰   巳  巳  巳   午   午  午 未   未   未   申  申  申   酉   酉 酉  戌   戌   戌   亥   亥   亥
+	// 子  子 子  丑   丑   丑   寅   寅  寅  卯   卯  卯 辰   辰   辰   巳  巳  巳   午   午  午 未   未   未   申  申  申   酉   酉 酉  戌   戌   戌   亥   亥   亥
 	// 癸        己   癸   辛   甲   丙      乙          戊   乙   癸   丙  戊  庚   丁   己     己   乙   丁   庚      壬   辛          戊   辛   丁   壬   甲
 	{1000, 0, 0, 530, 300, 200, 798, 360, 0, 1140, 0, 0, 530, 342, 200, 840, 0, 300, 1200, 0, 0, 530, 228, 360, 700, 0, 300, 1000, 0, 0, 530, 300, 240, 700, 342, 0}, // 寅月
 	{1000, 0, 0, 500, 300, 200, 840, 360, 0, 1200, 0, 0, 500, 360, 200, 840, 0, 300, 1200, 0, 0, 500, 240, 360, 700, 0, 300, 1000, 0, 0, 500, 300, 240, 700, 360, 0}, // 卯月
