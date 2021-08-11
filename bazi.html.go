@@ -14,6 +14,39 @@ func (m *TBazi) ToHTML() string {
 	row := htmlgo.NewRow()
 	row.AddTo(html.GetBody())
 
+	ganzhi := func(strText1, strText2 string, pZhu *TZhu) *htmlgo.TDiv {
+		column := htmlgo.NewColumn().SetFlex(1)
+
+		// column.SetBackground(fmt.Sprintf("rgb(%d,%d,%d)", rand.Intn(255), rand.Intn(255), rand.Intn(255)))
+
+		div := htmlgo.NewDiv().AddTo(column)
+		htmlgo.NewFont().P().SetText(strText1).SetSize(2).SetColor("gray").AddTo(div)
+		htmlgo.NewFont().P().SetText(strText2).SetSize(2).SetColor("gray").AddTo(div)
+
+		{
+			// 天干
+			row := htmlgo.NewRow().SetPadding("10px").AddTo(column)
+
+			htmlgo.NewFont().SetText(pZhu.Gan().String()).SetSize(8).SetColor(pZhu.Gan().ToWuXing().Color()).AddTo(row)
+			htmlgo.NewFont().SetText(pZhu.ShiShen().String()).SetSize(3).SetColor(pZhu.Gan().ToWuXing().Color()).AddTo(row)
+
+		}
+
+		{
+			// 地支
+			row := htmlgo.NewRow().SetPadding("10px").AddTo(column)
+			htmlgo.NewFont().SetText(pZhu.Zhi().String()).SetSize(8).SetColor(pZhu.Zhi().ToWuXing().Color()).AddTo(row)
+			column := htmlgo.NewColumn().AddTo(row)
+			// 藏干
+			for j := 0; j < pZhu.CangGan().Size(); j++ {
+				htmlgo.NewFont().SetText(pZhu.CangGan().ShiShen(j).String()).SetSize(3).SetColor(pZhu.CangGan().Gan(j).ToWuXing().Color()).AddTo(column)
+			}
+
+		}
+
+		return column
+	}
+
 	// 四柱
 	ganzhi(fmt.Sprintf("%d年", m.Date().Year()), m.LunarDate().Year(), m.SiZhu().YearZhu()).AddTo(row)
 	ganzhi(fmt.Sprintf("%02d月", m.Date().Month()), m.LunarDate().Month(), m.SiZhu().MonthZhu()).AddTo(row)
@@ -49,38 +82,4 @@ func (m *TBazi) ToHTML() string {
 	}
 
 	return html.String()
-}
-
-// 干支
-func ganzhi(strText1, strText2 string, pZhu *TZhu) *htmlgo.TDiv {
-	column := htmlgo.NewColumn().SetFlex(1)
-
-	// column.SetBackground(fmt.Sprintf("rgb(%d,%d,%d)", rand.Intn(255), rand.Intn(255), rand.Intn(255)))
-
-	div := htmlgo.NewDiv().AddTo(column)
-	htmlgo.NewFont().P().SetText(strText1).SetSize(2).SetColor("gray").AddTo(div)
-	htmlgo.NewFont().P().SetText(strText2).SetSize(2).SetColor("gray").AddTo(div)
-
-	{
-		// 天干
-		row := htmlgo.NewRow().SetPadding("10px").AddTo(column)
-
-		htmlgo.NewFont().SetText(pZhu.Gan().String()).SetSize(8).SetColor(pZhu.Gan().ToWuXing().Color()).AddTo(row)
-		htmlgo.NewFont().SetText(pZhu.ShiShen().String()).SetSize(3).SetColor(pZhu.Gan().ToWuXing().Color()).AddTo(row)
-
-	}
-
-	{
-		// 地支
-		row := htmlgo.NewRow().SetPadding("10px").AddTo(column)
-		htmlgo.NewFont().SetText(pZhu.Zhi().String()).SetSize(8).SetColor(pZhu.Zhi().ToWuXing().Color()).AddTo(row)
-		column := htmlgo.NewColumn().AddTo(row)
-		// 藏干
-		for j := 0; j < pZhu.CangGan().Size(); j++ {
-			htmlgo.NewFont().SetText(pZhu.CangGan().ShiShen(j).String()).SetSize(3).SetColor(pZhu.CangGan().Gan(j).ToWuXing().Color()).AddTo(column)
-		}
-
-	}
-
-	return column
 }
