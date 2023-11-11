@@ -19,6 +19,11 @@ func NewLunarDate(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSeco
 		return nil
 	}
 
+	// 同样需要检查时间是否合法
+	if !pDate.GetTimeIsValid(nHour, nMinute, nSecond) {
+		return nil
+	}
+
 	return pDate
 }
 
@@ -140,7 +145,6 @@ type TLunarDate struct {
 
 // GetDateIsValid 返回日期是否合法
 func (m *TLunarDate) GetDateIsValid() bool {
-
 	if m.nYear < 1800 || m.nYear > 2299 {
 		return false // 1800 之前的年份已经严重不精确  2299 也一样
 	}
@@ -167,6 +171,22 @@ func (m *TLunarDate) GetDateIsValid() bool {
 		return false
 	}
 
+	return true
+}
+
+// GetTimeIsValid 检查时间是否合法
+func (m *TLunarDate) GetTimeIsValid(nHour, nMinute, nSecond int) bool {
+	if nHour < 0 || nHour > 23 {
+		return false
+	}
+
+	if nMinute < 0 || nMinute > 59 {
+		return false
+	}
+
+	if nSecond < 0 || nSecond > 59 {
+		return false
+	}
 	return true
 }
 
