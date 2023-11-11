@@ -226,7 +226,7 @@ func (m *TSolarDate) GetAllDays() int {
 	return 0
 }
 
-//GetBasicDays 获取基本数据
+// GetBasicDays 获取基本数据
 func (m *TSolarDate) GetBasicDays(nYear, nMonth, nDay int) int {
 	if !m.GetDateIsValid(nYear, nMonth, nDay) {
 		return 0
@@ -252,7 +252,7 @@ func (m *TSolarDate) GetBasicDays(nYear, nMonth, nDay int) int {
 	return Result
 }
 
-//GetLeapDays 获取闰年天数
+// GetLeapDays 获取闰年天数
 func (m *TSolarDate) GetLeapDays(nYear, nMonth, nDay int) int {
 	if !m.GetDateIsValid(nYear, nMonth, nDay) {
 		return 0

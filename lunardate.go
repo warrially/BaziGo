@@ -61,7 +61,6 @@ func NewLunarDateFrom64TimeStamp(nTimeStamp int64) *TLunarDate {
 
 	// fmt.Println("这里  时间戳反推")
 	pDate.genNormal() // 第几个月转行成闰月
-
 	// 检查日期合法性
 	if !pDate.GetDateIsValid() {
 		return nil
@@ -171,6 +170,7 @@ func (m *TLunarDate) GetDateIsValid() bool {
 	return true
 }
 
+// genNormal 第几个月改成闰月
 func (m *TLunarDate) genNormal() {
 	m.GetLeapMonth() // 获取闰月信息
 
@@ -188,9 +188,10 @@ func (m *TLunarDate) genNormal() {
 	}
 
 	if m.nMonth == m.nLeapMonth+1 {
-		m.isLeap = true // 刚好是闰月
+		m.isLeap = true // 刚好是闰月,
 	}
 
+	// 闰月之后的月份需要+1
 	m.nConventionalMonth = m.nMonth - 1
 }
 
@@ -347,10 +348,12 @@ func (m *TLunarDate) GetYearFrom64TimeStamp(nTimeStamp int64) *TLunarDate {
 
 // GetMonthFrom64TimeStamp .
 func (m *TLunarDate) GetMonthFrom64TimeStamp(nTimeStamp int64) {
+	// 计算完毕年份以后, 需要在这里先判断 // fix chadwi https://github.com/warrially/BaziGo/issues/3
+	m.GetLeapMonth()
 	// 这里开始特殊处理
 	// 全年一共几个月
 	nTotalMonth := 12
-	if m.nLeapMonth == 0 {
+	if m.nLeapMonth > 0 {
 		nTotalMonth++
 	}
 
