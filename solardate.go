@@ -23,6 +23,11 @@ func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate 
 		return nil
 	}
 
+	// 检查时间是否合法, 传入一个大值HOUR导致崩溃的BUG // fix chadwi https://github.com/warrially/BaziGo/issues/3
+	if !pDate.GetTimeIsValid(nHour, nMinute, nSecond) {
+		fmt.Println("无效的时间", nHour, nMinute, nSecond)
+		return nil
+	}
 	// 计算64位时间戳值
 	// pDate.Get64TimeStamp()
 
@@ -213,6 +218,22 @@ func (m *TSolarDate) GetDateIsValid(nYear, nMonth, nDay int) bool {
 	}
 
 	return false
+}
+
+// GetTimeIsValid 检查时间是否合法
+func (m *TSolarDate) GetTimeIsValid(nHour, nMinute, nSecond int) bool {
+	if nHour < 0 || nHour > 23 {
+		return false
+	}
+
+	if nMinute < 0 || nMinute > 59 {
+		return false
+	}
+
+	if nSecond < 0 || nSecond > 59 {
+		return false
+	}
+	return true
 }
 
 // GetAllDays 获得距公元原点的日数 这里是公历的年月日
