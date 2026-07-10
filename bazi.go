@@ -24,13 +24,23 @@ func NewBaziFromLunarDate(pLunarDate *TLunarDate, nSex int) *TBazi {
 
 // GetBazi 旧版八字接口, 八字入口
 func GetBazi(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) *TBazi {
+	pBazi, _ := GetBaziE(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex)
+	return pBazi
+}
+
+// GetBaziE 带错误信息的安全八字入口。
+// GetBazi 为兼容旧代码而保留，新代码应优先使用本函数。
+func GetBaziE(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) (*TBazi, error) {
+	if err := CheckBaziInput(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex); err != nil {
+		return nil, err
+	}
 	// 先解决时间问题. 然后开始处理八字问题
 	pSolarDate := NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond)
 	if pSolarDate == nil {
-		return nil
+		return nil, ErrInvalidDate
 	}
 
-	return NewBazi(pSolarDate, nSex)
+	return NewBazi(pSolarDate, nSex), nil
 }
 
 // TBazi 八字大类

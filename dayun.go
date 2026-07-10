@@ -67,8 +67,19 @@ func (m *TDaYun) ShunNi() bool {
 
 // Zhu 获取柱
 func (m *TDaYun) Zhu(nIndex int) *TZhu {
-	nIndex %= 12
+	if nIndex < 0 || nIndex >= len(m.zhuList) {
+		return nil
+	}
 	return m.zhuList[nIndex]
+}
+
+// GetZhu 带错误信息地获取大运柱。
+func (m *TDaYun) GetZhu(nIndex int) (*TZhu, error) {
+	pZhu := m.Zhu(nIndex)
+	if pZhu == nil {
+		return nil, ErrIndexOutOfRange
+	}
+	return pZhu, nil
 }
 
 // Size 容量就是12
@@ -78,6 +89,17 @@ func (m *TDaYun) Size() int {
 
 // Age 获取年龄
 func (m *TDaYun) Age(nIndex int) int {
-	nIndex %= 12
+	if nIndex < 0 || nIndex >= len(m.nAge) {
+		return -1
+	}
 	return m.nAge[nIndex]
+}
+
+// GetAge 带错误信息地获取大运年龄。
+func (m *TDaYun) GetAge(nIndex int) (int, error) {
+	nAge := m.Age(nIndex)
+	if nAge < 0 {
+		return 0, ErrIndexOutOfRange
+	}
+	return nAge, nil
 }

@@ -54503,6 +54503,9 @@ func (m *TJieQiDate) ToSolarDate() *TSolarDate {
 
 // GetJieQiDate 获取某个日期的节气, 和前后两个节气的日期
 func GetJieQiDate(pSolarDate *TSolarDate) (*TJieQiDate, *TJieQiDate) {
+	if pSolarDate == nil {
+		return nil, nil
+	}
 	nYear := pSolarDate.Year()
 	if (nYear <= 31) || (nYear >= 2300) {
 		return nil, nil // 超过了
