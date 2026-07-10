@@ -36,7 +36,7 @@ func GetDiZhiFromNumber(nValue int) string {
 
 // NewZhi 创建地支
 func NewZhi(nValue int) *TZhi {
-	nValue %= 12
+	nValue = NormalizeNumber(nValue, 12)
 	Zhi := TZhi(nValue)
 	return &Zhi
 }

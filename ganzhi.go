@@ -132,7 +132,7 @@ func GetGanZhiFromNumber(nValue int) string {
 
 // NewGanZhi 创建干支
 func NewGanZhi(nValue int) *TGanZhi {
-	nValue %= 60
+	nValue = NormalizeNumber(nValue, 60)
 	pGanZhi := TGanZhi(nValue)
 	return &pGanZhi
 }
@@ -153,6 +153,9 @@ func NewGanZhiFromDay(nAllDays int) *TGanZhi {
 
 // CombineGanZhi 将天干地支组合成干支，0-9 0-11 转换成 0-59
 func CombineGanZhi(pGan *TGan, pZhi *TZhi) *TGanZhi {
+	if pGan == nil || pZhi == nil {
+		return nil
+	}
 	nGan := pGan.Value()
 	nZhi := pZhi.Value()
 	for i := 0; i <= 6; i++ {

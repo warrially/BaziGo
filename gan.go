@@ -37,7 +37,7 @@ func GetTianGanFromNumber(nValue int) string {
 
 // NewGan 创建天干
 func NewGan(nValue int) *TGan {
-	nValue %= 10
+	nValue = NormalizeNumber(nValue, 10)
 	pGan := TGan(nValue)
 	return &pGan
 }

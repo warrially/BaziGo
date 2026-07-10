@@ -4,22 +4,48 @@ import "fmt"
 
 // NewBazi 新建八字
 func NewBazi(pSolarDate *TSolarDate, nSex int) *TBazi {
-	//
+	pBazi, _ := NewBaziE(pSolarDate, nSex)
+	return pBazi
+}
+
+// NewBaziE 新建八字并返回明确错误。
+func NewBaziE(pSolarDate *TSolarDate, nSex int) (*TBazi, error) {
+	if pSolarDate == nil {
+		return nil, ErrInvalidDate
+	}
+	if nSex != SEX_FEMALE && nSex != SEX_MALE {
+		return nil, ErrInvalidSex
+	}
+	if pSolarDate.Year() < MIN_BAZI_YEAR || pSolarDate.Year() > MAX_BAZI_YEAR {
+		return nil, ErrDateOutOfRange
+	}
 	pBazi := &TBazi{
 		pSolarDate: pSolarDate,
 		nSex:       nSex,
 	}
-	return pBazi.init()
+	return pBazi.initE()
 }
 
 // NewBaziFromLunarDate 新建八字 从农历
 func NewBaziFromLunarDate(pLunarDate *TLunarDate, nSex int) *TBazi {
+	pBazi, _ := NewBaziFromLunarDateE(pLunarDate, nSex)
+	return pBazi
+}
+
+// NewBaziFromLunarDateE 从农历新建八字并返回明确错误。
+func NewBaziFromLunarDateE(pLunarDate *TLunarDate, nSex int) (*TBazi, error) {
+	if pLunarDate == nil {
+		return nil, ErrInvalidLunarDate
+	}
+	if nSex != SEX_FEMALE && nSex != SEX_MALE {
+		return nil, ErrInvalidSex
+	}
 	pBazi := &TBazi{
 		pLunarDate: pLunarDate,
 		nSex:       nSex,
 	}
 
-	return pBazi.init()
+	return pBazi.initE()
 }
 
 // GetBazi 旧版八字接口, 八字入口
@@ -40,7 +66,7 @@ func GetBaziE(nYear, nMonth, nDay, nHour, nMinute, nSecond, nSex int) (*TBazi, e
 		return nil, ErrInvalidDate
 	}
 
-	return NewBazi(pSolarDate, nSex), nil
+	return NewBaziE(pSolarDate, nSex)
 }
 
 // TBazi 八字大类
@@ -56,10 +82,15 @@ type TBazi struct {
 
 // 八字初始化
 func (m *TBazi) init() *TBazi {
+	pBazi, _ := m.initE()
+	return pBazi
+}
+
+func (m *TBazi) initE() (*TBazi, error) {
 	// 1. 新农互转
 	if m.pSolarDate == nil {
 		if m.pLunarDate == nil {
-			return nil
+			return nil, ErrInvalidBaziSource
 		}
 		// 农转新
 		m.pSolarDate = m.pLunarDate.ToSolarDate()
@@ -67,9 +98,15 @@ func (m *TBazi) init() *TBazi {
 		// 新转农
 		m.pLunarDate = m.pSolarDate.ToLunarDate()
 	}
+	if m.pSolarDate == nil || m.pLunarDate == nil {
+		return nil, ErrInvalidDate
+	}
 
 	// 1. 拿到新历的情况下, 需要计算八字历
 	m.pBaziDate = m.pSolarDate.ToBaziDate()
+	if m.pBaziDate == nil || m.pBaziDate.PreviousJie() == nil || m.pBaziDate.NextJie() == nil {
+		return nil, ErrDateOutOfRange
+	}
 
 	// 2. 根据八字历, 准备计算四柱了
 	m.pSiZhu = NewSiZhu(m.pSolarDate, m.pBaziDate)
@@ -86,7 +123,7 @@ func (m *TBazi) init() *TBazi {
 		m.pDaYun.nAge[i] = nAge + 10*i
 	}
 
-	return m
+	return m, nil
 }
 
 // String 打印用

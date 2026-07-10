@@ -45,6 +45,7 @@ func main() {
 		arrRecord, err = readCompressedSource(strSource)
 		checkError(err)
 	}
+	checkError(validateRecords(arrRecord))
 	checkError(writeBinary(strOutput, arrRecord))
 	fmt.Printf("generated %s: %d records\n", strOutput, len(arrRecord))
 }
@@ -83,7 +84,10 @@ func readOldGoSource(strFilename string) ([]TJieQiRecord, error) {
 		var stRecord TJieQiRecord
 		arrValue := []*int{&stRecord.nYear, &stRecord.nMonth, &stRecord.nDay, &stRecord.nHour, &stRecord.nMinute, &stRecord.nSecond, &stRecord.nJieQi}
 		for i, pValue := range arrValue {
-			*pValue, _ = strconv.Atoi(arrMatch[i+1])
+			*pValue, err = strconv.Atoi(arrMatch[i+1])
+			if err != nil {
+				return nil, fmt.Errorf("invalid value at record %d: %w", len(arrRecord), err)
+			}
 		}
 		arrRecord = append(arrRecord, stRecord)
 	}
@@ -145,23 +149,55 @@ func writeBinary(strFilename string, arrRecord []TJieQiRecord) error {
 	if err := os.MkdirAll(filepath.Dir(strFilename), 0755); err != nil {
 		return err
 	}
-	pFile, err := os.Create(strFilename)
+	pFile, err := os.CreateTemp(filepath.Dir(strFilename), ".jieqi-*.tmp")
 	if err != nil {
 		return err
 	}
-	defer pFile.Close()
+	strTemp := pFile.Name()
+	defer os.Remove(strTemp)
 	pWriter := bufio.NewWriter(pFile)
-	pWriter.WriteString(STR_MAGIC)
-	binary.Write(pWriter, binary.LittleEndian, N_FORMAT_VERSION)
-	binary.Write(pWriter, binary.LittleEndian, uint16(arrRecord[0].nYear))
-	binary.Write(pWriter, binary.LittleEndian, uint16(arrRecord[len(arrRecord)-1].nYear))
-	binary.Write(pWriter, binary.LittleEndian, uint32(len(arrRecord)))
-	binary.Write(pWriter, binary.LittleEndian, uint16(0))
-	for _, stRecord := range arrRecord {
-		binary.Write(pWriter, binary.LittleEndian, getSecondsFromYearZero(stRecord))
-		pWriter.WriteByte(byte(stRecord.nJieQi))
+	if _, err = pWriter.WriteString(STR_MAGIC); err != nil {
+		return err
 	}
-	return pWriter.Flush()
+	arrHeader := []any{N_FORMAT_VERSION, uint16(arrRecord[0].nYear), uint16(arrRecord[len(arrRecord)-1].nYear), uint32(len(arrRecord)), uint16(0)}
+	for _, value := range arrHeader {
+		if err = binary.Write(pWriter, binary.LittleEndian, value); err != nil {
+			return err
+		}
+	}
+	for _, stRecord := range arrRecord {
+		if err = binary.Write(pWriter, binary.LittleEndian, getSecondsFromYearZero(stRecord)); err != nil {
+			return err
+		}
+		if err = pWriter.WriteByte(byte(stRecord.nJieQi)); err != nil {
+			return err
+		}
+	}
+	if err = pWriter.Flush(); err != nil {
+		return err
+	}
+	if err = pFile.Sync(); err != nil {
+		return err
+	}
+	if err = pFile.Close(); err != nil {
+		return err
+	}
+	return os.Rename(strTemp, strFilename)
+}
+
+func validateRecords(arrRecord []TJieQiRecord) error {
+	if len(arrRecord) == 0 || len(arrRecord)%24 != 0 {
+		return errors.New("jieqi record count must be a non-zero multiple of 24")
+	}
+	for i, stRecord := range arrRecord {
+		if stRecord.nYear <= 0 || stRecord.nMonth < 1 || stRecord.nMonth > 12 || stRecord.nDay < 1 || stRecord.nDay > getMonthDays(stRecord.nYear, stRecord.nMonth) || stRecord.nHour < 0 || stRecord.nHour > 23 || stRecord.nMinute < 0 || stRecord.nMinute > 59 || stRecord.nSecond < 0 || stRecord.nSecond > 59 {
+			return fmt.Errorf("invalid date at record %d", i)
+		}
+		if stRecord.nJieQi < 0 || stRecord.nJieQi >= 24 {
+			return fmt.Errorf("invalid jieqi number at record %d", i)
+		}
+	}
+	return nil
 }
 
 func getSecondsFromYearZero(stRecord TJieQiRecord) int64 {

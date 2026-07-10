@@ -21,18 +21,24 @@ func GetYinYangFromNumber(nValue int) string {
 
 // NewYinYang 创建阴阳
 func NewYinYang(nValue int) *TYinYang {
-	nValue %= 2
+	nValue = NormalizeNumber(nValue, 2)
 	yinyang := TYinYang(nValue)
 	return &yinyang
 }
 
 // NewYinYangFromZhu 从柱里创建阴阳
 func NewYinYangFromZhu(pZhu *TZhu) *TYinYang {
+	if pZhu == nil {
+		return nil
+	}
 	return NewYinYangFromGan(pZhu.Gan())
 }
 
 // NewYinYangFromGan 从干里创建阴阳
 func NewYinYangFromGan(pGan *TGan) *TYinYang {
+	if pGan == nil {
+		return nil
+	}
 	nGan := pGan.Value()
 	switch nGan {
 	// 甲丙戊庚壬 0, 2, 4, 6, 8 阳 (1)

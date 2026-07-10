@@ -128,7 +128,7 @@ func GetShiShenFromNumber(nValue int) string {
 
 // NewShiShen 新建十神
 func NewShiShen(nValue int) *TShiShen {
-	nValue %= 10
+	nValue = NormalizeNumber(nValue, 10)
 	pShishen := TShiShen(nValue)
 	return &pShishen
 
@@ -150,6 +150,9 @@ var shishenlist = [...][10]int{
 // NewShiShenFromGan 从日干和目标干获取十神
 // nDayGan 日干 Gan2 目标干
 func NewShiShenFromGan(nDayGan int, pGan2 *TGan) *TShiShen {
+	if pGan2 == nil || nDayGan < 0 || nDayGan >= len(shishenlist) {
+		return nil
+	}
 	return NewShiShen(shishenlist[nDayGan][pGan2.Value()])
 }
 

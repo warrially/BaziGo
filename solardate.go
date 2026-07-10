@@ -2,12 +2,16 @@ package bazi
 
 // 新历日期时间， 采用标准的日历
 
-import (
-	"fmt"
-)
+import "fmt"
 
 // NewSolarDate 创建一个新历时间
 func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate {
+	pDate, _ := NewSolarDateE(nYear, nMonth, nDay, nHour, nMinute, nSecond)
+	return pDate
+}
+
+// NewSolarDateE 创建新历时间并返回明确错误。
+func NewSolarDateE(nYear, nMonth, nDay, nHour, nMinute, nSecond int) (*TSolarDate, error) {
 	// 把具体时间实例化出来
 	pDate := &TSolarDate{
 		nYear:   nYear,   // 年
@@ -19,19 +23,17 @@ func NewSolarDate(nYear, nMonth, nDay, nHour, nMinute, nSecond int) *TSolarDate 
 	}
 
 	if !pDate.GetDateIsValid(nYear, nMonth, nDay) {
-		fmt.Println("无效的日期", nYear, nMonth, nDay)
-		return nil
+		return nil, ErrInvalidDate
 	}
 
 	// 检查时间是否合法, 传入一个大值HOUR导致崩溃的BUG // fix chadwi https://github.com/warrially/BaziGo/issues/3
 	if !pDate.GetTimeIsValid(nHour, nMinute, nSecond) {
-		fmt.Println("无效的时间", nHour, nMinute, nSecond)
-		return nil
+		return nil, ErrInvalidDate
 	}
 	// 计算64位时间戳值
 	// pDate.Get64TimeStamp()
 
-	return pDate
+	return pDate, nil
 }
 
 // NewSolarDateFrom64TimeStamp 从64位时间戳反推日期

@@ -2,6 +2,12 @@ package bazi
 
 // NewLunarDate 新建一个农历日期,  顺序月
 func NewLunarDate(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond int) *TLunarDate {
+	pDate, _ := NewLunarDateE(nYear, nMonth, nDay, nHour, nMinute, nSecond)
+	return pDate
+}
+
+// NewLunarDateE 新建农历日期并返回明确错误。
+func NewLunarDateE(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond int) (*TLunarDate, error) {
 	pDate := &TLunarDate{
 		nYear:              nYear,
 		nMonth:             nMonth,
@@ -16,19 +22,25 @@ func NewLunarDate(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSeco
 
 	// 检查日期合法性
 	if !pDate.GetDateIsValid() {
-		return nil
+		return nil, ErrInvalidLunarDate
 	}
 
 	// 同样需要检查时间是否合法
 	if !pDate.GetTimeIsValid(nHour, nMinute, nSecond) {
-		return nil
+		return nil, ErrInvalidLunarDate
 	}
 
-	return pDate
+	return pDate, nil
 }
 
 // NewLunarDateFromLeap 新建一个农历日期, 带闰月
 func NewLunarDateFromLeap(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond int, isLeap bool) *TLunarDate {
+	pDate, _ := NewLunarDateFromLeapE(nYear, nMonth, nDay, nHour, nMinute, nSecond, isLeap)
+	return pDate
+}
+
+// NewLunarDateFromLeapE 新建带闰月的农历日期并返回明确错误。
+func NewLunarDateFromLeapE(nYear int, nMonth int, nDay int, nHour int, nMinute int, nSecond int, isLeap bool) (*TLunarDate, error) {
 
 	pDate := &TLunarDate{
 		nYear:              nYear,
@@ -47,10 +59,12 @@ func NewLunarDateFromLeap(nYear int, nMonth int, nDay int, nHour int, nMinute in
 
 	// 检查日期合法性
 	if !pDate.GetDateIsValid() {
-		return nil
+		return nil, ErrInvalidLunarDate
 	}
-
-	return pDate
+	if !pDate.GetTimeIsValid(nHour, nMinute, nSecond) {
+		return nil, ErrInvalidLunarDate
+	}
+	return pDate, nil
 }
 
 // NewLunarDateFrom64TimeStamp 从64位时间戳反推日期

@@ -17,6 +17,9 @@ var cangganlist = [12][3]int{
 
 // NewCangGan 新建藏干
 func NewCangGan(nDayGan int, pZhi *TZhi) *TCangGan {
+	if pZhi == nil || pZhi.Value() < 0 || pZhi.Value() >= len(cangganlist) || nDayGan < 0 || nDayGan >= 10 {
+		return nil
+	}
 	pCangGan := &TCangGan{
 		nDayGan: nDayGan,
 	}

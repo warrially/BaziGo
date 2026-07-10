@@ -12,6 +12,7 @@ const (
 
 var (
 	ErrInvalidDate       = errors.New("invalid solar date")
+	ErrInvalidLunarDate  = errors.New("invalid lunar date")
 	ErrInvalidSex        = errors.New("invalid sex, only 0(female) or 1(male) is supported")
 	ErrDateOutOfRange    = errors.New("date is outside the supported bazi range")
 	ErrInvalidBaziSource = errors.New("solar date and lunar date are both nil")

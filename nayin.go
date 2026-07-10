@@ -91,7 +91,7 @@ func GetNaYinFromNumber(nValue int) string {
 
 // NewNaYin 纳音
 func NewNaYin(nValue int) *TNaYin {
-	nValue %= 30
+	nValue = NormalizeNumber(nValue, 30)
 
 	NaYin := TNaYin(nValue)
 	return &NaYin
