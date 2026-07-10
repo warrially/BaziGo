@@ -16,6 +16,19 @@ if err != nil {
 fmt.Println(pBazi)
 ```
 
+## 节气数据
+
+节气运行数据位于 `internal/jieqidata/jieqi.bin`，通过 `go:embed` 编译进程序。引用本库的项目不需要复制数据文件，也不需要在运行时读取外部目录。
+
+二进制记录保存的是从公元起点累计的秒数，不使用 Unix 时间戳。可维护的原始数据压缩在 `tools/jieqigen/jieqi.csv.gz`，修改原始数据后运行：
+
+```bash
+go generate ./...
+go test ./...
+```
+
+生成工具会重新创建嵌入式二进制文件；测试会逐条核对全部节气记录。
+
 作者只想保留版权，无任何使用或者发布限制。您只需要在您的发行版本中注明代码出处
 https://github.com/warrially/BaziGo
 
